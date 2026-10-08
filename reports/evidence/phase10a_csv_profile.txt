@@ -1,0 +1,189 @@
+Phase 10a: CSV profile (Python csv module, streamed from data/raw/*.csv.gz)
+======================================================================
+
+appearances.csv.gz: gz=45,253,638 B, uncompressed=198,398,405 B, data_rows=1,894,350, physical_lines=1,894,351, columns=13, BOM=False, EOL=LF, valid UTF-8=True, wrong-width rows=0, quoted empty strings=0
+   appearance_id                            kinds=text                   max_chars=15     max_bytes=15     empty=0         non_ascii=0        
+   game_id                                  kinds=int                    max_chars=7      max_bytes=7      empty=0         non_ascii=0        
+   player_id                                kinds=int                    max_chars=7      max_bytes=7      empty=0         non_ascii=0        
+   player_club_id                           kinds=int                    max_chars=6      max_bytes=6      empty=0         non_ascii=0        
+   player_current_club_id                   kinds=int                    max_chars=6      max_bytes=6      empty=0         non_ascii=0        
+   date                                     kinds=date                   max_chars=10     max_bytes=10     empty=0         non_ascii=0        
+   player_name                              kinds=text                   max_chars=34     max_bytes=34     empty=2         non_ascii=361401   
+   competition_id                           kinds=text                   max_chars=4      max_bytes=4      empty=0         non_ascii=0        
+   yellow_cards                             kinds=int                    max_chars=1      max_bytes=1      empty=0         non_ascii=0        
+   red_cards                                kinds=int                    max_chars=1      max_bytes=1      empty=0         non_ascii=0        
+   goals                                    kinds=int                    max_chars=1      max_bytes=1      empty=0         non_ascii=0        
+   assists                                  kinds=int                    max_chars=1      max_bytes=1      empty=0         non_ascii=0        
+   minutes_played                           kinds=int                    max_chars=3      max_bytes=3      empty=0         non_ascii=0        
+
+club_games.csv.gz: gz=2,138,062 B, uncompressed=14,748,080 B, data_rows=177,916, physical_lines=177,917, columns=11, BOM=False, EOL=LF, valid UTF-8=True, wrong-width rows=0, quoted empty strings=0
+   game_id                                  kinds=int                    max_chars=7      max_bytes=7      empty=0         non_ascii=0        
+   club_id                                  kinds=int                    max_chars=6      max_bytes=6      empty=0         non_ascii=0        
+   own_goals                                kinds=int                    max_chars=2      max_bytes=2      empty=0         non_ascii=0        
+   own_position                             kinds=int                    max_chars=2      max_bytes=2      empty=50754     non_ascii=0        
+   own_manager_name                         kinds=text                   max_chars=29     max_bytes=29     empty=1688      non_ascii=33096    
+   opponent_id                              kinds=int                    max_chars=6      max_bytes=6      empty=0         non_ascii=0        
+   opponent_goals                           kinds=int                    max_chars=2      max_bytes=2      empty=0         non_ascii=0        
+   opponent_position                        kinds=int                    max_chars=2      max_bytes=2      empty=50754     non_ascii=0        
+   opponent_manager_name                    kinds=text                   max_chars=29     max_bytes=29     empty=1688      non_ascii=33096    
+   hosting                                  kinds=text                   max_chars=4      max_bytes=4      empty=0         non_ascii=0        
+   is_win                                   kinds=int                    max_chars=1      max_bytes=1      empty=0         non_ascii=0        
+
+clubs.csv.gz: gz=51,281 B, uncompressed=208,374 B, data_rows=796, physical_lines=797, columns=17, BOM=False, EOL=LF, valid UTF-8=True, wrong-width rows=0, quoted empty strings=0
+   club_id                                  kinds=int                    max_chars=6      max_bytes=6      empty=0         non_ascii=0        
+   club_code                                kinds=text                   max_chars=39     max_bytes=39     empty=0         non_ascii=0        
+   name                                     kinds=text                   max_chars=63     max_bytes=63     empty=0         non_ascii=120      embedded_comma=2 embedded_quote=1
+   domestic_competition_id                  kinds=text                   max_chars=4      max_bytes=4      empty=0         non_ascii=0        
+   total_market_value                       kinds=                       max_chars=0      max_bytes=0      empty=796       non_ascii=0        
+   squad_size                               kinds=int                    max_chars=2      max_bytes=2      empty=0         non_ascii=0        
+   average_age                              kinds=decimal                max_chars=4      max_bytes=4      empty=38        non_ascii=0        
+   foreigners_number                        kinds=int                    max_chars=2      max_bytes=2      empty=0         non_ascii=0        
+   foreigners_percentage                    kinds=decimal                max_chars=5      max_bytes=5      empty=60        non_ascii=0        
+   national_team_players                    kinds=int                    max_chars=2      max_bytes=2      empty=0         non_ascii=0        
+   stadium_name                             kinds=text                   max_chars=50     max_bytes=54     empty=0         non_ascii=184      embedded_comma=1 embedded_quote=8
+   stadium_seats                            kinds=int                    max_chars=5      max_bytes=5      empty=0         non_ascii=0        
+   net_transfer_record                      kinds=text                   max_chars=9      max_bytes=11     empty=0         non_ascii=596      
+   coach_name                               kinds=text                   max_chars=23     max_bytes=23     empty=393       non_ascii=93       
+   last_season                              kinds=int                    max_chars=4      max_bytes=4      empty=0         non_ascii=0        
+   filename                                 kinds=text                   max_chars=52     max_bytes=52     empty=0         non_ascii=0        
+   url                                      kinds=text                   max_chars=95     max_bytes=95     empty=0         non_ascii=0        
+
+competitions.csv.gz: gz=2,242 B, uncompressed=12,247 B, data_rows=65, physical_lines=66, columns=11, BOM=False, EOL=LF, valid UTF-8=True, wrong-width rows=0, quoted empty strings=0
+   competition_id                           kinds=text                   max_chars=4      max_bytes=4      empty=0         non_ascii=0        
+   competition_code                         kinds=text                   max_chars=39     max_bytes=39     empty=0         non_ascii=0        
+   name                                     kinds=text                   max_chars=39     max_bytes=39     empty=0         non_ascii=0        
+   sub_type                                 kinds=text                   max_chars=33     max_bytes=33     empty=0         non_ascii=0        
+   type                                     kinds=text                   max_chars=25     max_bytes=25     empty=0         non_ascii=0        
+   country_id                               kinds=int                    max_chars=3      max_bytes=3      empty=0         non_ascii=0        
+   country_name                             kinds=text                   max_chars=14     max_bytes=14     empty=12        non_ascii=1        embedded_comma=1
+   domestic_league_code                     kinds=text                   max_chars=4      max_bytes=4      empty=12        non_ascii=0        
+   confederation                            kinds=text                   max_chars=7      max_bytes=7      empty=0         non_ascii=0        
+   total_clubs                              kinds=int                    max_chars=2      max_bytes=2      empty=15        non_ascii=0        
+   url                                      kinds=text                   max_chars=98     max_bytes=98     empty=0         non_ascii=0        
+
+countries.csv.gz: gz=2,878 B, uncompressed=15,058 B, data_rows=124, physical_lines=125, columns=8, BOM=False, EOL=LF, valid UTF-8=True, wrong-width rows=0, quoted empty strings=0
+   country_id                               kinds=int                    max_chars=3      max_bytes=3      empty=0         non_ascii=0        
+   country_name                             kinds=text                   max_chars=20     max_bytes=20     empty=0         non_ascii=1        embedded_comma=1
+   country_code                             kinds=text                   max_chars=4      max_bytes=4      empty=0         non_ascii=0        
+   confederation                            kinds=text                   max_chars=7      max_bytes=7      empty=0         non_ascii=0        
+   total_clubs                              kinds=int                    max_chars=2      max_bytes=2      empty=0         non_ascii=0        
+   total_players                            kinds=int                    max_chars=3      max_bytes=3      empty=0         non_ascii=0        
+   average_age                              kinds=decimal                max_chars=4      max_bytes=4      empty=0         non_ascii=0        
+   url                                      kinds=text                   max_chars=68     max_bytes=68     empty=0         non_ascii=0        
+
+game_events.csv.gz: gz=45,466,137 B, uncompressed=179,098,694 B, data_rows=1,274,469, physical_lines=1,274,470, columns=11, BOM=False, EOL=LF, valid UTF-8=True, wrong-width rows=0, quoted empty strings=93157
+   game_event_id                            kinds=int,text               max_chars=32     max_bytes=32     empty=0         non_ascii=0        
+   date                                     kinds=date                   max_chars=10     max_bytes=10     empty=0         non_ascii=0        
+   game_id                                  kinds=int                    max_chars=7      max_bytes=7      empty=0         non_ascii=0        
+   minute                                   kinds=int                    max_chars=3      max_bytes=3      empty=0         non_ascii=0        
+   type                                     kinds=text                   max_chars=13     max_bytes=13     empty=0         non_ascii=0        
+   club_id                                  kinds=int                    max_chars=6      max_bytes=6      empty=0         non_ascii=0        
+   club_name                                kinds=text                   max_chars=38     max_bytes=38     empty=0         non_ascii=101291   embedded_comma=11
+   player_id                                kinds=int                    max_chars=7      max_bytes=7      empty=0         non_ascii=0        
+   description                              kinds=text                   max_chars=100    max_bytes=100    empty=93157     non_ascii=0        embedded_comma=1080685
+   player_in_id                             kinds=int                    max_chars=7      max_bytes=7      empty=643922    non_ascii=0        
+   player_assist_id                         kinds=int                    max_chars=7      max_bytes=7      empty=1086191   non_ascii=0        
+
+game_lineups.csv.gz: gz=125,814,089 B, uncompressed=415,978,884 B, data_rows=3,179,016, physical_lines=3,179,017, columns=10, BOM=False, EOL=LF, valid UTF-8=True, wrong-width rows=0, quoted empty strings=3
+   game_lineups_id                          kinds=int,text               max_chars=32     max_bytes=32     empty=0         non_ascii=0        
+   date                                     kinds=date                   max_chars=10     max_bytes=10     empty=0         non_ascii=0        
+   game_id                                  kinds=int                    max_chars=7      max_bytes=7      empty=0         non_ascii=0        
+   player_id                                kinds=int                    max_chars=7      max_bytes=7      empty=0         non_ascii=0        
+   club_id                                  kinds=int                    max_chars=6      max_bytes=6      empty=0         non_ascii=0        
+   player_name                              kinds=text                   max_chars=35     max_bytes=36     empty=0         non_ascii=565094   lead_trail_space=4
+   type                                     kinds=text                   max_chars=15     max_bytes=15     empty=0         non_ascii=0        
+   position                                 kinds=text                   max_chars=18     max_bytes=18     empty=3         non_ascii=0        
+   number                                   kinds=int,text               max_chars=3      max_bytes=3      empty=0         non_ascii=0        
+   team_captain                             kinds=int                    max_chars=1      max_bytes=1      empty=0         non_ascii=0        
+
+games.csv.gz: gz=4,995,595 B, uncompressed=28,965,132 B, data_rows=88,958, physical_lines=88,959, columns=23, BOM=False, EOL=LF, valid UTF-8=True, wrong-width rows=0, quoted empty strings=0
+   game_id                                  kinds=int                    max_chars=7      max_bytes=7      empty=0         non_ascii=0        
+   competition_id                           kinds=text                   max_chars=4      max_bytes=4      empty=0         non_ascii=0        
+   season                                   kinds=int                    max_chars=4      max_bytes=4      empty=0         non_ascii=0        
+   round                                    kinds=text                   max_chars=28     max_bytes=28     empty=0         non_ascii=0        
+   date                                     kinds=date                   max_chars=10     max_bytes=10     empty=0         non_ascii=0        
+   home_club_id                             kinds=int                    max_chars=6      max_bytes=6      empty=0         non_ascii=0        
+   away_club_id                             kinds=int                    max_chars=6      max_bytes=6      empty=0         non_ascii=0        
+   home_club_goals                          kinds=int                    max_chars=2      max_bytes=2      empty=0         non_ascii=0        
+   away_club_goals                          kinds=int                    max_chars=2      max_bytes=2      empty=0         non_ascii=0        
+   home_club_position                       kinds=int                    max_chars=2      max_bytes=2      empty=25377     non_ascii=0        
+   away_club_position                       kinds=int                    max_chars=2      max_bytes=2      empty=25377     non_ascii=0        
+   home_club_manager_name                   kinds=text                   max_chars=28     max_bytes=29     empty=844       non_ascii=16561    
+   away_club_manager_name                   kinds=text                   max_chars=29     max_bytes=29     empty=844       non_ascii=16535    
+   stadium                                  kinds=text                   max_chars=54     max_bytes=55     empty=242       non_ascii=18167    embedded_comma=280 embedded_quote=1828
+   attendance                               kinds=int                    max_chars=5      max_bytes=5      empty=10803     non_ascii=0        
+   referee                                  kinds=text                   max_chars=41     max_bytes=42     empty=678       non_ascii=17048    
+   url                                      kinds=text                   max_chars=125    max_bytes=125    empty=0         non_ascii=0        
+   home_club_formation                      kinds=text                   max_chars=15     max_bytes=15     empty=8200      non_ascii=0        
+   away_club_formation                      kinds=text                   max_chars=33     max_bytes=33     empty=8073      non_ascii=0        
+   home_club_name                           kinds=text                   max_chars=63     max_bytes=63     empty=86        non_ascii=8584     embedded_comma=70 embedded_quote=265
+   away_club_name                           kinds=text                   max_chars=63     max_bytes=63     empty=36        non_ascii=8568     embedded_comma=70 embedded_quote=272
+   aggregate                                kinds=text                   max_chars=5      max_bytes=5      empty=0         non_ascii=0        
+   competition_type                         kinds=text                   max_chars=25     max_bytes=25     empty=1214      non_ascii=0        
+
+national_teams.csv.gz: gz=6,952 B, uncompressed=32,980 B, data_rows=124, physical_lines=125, columns=17, BOM=False, EOL=LF, valid UTF-8=True, wrong-width rows=0, quoted empty strings=0
+   national_team_id                         kinds=int                    max_chars=5      max_bytes=5      empty=0         non_ascii=0        
+   name                                     kinds=text                   max_chars=20     max_bytes=20     empty=0         non_ascii=1        embedded_comma=1
+   team_code                                kinds=text                   max_chars=20     max_bytes=20     empty=0         non_ascii=0        
+   country_id                               kinds=int                    max_chars=3      max_bytes=3      empty=0         non_ascii=0        
+   country_name                             kinds=text                   max_chars=20     max_bytes=20     empty=0         non_ascii=1        embedded_comma=1
+   country_code                             kinds=text                   max_chars=4      max_bytes=4      empty=0         non_ascii=0        
+   confederation                            kinds=text                   max_chars=8      max_bytes=8      empty=1         non_ascii=0        
+   team_image_url                           kinds=text                   max_chars=88     max_bytes=88     empty=0         non_ascii=0        
+   squad_size                               kinds=int                    max_chars=2      max_bytes=2      empty=0         non_ascii=0        
+   average_age                              kinds=decimal                max_chars=4      max_bytes=4      empty=0         non_ascii=0        
+   foreigners_number                        kinds=int                    max_chars=2      max_bytes=2      empty=0         non_ascii=0        
+   foreigners_percentage                    kinds=decimal                max_chars=5      max_bytes=5      empty=8         non_ascii=0        
+   total_market_value                       kinds=int                    max_chars=9      max_bytes=9      empty=4         non_ascii=0        
+   coach_name                               kinds=                       max_chars=0      max_bytes=0      empty=124       non_ascii=0        
+   fifa_ranking                             kinds=int                    max_chars=3      max_bytes=3      empty=0         non_ascii=0        
+   last_season                              kinds=int                    max_chars=4      max_bytes=4      empty=0         non_ascii=0        
+   url                                      kinds=text                   max_chars=75     max_bytes=75     empty=0         non_ascii=0        
+
+player_valuations.csv.gz: gz=7,197,935 B, uncompressed=39,647,280 B, data_rows=656,301, physical_lines=656,302, columns=6, BOM=False, EOL=LF, valid UTF-8=True, wrong-width rows=0, quoted empty strings=0
+   player_id                                kinds=int                    max_chars=7      max_bytes=7      empty=0         non_ascii=0        
+   date                                     kinds=date                   max_chars=10     max_bytes=10     empty=0         non_ascii=0        
+   market_value_in_eur                      kinds=int                    max_chars=9      max_bytes=9      empty=0         non_ascii=0        
+   current_club_name                        kinds=text                   max_chars=52     max_bytes=53     empty=0         non_ascii=69207    
+   current_club_id                          kinds=int                    max_chars=6      max_bytes=6      empty=0         non_ascii=0        
+   player_club_domestic_competition_id      kinds=text                   max_chars=4      max_bytes=4      empty=92973     non_ascii=0        
+
+players.csv.gz: gz=4,389,958 B, uncompressed=19,624,138 B, data_rows=50,149, physical_lines=50,150, columns=26, BOM=False, EOL=LF, valid UTF-8=True, wrong-width rows=0, quoted empty strings=0
+   player_id                                kinds=int                    max_chars=7      max_bytes=7      empty=0         non_ascii=0        
+   first_name                               kinds=text                   max_chars=20     max_bytes=20     empty=3164      non_ascii=3623     
+   last_name                                kinds=text                   max_chars=23     max_bytes=23     empty=0         non_ascii=5904     
+   name                                     kinds=text                   max_chars=34     max_bytes=34     empty=0         non_ascii=8545     
+   last_season                              kinds=int                    max_chars=4      max_bytes=4      empty=0         non_ascii=0        
+   current_club_id                          kinds=int                    max_chars=6      max_bytes=6      empty=0         non_ascii=0        
+   player_code                              kinds=text                   max_chars=35     max_bytes=35     empty=0         non_ascii=14       
+   country_of_birth                         kinds=text                   max_chars=30     max_bytes=30     empty=5885      non_ascii=715      embedded_comma=544
+   city_of_birth                            kinds=text                   max_chars=58     max_bytes=60     empty=5608      non_ascii=44503    embedded_comma=3871 lead_trail_space=44493
+   country_of_citizenship                   kinds=text                   max_chars=24     max_bytes=24     empty=269       non_ascii=908      embedded_comma=621
+   date_of_birth                            kinds=datetime               max_chars=19     max_bytes=19     empty=49        non_ascii=0        
+   sub_position                             kinds=text                   max_chars=18     max_bytes=18     empty=586       non_ascii=0        
+   position                                 kinds=text                   max_chars=10     max_bytes=10     empty=0         non_ascii=0        
+   foot                                     kinds=text                   max_chars=5      max_bytes=5      empty=5893      non_ascii=0        
+   height_in_cm                             kinds=int                    max_chars=3      max_bytes=3      empty=4365      non_ascii=0        
+   contract_expiration_date                 kinds=datetime               max_chars=19     max_bytes=19     empty=18569     non_ascii=0        
+   agent_name                               kinds=int,text               max_chars=20     max_bytes=22     empty=23296     non_ascii=956      embedded_comma=49 lead_trail_space=12
+   image_url                                kinds=text                   max_chars=91     max_bytes=91     empty=0         non_ascii=0        
+   international_caps                       kinds=int                    max_chars=3      max_bytes=3      empty=30793     non_ascii=0        
+   international_goals                      kinds=int                    max_chars=3      max_bytes=3      empty=30793     non_ascii=0        
+   current_national_team_id                 kinds=int                    max_chars=5      max_bytes=5      empty=46889     non_ascii=0        
+   url                                      kinds=text                   max_chars=89     max_bytes=89     empty=0         non_ascii=1        
+   current_club_domestic_competition_id     kinds=text                   max_chars=4      max_bytes=4      empty=2986      non_ascii=0        
+   current_club_name                        kinds=text                   max_chars=63     max_bytes=63     empty=2986      non_ascii=6043     embedded_comma=105 embedded_quote=77
+   market_value_in_eur                      kinds=int                    max_chars=9      max_bytes=9      empty=8621      non_ascii=0        
+   highest_market_value_in_eur              kinds=int                    max_chars=9      max_bytes=9      empty=8621      non_ascii=0        
+
+transfers.csv.gz: gz=5,809,514 B, uncompressed=18,112,063 B, data_rows=175,165, physical_lines=175,166, columns=10, BOM=False, EOL=LF, valid UTF-8=True, wrong-width rows=0, quoted empty strings=0
+   player_id                                kinds=int                    max_chars=7      max_bytes=7      empty=0         non_ascii=0        
+   transfer_date                            kinds=date                   max_chars=10     max_bytes=10     empty=0         non_ascii=0        
+   transfer_season                          kinds=text                   max_chars=5      max_bytes=5      empty=0         non_ascii=0        
+   from_club_id                             kinds=int                    max_chars=6      max_bytes=6      empty=0         non_ascii=0        
+   to_club_id                               kinds=int                    max_chars=6      max_bytes=6      empty=0         non_ascii=0        
+   from_club_name                           kinds=text                   max_chars=34     max_bytes=35     empty=0         non_ascii=16291    
+   to_club_name                             kinds=text                   max_chars=34     max_bytes=34     empty=0         non_ascii=15944    
+   transfer_fee                             kinds=decimal                max_chars=13     max_bytes=13     empty=61526     non_ascii=0        
+   market_value_in_eur                      kinds=decimal                max_chars=13     max_bytes=13     empty=68160     non_ascii=0        
+   player_name                              kinds=text                   max_chars=34     max_bytes=34     empty=0         non_ascii=34096    

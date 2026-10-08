@@ -1,0 +1,33 @@
+# Raw source data (1.1 GB): never committed. See data/README.md to download it.
+data/raw/
+
+# Batch files for the SSIS load are copies of the raw data: keep the folders, not the files.
+data/inbox/*
+data/archive/*
+!data/inbox/.gitkeep
+!data/archive/.gitkeep
+
+# Large local database and backup files
+*.duckdb
+*.mdf
+*.ldf
+*.bak
+
+# Visual Studio / SSIS build output and per-user settings
+.vs/
+bin/
+obj/
+*.user
+*.suo
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# OS files
+Thumbs.db
+desktop.ini
+.DS_Store

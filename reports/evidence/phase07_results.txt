@@ -1,0 +1,547 @@
+Phase 7: Data quality log
+======================================================================
+
+[P7.1] Null % per column: appearances
+                   col  null_pct
+         appearance_id       0.0
+               game_id       0.0
+             player_id       0.0
+        player_club_id       0.0
+player_current_club_id       0.0
+                  date       0.0
+           player_name       0.0
+        competition_id       0.0
+          yellow_cards       0.0
+             red_cards       0.0
+                 goals       0.0
+               assists       0.0
+        minutes_played       0.0
+
+[P7.2] Null % per column: club_games
+                  col  null_pct
+              game_id      0.00
+              club_id      0.00
+            own_goals      0.00
+         own_position     28.53
+     own_manager_name      0.95
+          opponent_id      0.00
+       opponent_goals      0.00
+    opponent_position     28.53
+opponent_manager_name      0.95
+              hosting      0.00
+               is_win      0.00
+
+[P7.3] Null % per column: clubs
+                    col  null_pct
+                club_id      0.00
+              club_code      0.00
+                   name      0.00
+domestic_competition_id      0.00
+     total_market_value    100.00
+             squad_size      0.00
+            average_age      4.77
+      foreigners_number      0.00
+  foreigners_percentage      7.54
+  national_team_players      0.00
+           stadium_name      0.00
+          stadium_seats      0.00
+    net_transfer_record      0.00
+             coach_name     49.37
+            last_season      0.00
+               filename      0.00
+                    url      0.00
+
+[P7.4] Null % per column: competitions
+                 col  null_pct
+      competition_id      0.00
+    competition_code      0.00
+                name      0.00
+            sub_type      0.00
+                type      0.00
+          country_id      0.00
+        country_name     18.46
+domestic_league_code     18.46
+       confederation      0.00
+         total_clubs     23.08
+                 url      0.00
+
+[P7.5] Null % per column: countries
+          col  null_pct
+   country_id       0.0
+ country_name       0.0
+ country_code       0.0
+confederation       0.0
+  total_clubs       0.0
+total_players       0.0
+  average_age       0.0
+          url       0.0
+
+[P7.6] Null % per column: game_events
+             col  null_pct
+   game_event_id      0.00
+            date      0.00
+         game_id      0.00
+          minute      0.00
+            type      0.00
+         club_id      0.00
+       club_name      0.00
+       player_id      0.00
+     description      0.00
+    player_in_id     50.52
+player_assist_id     85.23
+
+[P7.7] Null % per column: game_lineups
+            col  null_pct
+game_lineups_id       0.0
+           date       0.0
+        game_id       0.0
+      player_id       0.0
+        club_id       0.0
+    player_name       0.0
+           type       0.0
+       position       0.0
+         number       0.0
+   team_captain       0.0
+
+[P7.8] Null % per column: games
+                   col  null_pct
+               game_id      0.00
+        competition_id      0.00
+                season      0.00
+                 round      0.00
+                  date      0.00
+          home_club_id      0.00
+          away_club_id      0.00
+       home_club_goals      0.00
+       away_club_goals      0.00
+    home_club_position     28.53
+    away_club_position     28.53
+home_club_manager_name      0.95
+away_club_manager_name      0.95
+               stadium      0.27
+            attendance     12.14
+               referee      0.76
+                   url      0.00
+   home_club_formation      9.22
+   away_club_formation      9.08
+        home_club_name      0.10
+        away_club_name      0.04
+             aggregate      0.00
+      competition_type      1.36
+
+[P7.9] Null % per column: national_teams
+                  col  null_pct
+     national_team_id      0.00
+                 name      0.00
+            team_code      0.00
+           country_id      0.00
+         country_name      0.00
+         country_code      0.00
+        confederation      0.81
+       team_image_url      0.00
+           squad_size      0.00
+          average_age      0.00
+    foreigners_number      0.00
+foreigners_percentage      6.45
+   total_market_value      3.23
+           coach_name    100.00
+         fifa_ranking      0.00
+          last_season      0.00
+                  url      0.00
+
+[P7.10] Null % per column: player_valuations
+                                col  null_pct
+                          player_id      0.00
+                               date      0.00
+                market_value_in_eur      0.00
+                  current_club_name      0.00
+                    current_club_id      0.00
+player_club_domestic_competition_id     14.17
+
+[P7.11] Null % per column: players
+                                 col  null_pct
+                           player_id      0.00
+                          first_name      6.31
+                           last_name      0.00
+                                name      0.00
+                         last_season      0.00
+                     current_club_id      0.00
+                         player_code      0.00
+                    country_of_birth     11.74
+                       city_of_birth     11.18
+              country_of_citizenship      0.54
+                       date_of_birth      0.10
+                        sub_position      1.17
+                            position      0.00
+                                foot     11.75
+                        height_in_cm      8.70
+            contract_expiration_date     37.03
+                          agent_name     46.45
+                           image_url      0.00
+                  international_caps     61.40
+                 international_goals     61.40
+            current_national_team_id     93.50
+                                 url      0.00
+current_club_domestic_competition_id      5.95
+                   current_club_name      5.95
+                 market_value_in_eur     17.19
+         highest_market_value_in_eur     17.19
+
+[P7.12] Null % per column: transfers
+                col  null_pct
+          player_id      0.00
+      transfer_date      0.00
+    transfer_season      0.00
+       from_club_id      0.00
+         to_club_id      0.00
+     from_club_name      0.00
+       to_club_name      0.00
+       transfer_fee     35.12
+market_value_in_eur     38.91
+        player_name      0.00
+
+[P7.13] Null % per column: version
+        col  null_pct
+commit_hash       0.0
+
+[P7.14] Birth dates: future, before 1950, implausibly young (< 14 at cut-off)
+ future  before_1950  under_14    min_dob    max_dob  nulls
+      0            0         0 1968-07-31 2011-02-23     49
+
+[P7.15] Contract dates before 2000 / after 2035
+ before_2000  after_2035  before_2023
+           0           0            1
+
+[P7.16] The single pre-2023 contract date
+        name last_season current_club_name contract_expiration_date
+Morgan Boyes        2023     Livingston FC               2000-05-31
+
+[P7.17] Games: season label vs date (dates outside the season label's plausible window)
+season competition_id  n      min_d      max_d
+  2025           COPA 32 2024-06-21 2024-07-15
+  2022            CGB  5 2024-01-09 2024-02-25
+  2025           UKRS  1 2021-09-22 2021-09-22
+  2019            CDR  1 2021-04-03 2021-04-03
+
+[P7.18] Transfers dated in the future relative to the cut-off
+  n
+520
+
+[P7.19] Money columns: negatives, zeros, extremes
+                                  col  neg  zero    min_v       max_v
+          players.market_value_in_eur    0     0  10000.0 200000000.0
+  players.highest_market_value_in_eur    0     0  10000.0 200000000.0
+player_valuations.market_value_in_eur    0     1      0.0 200000000.0
+               transfers.transfer_fee    0 96085      0.0 222000000.0
+        transfers.market_value_in_eur    0     0  10000.0 180000000.0
+    national_teams.total_market_value    0     0 350000.0 947000000.0
+
+[P7.20] highest_market_value < current market value (impossible)
+ n
+ 0
+
+[P7.21] Valuation zero row
+ player_id       date  market_value_in_eur current_club_name  current_club_id player_club_domestic_competition_id            name
+     60096 2008-03-17                    0        NK Maribor             2696                                 RU1 Miral Samardzic
+
+[P7.22] Transfer fee outliers: fee > 5x value at transfer (value >= 1m)
+  n
+111
+
+[P7.23] Transfer fee outliers: examples
+         player_name transfer_date  from_club_name to_club_name  transfer_fee  market_value_in_eur
+  Alessandro Bastoni    2017-08-31        Atalanta        Inter    40700000.0            1500000.0
+      Omari Kellyman    2024-07-01 Aston Villa U21      Chelsea    22500000.0            1000000.0
+        Mike Penders    2024-08-27            Genk      Chelsea    20000000.0            1000000.0
+     Jefferson Lerma    2018-08-07         Levante  Bournemouth    30500000.0            2000000.0
+Veljko Milosavljevic    2025-09-01        Red Star  Bournemouth    15000000.0            1000000.0
+      Cesare Casadei    2022-08-19           Inter      Chelsea    14860000.0            1000000.0
+       Alberto Costa    2025-01-15  Vit. Guimarães     Juventus    13800000.0            1000000.0
+        Yan Diomande    2025-07-16      CD Leganés      Leipzig    20000000.0            1500000.0
+
+[P7.24] clubs.net_transfer_record is text with currency symbol (examples and formats)
+  pattern   n   example
+      +-9 200       +-0
+  +€9.99m 199   +€5.90m
+  €-9.99m 107   €-3.70m
+ +€99.99m  83  +€57.30m
+   +€999k  73    +€900k
+ €-99.99m  54  €-25.00m
+   €-999k  52    €-180k
+    €-99k  11     €-40k
+    +€99k   9     +€30k
+€-999.99m   5 €-160.55m
+     €-9k   1      €-7k
+     +€9k   1      +€5k
++€999.99m   1 +€144.00m
+
+[P7.25] clubs.total_market_value and national_teams.coach_name entirely null
+ clubs_tmv_non_null  nt_coach_non_null
+                  0                  0
+
+[P7.26] Height outliers
+ under_150  over_210  zero  min_h  max_h
+        13         0     0     17    210
+
+[P7.27] Height outliers: examples
+                name  height_in_cm position
+            Adi Yona            17 Midfield
+Fahad Al-Abdulrazzaq            17 Defender
+   Aïssa Boudechicha            18 Defender
+        Genar Fornés            18 Defender
+  Krzysztof Kurowski            18 Defender
+     Eugene Amankwah            18 Defender
+      Kilian Toscano            18 Midfield
+        Italo Vargas            18   Attack
+     Oliver Randazzo            18 Midfield
+       Waliu Ojetoye            18 Defender
+
+[P7.28] players.position values
+  position     n
+  Defender 15961
+  Midfield 14272
+    Attack 13502
+Goalkeeper  5828
+   Missing   586
+
+[P7.29] players.sub_position values
+      sub_position    n
+       Centre-Back 8766
+    Centre-Forward 6749
+        Goalkeeper 5828
+  Central Midfield 5498
+Defensive Midfield 4123
+        Right-Back 3700
+Attacking Midfield 3520
+         Left-Back 3495
+       Left Winger 3297
+      Right Winger 3170
+               NaN  586
+     Left Midfield  566
+    Right Midfield  565
+    Second Striker  286
+
+[P7.30] players.foot values
+ foot     n
+right 31445
+ left 11000
+  NaN  5893
+ both  1811
+
+[P7.31] game_lineups.position: case variants and blanks
+position    n
+  Attack 3648
+midfield 3631
+Defender 3288
+Midfield 2755
+ Sweeper  439
+            3
+
+[P7.32] game_lineups.type and number values (non-numeric shirt numbers)
+           type       n  non_numeric_number example
+starting_lineup 1780759               16022       -
+    substitutes 1398257                9676       -
+
+[P7.33] games.competition_type values (incl. NULL)
+         competition_type     n
+          domestic_league 63382
+             domestic_cup 12904
+                    other  7599
+        international_cup  3117
+                      NaN  1214
+national_team_competition   742
+
+[P7.34] games formation variants (non-standard labels)
+      formation     n
+4-3-3 Attacking 12596
+ 4-4-2 double 6  7149
+4-3-3 Defending  4085
+     3-5-2 flat  3160
+  4-4-2 Diamond   874
+3-5-2 Attacking   475
+     4-5-1 flat   297
+  5-4-1 Diamond   108
+  3-4-3 Diamond    53
+         0-10-0     1
+
+[P7.35] Country names: variants and historical states (country_of_birth vs country_of_citizenship)
+                       country   n
+                         UdSSR 944
+             Jugoslawien (SFR) 529
+         Yugoslavia (Republic) 466
+         Serbia and Montenegro 206
+                          CSSR 188
+                         Zaire  74
+                     Macedonia  73
+            East Germany (GDR)  30
+          Netherlands Antilles  17
+People's republic of the Congo   6
+                United Kingdom   6
+                       Mayotte   4
+                        Jersey   3
+                        Kuwait   2
+                     Swaziland   1
+
+[P7.36] Competition names are slugs (lowercase-with-dashes), not display names
+competition_id                  name      competition_code
+            A1            bundesliga            bundesliga
+          AFAC         afc-asian-cup         afc-asian-cup
+          AFCN africa-cup-of-nations africa-cup-of-nations
+          ARG1       torneo-apertura       torneo-apertura
+          AUS1          a-league-men          a-league-men
+
+[P7.37] competitions.name = competition_code count; duplicate names
+ name_is_slug  total  duplicate_names
+           65     65                3
+
+[P7.38] Duplicate competition names
+        name                          ids
+premier-liga RU1 (Russia), UKR1 (Ukraine)
+   superliga DK1 (Denmark), RO1 (Romania)
+  bundesliga   A1 (Austria), L1 (Germany)
+
+[P7.39] Confederation labels differ between tables (competitions/countries vs national_teams)
+           src confederation  n
+  competitions        afrika  1
+  competitions       amerika  5
+  competitions         asien  5
+  competitions        europa 53
+  competitions          fifa  1
+national_teams           AFC 32
+national_teams           CAF 12
+national_teams      CONCACAF 13
+national_teams      CONMEBOL 10
+national_teams           OFC  2
+national_teams          UEFA 54
+national_teams           NaN  1
+
+[P7.40] Club names: short in transfers vs official in clubs (same id, different name)
+club_id                              clubs_name transfers_name   n
+    683 Olympiakos Syndesmos Filathlon Peiraios     Olympiacos 355
+     46                             Inter Milan          Inter 350
+    252                               Genoa CFC          Genoa 346
+    631                              Chelsea FC        Chelsea 316
+    294                              SL Benfica        Benfica 314
+    430                          ACF Fiorentina     Fiorentina 290
+    506                             Juventus FC       Juventus 279
+    660                     FC Shakhtar Donetsk    Shakhtar D. 269
+
+[P7.41] Same club id with several names in player_valuations (name history / variants)
+ club_ids_with_multiple_names
+                         1314
+
+[P7.42] Leading/trailing whitespace (incl. non-breaking spaces) in text columns
+                    col     n
+           players.name     0
+     players.first_name     0
+      players.last_name     0
+  players.city_of_birth 44493
+     players.agent_name     0
+             clubs.name     0
+     clubs.stadium_name     0
+  transfers.player_name     0
+          games.stadium     0
+game_events.description     0
+
+[P7.43] city_of_birth trailing NBSP example
+city_of_birth  len
+      Opole      7
+       Diez      6
+Blagoevgrad     13
+
+[P7.44] Non-ASCII characters in names (accents etc.) - share of players
+ non_ascii_names  total
+            8545  50149
+
+[P7.45] Unusual characters in names (control chars, replacement char, digits, symbols)
+(0 rows)
+
+[P7.46] Embedded line breaks, quotes, commas or semicolons in text (CSV risk)
+                     col  linebreaks  dquotes  commas
+            players.name           0        0       0
+      players.agent_name           0        0      49
+              clubs.name           0        1       2
+      clubs.stadium_name           0        8       1
+           games.stadium           0     1828     280
+             games.round           0        0       0
+ game_events.description           0        0 1080685
+transfers.from_club_name           0        0       0
+
+[P7.47] Same player, different name spelling across tables (players.name vs transfers.player_name)
+ players_with_name_mismatch
+                          0
+
+[P7.48] Name mismatch examples
+(0 rows)
+
+[P7.49] Players with the same name but different ids
+ names_shared  players_involved
+          937            2261.0
+
+[P7.50] Same name AND same birth date (possible true duplicates)
+          name        dob  n           ids
+João Ricciulli 1999-10-10  2 398057,461923
+
+[P7.51] Same name examples (different people)
+      name  n
+  Paulinho 14
+João Pedro 13
+   Vitinho 11
+  Bruninho 10
+   Eduardo 10
+ Guilherme  9
+   Rafinha  8
+   Fabinho  8
+
+[P7.52] Players with position = 'Missing'
+  n  active  with_value
+586     254         129
+
+[P7.53] Players with no market value: profile
+last_season  no_value
+       2012        64
+       2013        64
+       2014        62
+       2015        61
+       2016        84
+       2017        80
+       2018        82
+       2019        67
+       2020        86
+       2021       130
+       2022       143
+       2023       238
+       2024      3572
+       2025      3888
+
+[P7.54] Appearances with minutes 0 or > 125
+      date         player_name  minutes_played competition_id
+2018-02-21   Oleksiy Gutsulyak             135           UKR1
+2018-02-21     Jorge Carrascal             135           UKR1
+2024-12-04      Javi Hernández             148            CDR
+2026-02-14       Travis Hernes               0            NL1
+2026-02-22   Samuel Amo-Ameyaw               0            FR1
+2026-04-04 Abdülkerim Bardakcı               0            TR1
+
+[P7.55] Games: implausible scores or attendance
+ score_over_10  attendance_over_120k  attendance_zero  max_att
+            54                     0                0    99354
+
+[P7.56] clubs.filename column holds build paths (not data)
+                                            filename
+../data/raw/transfermarkt-scraper/2019/clubs.json.gz
+../data/raw/transfermarkt-scraper/2018/clubs.json.gz
+../data/raw/transfermarkt-scraper/2013/clubs.json.gz
+
+[P7.57] Season columns stored as text (players/clubs last_season, games.season)
+    table_name     column_name data_type
+         clubs     last_season   VARCHAR
+         games          season   VARCHAR
+national_teams     last_season   VARCHAR
+       players     last_season   VARCHAR
+     transfers transfer_season   VARCHAR
+
+[P7.58] player_valuations.player_club_domestic_competition_id null share (clubs outside covered leagues)
+ pct_null
+     14.2
+

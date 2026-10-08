@@ -1,0 +1,165 @@
+﻿table,column,type,null_pct,distinct_count,example_values,description_guess
+appearances,appearance_id,VARCHAR,0.0,1894350,2233748_79232 | 2235539_69445 | 2235545_19409,"Surrogate key '<game_id>_<player_id>' (unique). TABLE GRAIN: one row per player per game played (unused substitutes excluded); 14 European leagues + cups; 1,894,350 rows"
+appearances,game_id,INTEGER,0.0,73426,2231978 | 2234413 | 2234418,"Transfermarkt game id (VARCHAR in games/club_games/game_events, INTEGER elsewhere: cast to join)"
+appearances,player_id,INTEGER,0.0,29531,19409 | 63356 | 14940,Transfermarkt player id (join key to players)
+appearances,player_club_id,INTEGER,0.0,1231,853 | 1274 | 195,Club the player played for in this game
+appearances,player_current_club_id,VARCHAR,0.0,1148,1304 | 2727 | 11127,"Player's current club at scrape time (snapshot, not the club in this game)"
+appearances,date,DATE,0.0,4108,2012-07-14 | 2012-07-20 | 2012-07-27,Date of the event/row
+appearances,player_name,VARCHAR,0.0,28911,Aurélien Joachim | Ivan Sesar | Nils Röseler,Player display name (denormalised copy)
+appearances,competition_id,VARCHAR,0.0,48,ELQ | UKRS | POCP,"Competition code (e.g. GB1 Premier League, CL Champions League)"
+appearances,yellow_cards,INTEGER,0.0,3,2 | 1 | 0,Yellow cards in the game (0-2)
+appearances,red_cards,INTEGER,0.0,2,0 | 1,Red cards in the game (0-1)
+appearances,goals,INTEGER,0.0,7,0 | 2 | 1,Goals scored in the game (own goals excluded)
+appearances,assists,INTEGER,0.0,7,2 | 0 | 1,Assists in the game
+appearances,minutes_played,INTEGER,0.0,123,26 | 64 | 13,Minutes played (1-120 normal; extra time up to 120)
+club_games,game_id,VARCHAR,0.0,88958,1169002 | 1169006 | 1169010,"Transfermarkt game id (VARCHAR in games/club_games/game_events, INTEGER elsewhere: cast to join). TABLE GRAIN: one row per club per game (2 rows per game); 177,916 rows"
+club_games,club_id,INTEGER,0.0,3274,3439 | 2589 | 44,"Transfermarkt club id (VARCHAR in clubs, INTEGER elsewhere: cast to join)"
+club_games,own_goals,INTEGER,0.0,18,0 | 5 | 6,Goals scored by this club in the game
+club_games,own_position,INTEGER,28.53,21,13 | 19 | 9,League table position of this club before/at the game (null outside leagues)
+club_games,own_manager_name,VARCHAR,0.95,7031,Takeshi Okada | Marcelo Bielsa | Ilija Petkovic,Manager of this club in the game
+club_games,opponent_id,INTEGER,0.0,3274,3437 | 3262 | 3378,Opponent club id
+club_games,opponent_goals,INTEGER,0.0,18,0 | 1 | 5,Goals conceded (scored by the opponent) - basis for clean sheets
+club_games,opponent_position,INTEGER,28.53,21,13 | 19 | 8,Opponent league position
+club_games,opponent_manager_name,VARCHAR,0.95,7031,Takeshi Okada | Marcelo Bielsa | Ilija Petkovic,Opponent manager
+club_games,hosting,VARCHAR,0.0,2,Home | Away,Home or Away
+club_games,is_win,INTEGER,0.0,2,0 | 1,"1 if this club won, else 0 (draws are 0)"
+clubs,club_id,VARCHAR,0.0,796,1023 | 1049 | 10492,"Transfermarkt club id (VARCHAR in clubs, INTEGER elsewhere: cast to join). TABLE GRAIN: one row per club in a covered domestic league (796 clubs only); 796 rows"
+clubs,club_code,VARCHAR,0.0,796,paris-fc | fc-watford | cerezo-osaka,URL slug of the club
+clubs,name,VARCHAR,0.0,796,Bologna Football Club 1909 | Club Atlético Vélez Sársfield | Asociación Atlética Argentinos Juniors,Official club name (long form; transfers use short names)
+clubs,domestic_competition_id,VARCHAR,0.0,32,GB1 | TR1 | ES1,Club's LAST covered domestic league (not necessarily the current league)
+clubs,total_market_value,FLOAT,100.0,0,,Total squad value - 100% NULL in this snapshot
+clubs,squad_size,INTEGER,0.0,43,32 | 26 | 34,Number of players in the squad
+clubs,average_age,FLOAT,4.77,84,28.4 | 26.3 | 27.5,Average squad age in years
+clubs,foreigners_number,INTEGER,0.0,33,32 | 13 | 23,Number of foreign players in the squad
+clubs,foreigners_percentage,FLOAT,7.54,279,63.0 | 48.1 | 53.8,Share of foreign players in the squad (%)
+clubs,national_team_players,INTEGER,0.0,24,13 | 19 | 0,Number of current internationals in the squad
+clubs,stadium_name,VARCHAR,0.0,760,Ettore Giardiniero | Stadio Renato Dall’Ara | José Amalfitani,Home stadium
+clubs,stadium_seats,INTEGER,0.0,658,24161 | 12039 | 28100,Stadium capacity
+clubs,net_transfer_record,VARCHAR,0.0,482,+€3.35m | +-0 | +€3.06m,"Net transfer balance as TEXT with currency, e.g. '+€5.90m' / '€-25.00m'"
+clubs,coach_name,VARCHAR,49.37,395,Bruno Genesio | Mikel Arteta | Nikica Jelavic,Head coach name
+clubs,last_season,VARCHAR,0.0,14,2021 | 2019 | 2015,"Last season (start year, text) in which the entity appears in the covered data"
+clubs,filename,VARCHAR,0.0,14,../data/raw/transfermarkt-scraper/2025/c | ../data/raw/transfermarkt-scraper/2012/c | ../data/raw/transfermarkt-scraper/2016/c,Build artefact: path of the scraper file (not business data)
+clubs,url,VARCHAR,0.0,796,https://www.transfermarkt.co.uk/us-lecce | https://www.transfermarkt.co.uk/sarpsbor | https://www.transfermarkt.co.uk/olympiqu,Transfermarkt page URL
+competitions,competition_id,VARCHAR,0.0,65,AFAC | ES1 | GB1,"Competition code (e.g. GB1 Premier League, CL Champions League). TABLE GRAIN: one row per competition (65); 65 rows"
+competitions,competition_code,VARCHAR,0.0,62,jupiler-pro-league | uefa-champions-league | uefa-champions-league-qualifying,URL slug of the competition
+competitions,name,VARCHAR,0.0,62,jupiler-pro-league | uefa-champions-league | uefa-champions-league-qualifying,Competition name - a slug identical to competition_code (not a display name)
+competitions,sub_type,VARCHAR,0.0,16,uefa_europa_league | first_tier | domestic_super_cup,"Detailed type (first_tier, domestic_cup, uefa_champions_league, ...)"
+competitions,type,VARCHAR,0.0,5,domestic_league | other | domestic_cup,domestic_league / domestic_cup / international_cup / national_team_competition / other
+competitions,country_id,INTEGER,0.0,32,19 | 26 | 148,Transfermarkt country id (-1 for international competitions)
+competitions,country_name,VARCHAR,18.46,31,Greece | Romania | Spain,Country name
+competitions,domestic_league_code,VARCHAR,18.46,31,BE1 | UKR1 | ES1,League code of the competition's country
+competitions,confederation,VARCHAR,0.0,5,amerika | afrika | asien,Football confederation (label style differs by table)
+competitions,total_clubs,INTEGER,23.08,7,16 | 20 | 18,Number of clubs in the competition
+competitions,url,VARCHAR,0.0,65,https://www.transfermarkt.co.uk/jupiler- | https://www.transfermarkt.co.uk/jupiler- | https://www.transfermarkt.co.uk/copa-del,Transfermarkt page URL
+countries,country_id,VARCHAR,0.0,124,137 | 153 | 164,Transfermarkt country id (-1 for international competitions). TABLE GRAIN: one row per country with a covered or listed league; 124 rows
+countries,country_name,VARCHAR,0.0,124,Armenia | North Macedonia | Malta,Country name
+countries,country_code,VARCHAR,0.0,124,NNL1 | NPFL | SMR1,Code of the country's top league (e.g. ARM1)
+countries,confederation,VARCHAR,0.0,4,amerika | afrika | asien,Football confederation (label style differs by table)
+countries,total_clubs,INTEGER,0.0,14,13 | 16 | 8,Number of clubs
+countries,total_players,INTEGER,0.0,105,223 | 429 | 561,Players registered in the country's league
+countries,average_age,FLOAT,0.0,46,25.0 | 25.4 | 25.6,Average squad age in years
+countries,url,VARCHAR,0.0,124,https://www.transfermarkt.co.uk/wettbewe | https://www.transfermarkt.co.uk/wettbewe | https://www.transfermarkt.co.uk/wettbewe,Transfermarkt page URL
+game_events,game_event_id,VARCHAR,0.0,1274469,2f4c820f11f27999f888f4abd635a389 | 63e5f78306a576242e4f29f358200541 | eef064ba07fa91167db7b9060127019f,"Hash id of the event (unique). TABLE GRAIN: one row per in-game event (goal, card, substitution, shoot-out kick); 1,274,469 rows"
+game_events,date,DATE,0.0,4443,2012-06-17 | 2012-06-10 | 2012-06-11,Date of the event/row
+game_events,game_id,VARCHAR,0.0,88813,1169002 | 1169006 | 1169010,"Transfermarkt game id (VARCHAR in games/club_games/game_events, INTEGER elsewhere: cast to join)"
+game_events,minute,INTEGER,0.0,121,38 | 32 | 72,Match minute of the event
+game_events,type,VARCHAR,0.0,4,Goals | Cards | Substitutions,Goals / Cards / Substitutions / Shootout
+game_events,club_id,INTEGER,0.0,3170,3439 | 2589 | 44,Club of the player involved
+game_events,club_name,VARCHAR,0.0,3439,Argentina | Slovakia | Denmark,Club name (national team name for international games)
+game_events,player_id,INTEGER,0.0,74555,29572 | 45320 | 707,Player who scored / was booked / was substituted off
+game_events,description,VARCHAR,0.0,8931,", Header, 1. Tournament Goal Assist: , C | , Saved | , Long distance kick, 1. Tournament Goal","Event detail text with embedded commas (e.g. ', Right-footed shot, 2. Tournament Goal Assist: ...')"
+game_events,player_in_id,INTEGER,50.52,67926,72653 | 5975 | 39465,Substitute coming on (substitution events only)
+game_events,player_assist_id,INTEGER,85.23,30356,72653 | 2514 | 4380,Assisting player (goal events only)
+game_lineups,game_lineups_id,VARCHAR,0.0,3179016,091c126bd4e71488db374cb2958ae89e | 2b8afc17d84ee0883cc797dc344d7734 | 553ec5f80b96e8bacbc5873970a0e7e0,"Hash id of the lineup row. TABLE GRAIN: one row per player listed in a match squad (starters and substitutes); 3,179,016 rows"
+game_lineups,date,DATE,0.0,3967,2013-08-05 | 2013-08-02 | 2013-08-04,Date of the event/row
+game_lineups,game_id,INTEGER,0.0,81197,2320453 | 2320461 | 2320466,"Transfermarkt game id (VARCHAR in games/club_games/game_events, INTEGER elsewhere: cast to join)"
+game_lineups,player_id,INTEGER,0.0,114893,34784 | 36391 | 44675,Transfermarkt player id (join key to players)
+game_lineups,club_id,INTEGER,0.0,3144,41 | 92 | 912,Club of the player in this game
+game_lineups,player_name,VARCHAR,0.0,111045,Bojan Krkic | Jóhann Berg Gudmundsson | Joël Veltman,Player display name (denormalised copy)
+game_lineups,type,VARCHAR,0.0,2,starting_lineup | substitutes,starting_lineup or substitutes
+game_lineups,position,VARCHAR,0.0,19,Defensive Midfield | Attacking Midfield | Central Midfield,"Position played in this game (19 values, case variants)"
+game_lineups,number,VARCHAR,0.0,169,20 | 35 | 40,Shirt number as text ('-' when unknown)
+game_lineups,team_captain,INTEGER,0.0,2,0 | 1,1 if captain
+games,game_id,VARCHAR,0.0,88958,1027750 | 1029770 | 1168995,"Transfermarkt game id (VARCHAR in games/club_games/game_events, INTEGER elsewhere: cast to join). TABLE GRAIN: one row per game; 88,958 rows"
+games,competition_id,VARCHAR,0.0,70,FIWC | BESC | DFL,"Competition code (e.g. GB1 Premier League, CL Champions League)"
+games,season,VARCHAR,0.0,18,2011 | 2012 | 2009,Season start year as text (2025 = 2025/26; calendar-year leagues use the year)
+games,round,VARCHAR,0.0,128,Group D | First Round | 15. Matchday,Round / matchday label
+games,date,DATE,0.0,4445,2010-06-27 | 2010-07-07 | 2006-06-21,Date of the event/row
+games,home_club_id,INTEGER,0.0,2980,3437 | 3262 | 3378,Home club id
+games,away_club_id,INTEGER,0.0,2634,3439 | 44 | 16,Away club id
+games,home_club_goals,INTEGER,0.0,16,2 | 0 | 1,Home goals (final score)
+games,away_club_goals,INTEGER,0.0,18,6 | 5 | 7,Away goals (final score)
+games,home_club_position,INTEGER,28.53,21,16 | 17 | 8,Home club league position (null outside leagues)
+games,away_club_position,INTEGER,28.53,21,13 | 19 | 7,Away club league position (null outside leagues)
+games,home_club_manager_name,VARCHAR,0.95,6137,Diego Maradona | Gerardo Martino | Michal Bilek,Home manager
+games,away_club_manager_name,VARCHAR,0.95,5756,Milovan Rajevac | Marco van Basten | Michal Bilek,Away manager
+games,stadium,VARCHAR,0.27,2968,FNB-Stadium | Royal Bafokeng Stadium | Free State Stadium,Stadium name (contains embedded quotes/commas)
+games,attendance,INTEGER,12.14,33301,54096 | 37216 | 40803,Spectators
+games,referee,VARCHAR,0.76,3135,Carlos Batrés | Robert Hartmann | Bibiana Steinhaus-Webb,Referee
+games,url,VARCHAR,0.0,88958,https://www.transfermarkt.co.uk/spielber | https://www.transfermarkt.co.uk/spielber | https://www.transfermarkt.co.uk/spielber,Transfermarkt page URL
+games,home_club_formation,VARCHAR,9.22,57,4-1-4-1 | 5-4-1 | 3-6-1,Home formation label (non-standard variants like '4-3-3 Attacking')
+games,away_club_formation,VARCHAR,9.08,68,6-1-3 | 3-3-4 | 4-3-3 Defending,Away formation label
+games,home_club_name,VARCHAR,0.1,2901,Brazil | Serbia and Montenegro | Poland,Home club short name
+games,away_club_name,VARCHAR,0.04,2600,South Korea | Brazil | Serbia and Montenegro,Away club short name
+games,aggregate,VARCHAR,0.0,119,3:1 | 0:2 | 6:2,Final score as text 'h:a'
+games,competition_type,VARCHAR,1.36,5,domestic_cup | other | domestic_league,Competition type (NULL for 5 codes missing from competitions)
+national_teams,national_team_id,VARCHAR,0.0,124,10521 | 13497 | 16038,Transfermarkt id of the national team (club-style id). TABLE GRAIN: one row per national team; 124 rows
+national_teams,name,VARCHAR,0.0,124,San Marino | Oman | Nicaragua,Display name
+national_teams,team_code,VARCHAR,0.0,124,montenegro | uganda | fiji,URL slug
+national_teams,country_id,VARCHAR,0.0,124,216 | 137 | 153,Transfermarkt country id (-1 for international competitions)
+national_teams,country_name,VARCHAR,0.0,124,Uganda | Cambodia | Puerto Rico,Country name
+national_teams,country_code,VARCHAR,0.0,124,SMR1 | GU1A | SIN1,Code of the country's top league
+national_teams,confederation,VARCHAR,0.81,6,OFC | AFC | CONMEBOL,Football confederation (label style differs by table)
+national_teams,team_image_url,VARCHAR,0.0,124,https://tmssl.akamaized.net//images/wapp | https://tmssl.akamaized.net//images/wapp | https://tmssl.akamaized.net//images/wapp,Crest image URL
+national_teams,squad_size,INTEGER,0.0,12,22 | 27 | 24,Number of players in the squad
+national_teams,average_age,FLOAT,0.0,54,26.8 | 29.5 | 25.5,Average squad age in years
+national_teams,foreigners_number,INTEGER,0.0,29,0 | 8 | 17,Number of foreign players in the squad
+national_teams,foreigners_percentage,FLOAT,6.45,71,4.3 | 77.3 | 64.0,Share of foreign players in the squad (%)
+national_teams,total_market_value,INTEGER,3.23,120,3330000 | 332500000 | 807500000,Total squad market value (EUR)
+national_teams,coach_name,VARCHAR,100.0,0,,Coach - 100% NULL
+national_teams,fifa_ranking,INTEGER,0.0,123,100 | 135 | 148,FIFA ranking
+national_teams,last_season,VARCHAR,0.0,1,2025,"Last season (start year, text) in which the entity appears in the covered data"
+national_teams,url,VARCHAR,0.0,124,https://www.transfermarkt.co.uk/san-mari | https://www.transfermarkt.co.uk/uganda/s | https://www.transfermarkt.co.uk/qatar/st,Transfermarkt page URL
+player_valuations,player_id,INTEGER,0.0,41528,405973 | 342216 | 26,"Transfermarkt player id (join key to players). TABLE GRAIN: one row per player per Transfermarkt valuation date; 656,301 rows"
+player_valuations,date,DATE,0.0,5749,2001-07-20 | 2004-10-05 | 2004-10-11,Date of the event/row
+player_valuations,market_value_in_eur,INTEGER,0.0,426,1000000 | 6000000 | 1750000,Transfermarkt market value at that date (EUR)
+player_valuations,current_club_name,VARCHAR,0.0,8055,Hertha BSC | FC Internazionale | Rot-Weiss Essen,Club AT the valuation date (despite the column name)
+player_valuations,current_club_id,INTEGER,0.0,5424,1241 | 20100 | 39,Club id AT the valuation date
+player_valuations,player_club_domestic_competition_id,VARCHAR,14.17,32,BE1 | UKR1 | L1,"League of that club (NULL when outside covered leagues, 14%)"
+players,player_id,INTEGER,0.0,50149,26 | 109 | 276,"Transfermarkt player id (join key to players). TABLE GRAIN: one row per player (current snapshot at scrape time); 50,149 rows"
+players,first_name,VARCHAR,6.31,10800,Roque | Tamás | Sebastian,First name (null for mononyms)
+players,last_name,VARCHAR,0.0,33876,Weidenfeller | Hildebrand | Klasnic,Last name
+players,name,VARCHAR,0.0,48825,Roman Weidenfeller | Tom Starke | Dedê,"Display name (not unique: 937 names shared by 2,261 players)"
+players,last_season,VARCHAR,0.0,14,2012 | 2025 | 2015,"Last season (start year, text) the player appeared in a covered squad"
+players,current_club_id,VARCHAR,0.0,1852,33 | 589 | 128,Current club id at scrape time (VARCHAR; may point outside clubs table)
+players,player_code,VARCHAR,0.0,48738,dimitar-berbatov | sergio-da-silva-pinto | levan-kobiashvili,URL slug
+players,country_of_birth,VARCHAR,11.74,211,Germany | UdSSR | United States,"Country of birth (includes historical states e.g. UdSSR, Jugoslawien)"
+players,city_of_birth,VARCHAR,11.18,12335,Brasília   | Vratsa   | Frankenthal  ,"City of birth (44,493 values end with two non-breaking spaces)"
+players,country_of_citizenship,VARCHAR,0.54,202,Brazil | North Macedonia | Tunisia,Main citizenship
+players,date_of_birth,TIMESTAMP,0.1,10359,1981-08-16 00:00:00 | 1979-01-15 00:00:00 | 1980-01-29 00:00:00,Birth date (TIMESTAMP with 00:00:00)
+players,sub_position,VARCHAR,1.17,13,Goalkeeper | Right-Back | Left-Back,Detailed position (13 values)
+players,position,VARCHAR,0.0,5,Midfield | Defender | Missing,Position group: Goalkeeper/Defender/Midfield/Attack/'Missing'
+players,foot,VARCHAR,11.75,3,left | both | right,Preferred foot: right/left/both
+players,height_in_cm,INTEGER,8.7,58,196 | 173 | 190,Height in cm (13 values < 150 are errors)
+players,contract_expiration_date,TIMESTAMP,37.03,241,2026-11-30 00:00:00 | 2028-05-31 00:00:00 | 2025-01-01 00:00:00,"End of CURRENT contract at scrape time (snapshot only, no history)"
+players,agent_name,VARCHAR,46.45,3954,Neubauer 13 GmbH | Football Concept | Siebert & Backs,Agent / agency
+players,image_url,VARCHAR,0.0,41061,https://img.a.transfermarkt.technology/p | https://img.a.transfermarkt.technology/p | https://img.a.transfermarkt.technology/p,Portrait image URL
+players,international_caps,INTEGER,61.4,159,129 | 23 | 41,Senior caps
+players,international_goals,INTEGER,61.4,68,0 | 8 | 17,Senior international goals
+players,current_national_team_id,VARCHAR,93.5,123,10521 | 9173 | 3574,Current national team id
+players,url,VARCHAR,0.0,50149,https://www.transfermarkt.co.uk/dede/pro | https://www.transfermarkt.co.uk/giuseppe | https://www.transfermarkt.co.uk/hanno-ba,Transfermarkt page URL
+players,current_club_domestic_competition_id,VARCHAR,5.95,32,TR1 | GB1 | ES1,Club's last covered league (NOT necessarily current league)
+players,current_club_name,VARCHAR,5.95,793,Málaga CF | Levante UD | Kasimpasa,Current club name (official long form)
+players,market_value_in_eur,INTEGER,17.19,121,1000000 | 1750000 | 6000000,Latest market value (= last row in player_valuations)
+players,highest_market_value_in_eur,INTEGER,17.19,206,34500000 | 9500000 | 800000,Career-high market value
+transfers,player_id,INTEGER,0.0,23379,730364 | 929007 | 784335,"Transfermarkt player id (join key to players). TABLE GRAIN: one row per transfer leg (move between two clubs, including loans and loan returns); 175,165 rows"
+transfers,transfer_date,DATE,0.0,5634,2028-02-02 | 2027-06-30 | 2027-05-30,Date of the move (future dates = scheduled loan returns / agreed moves)
+transfers,transfer_season,VARCHAR,0.0,35,26/27 | 25/26 | 27/28,Season label 'YY/YY' (matches July-June date in 99%)
+transfers,from_club_id,INTEGER,0.0,17408,5546 | 41362 | 23897,"Selling / releasing club (515 Without Club, 75 Unknown, 2113 Career break, 12604 Own Youth)"
+transfers,to_club_id,INTEGER,0.0,13208,19684 | 449 | 43,"Buying club (515 Without Club, 123 Retired, 75 Unknown)"
+transfers,from_club_name,VARCHAR,0.0,18285,Gimcheon Sangmu | Vojvodina | SC Kriens,Short club name
+transfers,to_club_name,VARCHAR,0.0,14086,Without Club | UTA Arad | Austria Vienna,Short club name
+transfers,transfer_fee,"DECIMAL(18,3)",35.12,1503,25000000.000 | 1300000.000 | 5500000.000,Fee in EUR: >0 paid (or loan fee); 0 free/loan/end of loan; NULL undisclosed or youth move
+transfers,market_value_in_eur,"DECIMAL(18,3)",38.91,191,300000.000 | 200000.000 | 8000000.000,Player's market value at transfer (= latest valuation before the date)
+transfers,player_name,VARCHAR,0.0,23036,Luca Belardinelli | Gyu-hyeon Choe | Young-hun Kang,Player display name (denormalised copy)
+version,commit_hash,VARCHAR,0.0,1,e44f186d6f06dd8452aaf54c7921ba66c961f637,Git commit of the dataset build. TABLE GRAIN: one row: git commit hash of the dataset build; 1 rows

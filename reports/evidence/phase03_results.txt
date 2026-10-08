@@ -1,0 +1,117 @@
+Phase 3: Valuation history
+======================================================================
+
+[P3.1] Overall size and range
+  rows  players first_date  last_date
+656301    41528 2000-01-20 2026-06-12
+
+[P3.2] Valuation points per player (buckets)
+bucket  players
+     1     1063
+   10+    28678
+   2-4     4576
+   5-9     7211
+
+[P3.3] Players whose history spans >= 365 days
+ players_span_12m
+            37844
+
+[P3.4] Null or zero values
+ nulls  zeros  negatives  total  min_v     max_v
+     0      1          0 656301      0 200000000
+
+[P3.5] Duplicate (player_id, date) pairs
+ dup_pairs  extra_rows
+         0         NaN
+
+[P3.6] DECISION METRIC: players with current value >= 1m having >= 3 points spanning >= 12 months
+ players_1m_plus  with_any_valuation  with_3pts_12m  pct
+            8635                8635           8300 96.1
+
+[P3.7] Same, recently active players only (last_season >= 2025)
+ players_1m_plus  with_any_valuation  with_3pts_12m  pct
+            7055                7055           6758 95.8
+
+[P3.8] Update frequency: points per player per year of history (players with span >= 1 year)
+ avg_pts_per_year  median_pts_per_year  p10  p90
+             2.22                 2.21 1.44 2.97
+
+[P3.9] Gap between consecutive valuations (days)
+ avg_gap  median_gap  p90_gap  max_gap
+   185.0       168.0    268.0     5862
+
+[P3.10] Gap between consecutive valuations, recent years only (2022+)
+  yr  avg_gap  median_gap
+2022    166.0       159.0
+2023    175.0       173.0
+2024    153.0       168.0
+2025    152.0       168.0
+2026    139.0       156.0
+
+[P3.11] Valuation dates cluster on a few update days per year? (top dates)
+      date    n
+2026-06-04 2300
+2026-05-28 1890
+2025-12-15 1749
+2025-12-18 1630
+2026-06-02 1630
+2026-05-26 1464
+2025-12-17 1404
+2025-12-10 1387
+2025-12-11 1311
+2026-05-20 1280
+2026-06-03 1273
+2025-06-17 1258
+
+[P3.12] Does players.market_value_in_eur equal the latest valuation?
+ players_with_both  equal  pct_equal
+             41528  41528      100.0
+
+[P3.13] Players with a value in players but no row in player_valuations, and vice versa
+ value_but_no_history  history_but_no_value
+                    0                     0
+
+[P3.14] 12-month value change feasibility as of 2026-07-06 (active players, value >= 1m)
+ base_players  with_value_now  with_value_12m_ago  pct_both  now_value_dated_2026
+         7055            7055                6833      96.9                  6752
+
+[P3.15] Value distribution of latest valuation per player (as of cut-off)
+     band  players
+  a <100k     6802
+b 100k-1m    26091
+   c 1-5m     6117
+  d 5-20m     1848
+ e 20-50m      541
+   f 50m+      129
+
+[P3.16] Extreme valuation values (top 5)
+ player_id           name       date  market_value_in_eur
+    342229  Kylian Mbappé 2025-12-12            200000000
+    418560 Erling Haaland 2025-12-09            200000000
+    418560 Erling Haaland 2026-06-03            200000000
+    937958   Lamine Yamal 2025-12-12            200000000
+    937958   Lamine Yamal 2026-06-05            200000000
+
+[P3.17] Valuation rows: club columns completeness
+ pct_club_id_null  pct_comp_null
+              0.0          14.17
+
+[P3.18] Is player_valuations.current_club_id the club AT valuation date or the CURRENT club? (players with >1 club in history)
+ players  players_with_multiple_clubs
+   41528                        18821
+
+[P3.19] Sample: one well-known player's valuation history with club
+      date  market_value_in_eur   current_club_name player_club_domestic_competition_id
+2026-06-03            100000000        Liverpool FC                                 GB1
+2025-12-09            110000000        Liverpool FC                                 GB1
+2025-10-17            130000000        Liverpool FC                                 GB1
+2025-06-05            140000000 Bayer 04 Leverkusen                                  L1
+2024-12-20            140000000 Bayer 04 Leverkusen                                  L1
+2024-05-29            130000000 Bayer 04 Leverkusen                                  L1
+2024-03-27            110000000 Bayer 04 Leverkusen                                  L1
+2023-12-14            100000000 Bayer 04 Leverkusen                                  L1
+2023-06-22             85000000 Bayer 04 Leverkusen                                  L1
+2023-03-29             85000000 Bayer 04 Leverkusen                                  L1
+2022-11-09             70000000 Bayer 04 Leverkusen                                  L1
+2022-06-09             70000000 Bayer 04 Leverkusen                                  L1
+

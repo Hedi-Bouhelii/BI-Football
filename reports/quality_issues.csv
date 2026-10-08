@@ -1,0 +1,62 @@
+﻿table,column,issue,rows_affected,pct,example,proposed_fix_in_ETL
+players,contract_expiration_date,"Snapshot of current contract only; no history (cannot know a past contract) [P2.12-P2.15, P9.20]",50149,100.0,Jonathan David left Lille free 2025-07; his row now shows his Juventus contract,Load as SCD1 attribute with snapshot_date = 2026-07-06; never use for backtests
+players,contract_expiration_date,Missing contract date [P2.3],18569,37.03,NULL,Keep NULL; flag 'contract unknown'; exclude from contract KPIs; report coverage
+players,contract_expiration_date,Contract already expired at reference date for players still listed at a club [P2.17],12561,25.05,"Ansu Fati, AS Monaco, 2026-06-30",Flag contract_status = 'expired/unknown' when < 2026-07-06; exclude from at-risk window
+players,contract_expiration_date,Implausible date (pre-2023 for a 2023 player) [P7.16],1,0.0,Morgan Boyes 2000-05-31,Set to NULL when < 2005; log
+players,current_club_domestic_competition_id,"Shows the club's LAST covered league, not its current league (relegated clubs keep GB1 etc.); 163 = recently active players wrongly counted as big-5 [P2.5 vs P2.25]",163,4.49,"Hull City, Watford, QPR tagged GB1",Derive current league from games (club played in competition in season 2025); add is_current flag to DimClub
+players,current_club_id,Club id not present in clubs (club outside covered leagues; no name) [P6.7-P6.8],2986,5.95,current_club_id 515 with NULL name,Map to DimClub 'Unknown / outside coverage' member; build DimClub from all sources
+players,current_club_id,Stored as VARCHAR while other club ids are INTEGER [P6.1],50149,100.0,'398',CAST to INT in staging -> clean
+players,city_of_birth,Trailing non-breaking spaces (U+00A0 x2) [P7.42-P7.43],44493,88.72,'Opole\u00a0\u00a0',"REPLACE(col, NCHAR(160), '') then TRIM"
+players,height_in_cm,"Impossible heights (< 150 cm, e.g. 17, 18) [P7.26-P7.27]",13,0.03,Adi Yona 17,Set to NULL when < 150 or > 215; log
+players,position,Placeholder value 'Missing' (sub_position NULL) [P7.52],586,1.17,Missing,Map to DimPosition 'Unknown'; try per-game position from game_lineups (most frequent)
+players,market_value_in_eur,"No market value [P0, P7.53]",8621,17.19,NULL (mostly last_season 2024-2025 new leagues),Keep NULL; exclude from value KPIs
+players,foot,Missing preferred foot [P0],5893,11.75,NULL,Map to 'Unknown'
+players,country_of_birth,Historical / defunct country names (at least; top-15 list) [P7.35],2534,5.05,"UdSSR, Jugoslawien (SFR), CSSR, Zaire",Lookup table mapping to current countries; keep original
+players,name,"Same name, different players (not a key) [P7.49-P7.51]",2261,4.51,Paulinho x14,Never join on name; use player_id
+players,name,"Same name AND birth date, two ids (possible duplicate person) [P7.50]",2,0.0,"João Ricciulli 1999-10-10 ids 398057, 461923",Manual review; keep both ids
+players,last_season,Season stored as text [P7.57],50149,100.0,'2025',CAST to SMALLINT
+players,date_of_birth,TIMESTAMP with 00:00:00; 49 NULL [P7.14],49,0.1,1978-06-09 00:00:00,CAST to DATE; age bands from 2026-07-06
+transfers,transfer_fee,"No loan / free flag: 0 means free, loan or end of loan; NULL means undisclosed or youth move [P4.4, P4.10-P4.13]",157611,89.98,Rashford Man Utd->Barcelona fee 0 (loan),Derive transfer_type with the window-function rule (checklib.TRANSFER_CLASS_SQL); store class + subclass
+transfers,transfer_fee,Transfer type stays unknown after the rule [P4.26-P4.28],12052,6.88,Atl. Madrileño -> Atlético fee NULL,"Maintain a feeder-club lookup (B teams, academies) to move rows to 'internal'; leave rest 'unknown'"
+transfers,transfer_fee,Possible loans whose return leg is missing (classified free but player later returns) [P4.34],655,0.37,free club-to-club leg followed later by reverse move,Flag as 'free (possible loan)'; exclude from free-departure KPI sensitivity check
+transfers,transfer_date,"Future-dated rows after the 2026-07-06 cut-off (scheduled loan returns, agreed moves) [P1.6-P1.7]",520,0.3,2030-06-30 Reggiana->Empoli,Keep (needed to pair loans) but exclude from as-of-cut-off facts; flag is_future
+transfers,transfer_season,Label differs from the July-June season of the date [P4.22-P4.23],1700,0.97,25/26 on 2016-06-30,Derive season from transfer_date in DimDate; keep label as attribute
+transfers,from_club_id/to_club_id,"Special pseudo-clubs (7,765 club references in from/to) [P4.8]",7765,,"515 Without Club, 75 Unknown, 123 Retired, 2113 Career break, 12604 Own Youth",Seed DimClub with these members and a club_type attribute
+transfers,from_club_id/to_club_id,"Club ids not in clubs (clubs outside covered leagues): 62.6% of from-ids, 52.9% of to-ids [P6.14]",,62.6,"16,612 distinct missing from_club ids",Build DimClub from union of all club ids + names (P8.5-P8.6)
+transfers,from_club_name/to_club_name,Short names differ from clubs.name for the same id [P7.40],,,'Inter' vs 'Inter Milan',"Use clubs.name when available, else most recent short name"
+transfers,market_value_in_eur,No value at transfer [P4.5],68160,38.91,"NULL (youth, old moves)",Keep NULL; exclude from fee-vs-value KPI
+transfers,transfer_fee,"Fee > 5x value at transfer (value >= 1m) - outliers, mostly genuine [P7.22-P7.23]",111,0.06,Bastoni 40.7m vs value 1.5m,Keep; flag ratio outliers; cap in averages (use median)
+player_valuations,market_value_in_eur,"Zero value [P3.4, P7.21]",1,0.0,Miral Samardzic 2008-03-17,Treat 0 as NULL
+player_valuations,player_club_domestic_competition_id,NULL for clubs outside covered leagues [P7.58],92973,14.17,NULL,Map to 'Outside coverage' competition member
+player_valuations,current_club_id,Club id not in clubs [P6.15],92973,14.17,-,DimClub from all sources
+player_valuations,current_club_name,Same club id has several names over time [P7.41],,,"1,314 club ids with >1 name",DimClub: keep latest name; optional name history
+appearances,player_id,Orphan players [P6.2],2,0.0,-,Map to 'Unknown player' member
+appearances,minutes_played,0 minutes or > 125 minutes [P7.54],6,0.0,"148 (CDR 2024-12-04), 0",Cap at 120; 0 -> NULL
+appearances,competition_id,"Codes missing from competitions (POCP, CGB, KLUB, UKRS) [P6.16]",14200,0.75,CGB (EFL Cup),Seed missing competitions manually
+appearances,(coverage),"No appearance rows for 17 leagues added in 2024 (Brazil, MLS, Saudi, Austria, ...) [P5.19]",,,"BRA1 2025: 177 games, 0 appearances",Restrict performance KPIs to 14 covered leagues; flag has_performance_data on DimCompetition
+appearances,player_current_club_id,"Snapshot column (current club), VARCHAR [P0]",1894350,100.0,'235',Do not load into FactAppearance; use player_club_id
+games,game_id,"Stored as VARCHAR in games/club_games/game_events, INTEGER in appearances/game_lineups [P6.1, P6.4]",88958,100.0,'1026846',CAST to INT (all castable)
+games,competition_id,"Codes missing from competitions (POCP, CGB, COL1, KLUB, UKRS); competition_type NULL [P6.26, P7.33]",1214,1.36,POCP 602 games,Seed competitions table with the 5 codes
+games,season,Date far outside the season label [P7.17],39,0.04,COPA season 2025 dated 2024-06,Derive season from date for league games; keep label
+games,home_club_formation/away_club_formation,"Non-standard formation labels (home side, top 10 variants) [P7.34]",28798,32.37,"'4-3-3 Attacking', '4-4-2 double 6', '0-10-0'",Normalise to base formation + variant
+games,home_club_name/away_club_name,Missing club names [P6.13],122,0.14,NULL,Fill from DimClub
+games,attendance,Missing attendance [P0],10803,12.14,NULL,Keep NULL
+competitions,name,Name is the URL slug; 3 duplicate names across countries [P7.36-P7.38],65,100.0,'premier-liga' for RU1 and UKR1,Add display-name lookup (name + country)
+competitions,country_id,Sentinel -1 for international competitions [P10a],12,18.46,-1,Map -1 to NULL / 'International'
+competitions,confederation,Label style differs from national_teams (europa vs UEFA) [P7.39],65,100.0,europa / UEFA,Conform to UEFA/CONMEBOL/... codes
+clubs,total_market_value,Column 100% NULL [P7.25],796,100.0,NULL,Drop; compute squad value from players/valuations
+clubs,net_transfer_record,Money stored as text with currency and unit [P7.24],796,100.0,"'+€5.90m', '€-25.00m', '+€900k', '+-0'","Parse: strip €, sign, k=1e3, m=1e6 -> BIGINT"
+clubs,domestic_competition_id,"Last covered league, not current league (relegated clubs keep it) [P2.22]",,,Southampton GB1 last_season 2024,Add is_current_top_flight from games season 2025
+clubs,club_id,"Stored as VARCHAR; only 796 of 18,636 referenced club ids have a row [P8.5]",17840,,'1023',CAST to INT; DimClub from union of all sources (100 ids have no name anywhere)
+clubs,filename,Build artefact column [P7.56],796,100.0,../data/raw/transfermarkt-scraper/2019/clubs.json.gz,Do not load
+clubs,coach_name,Missing coach [P0],393,49.37,NULL,Keep NULL
+national_teams,coach_name,Column 100% NULL [P7.25],124,100.0,NULL,Drop
+game_lineups,position,Case variants / generic labels / blanks [P7.31],13325,0.42,"'midfield' vs 'Midfield', 'Attack', ''",Normalise case; map generic to position group; '' -> NULL
+game_lineups,number,Non-numeric shirt numbers ('-') [P7.32],25698,0.81,-,"TRY_CAST to INT, else NULL"
+game_lineups,"(game_id, player_id)","Duplicate player in the same game lineup [P6.18, P6.21]",12,,Mariyan Ognyanov game 2345078 twice,"Keep first row per (game_id, player_id)"
+game_lineups,player_id,Players not in players table (opponents from uncovered clubs) [P6.17],315555,9.93,ELQ/FAC qualifier opponents,Map to 'Unknown player' or load minimal DimPlayer rows from lineup names
+game_lineups,player_name,Leading/trailing spaces [P10a],4,,-,TRIM
+game_events,description,"Quoted empty string """" instead of NULL; comma-laden free text [P10a]",93157,7.31,"', Right-footed shot, 2. Tournament Goal'","NULLIF(TRIM(col), ''); parse sub-fields if needed"
+game_events,player_id,Players not in players table [P6.17],128274,10.06,-,As game_lineups
+(all),(keys),Inconsistent key types across tables (VARCHAR vs INTEGER) [P6.1],,,clubs.club_id VARCHAR vs transfers.to_club_id INTEGER,Cast all ids to INT in staging
+(all),(files),Files are gzip-compressed; SSIS Flat File source cannot read .gz [P10a],12,,*.csv.gz,Decompress step (PowerShell/Script Task) before the Data Flow

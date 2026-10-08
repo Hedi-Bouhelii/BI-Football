@@ -1,0 +1,154 @@
+Phase 9: Business questions
+======================================================================
+
+[P9.1] Create transfers_classified (classification rule, see checklib.TRANSFER_CLASS_SQL)
+ Count
+175165
+
+[P9.2] Q1: value >= 5m, contract ends 2026-07-06..2027-07-06 - totals
+ players  total_value  at_big5_clubs_2025_26  value_at_big5_clubs  tagged_big5_competition_id
+     348 3953000000.0                    206         2859000000.0                         214
+
+[P9.3] Q1: by league (clubs that played big-5 in 2025/26)
+league  players        value
+   GB1       64 1047000000.0
+   IT1       43  534000000.0
+   FR1       40  393000000.0
+   ES1       30  501000000.0
+    L1       29  384000000.0
+
+[P9.4] Q1: did any of them already move after the cut-off? (transfers dated > 2026-07-06 or on 2026-07-01..06)
+ at_risk_with_recorded_move_since_2026_06_01
+                                          47
+
+[P9.5] Q2: rows available (outfield, big-5 2025/26, >= 900 min, with value and birth date)
+position  players
+  Attack      408
+Defender      601
+Midfield      474
+
+[P9.6] Q2: undervalued = top 20% output for position, bottom 30% value for position x age band
+ undervalued  aged_25_or_less
+          42               16
+
+[P9.7] Q2: list (sorted by output)
+                     name             current_club_name position  age   mins    g   a  ga90  market_value_in_eur  perf_pct  value_pct
+      Michael Gregoritsch                   FC Augsburg   Attack   32  917.0  6.0 3.0  0.88              1500000      0.96       0.13
+          Andrej Kramaric           TSG 1899 Hoffenheim   Attack   35 2223.0 14.0 6.0  0.81              2500000      0.93       0.28
+              Raúl García                    CA Osasuna   Attack   26 1013.0  7.0 1.0  0.71              3000000      0.86       0.06
+Pierre-Emerick Aubameyang           Olympique Marseille   Attack   37 2047.0 10.0 6.0  0.70              2500000      0.86       0.28
+         Santiago Hidalgo                   FC Toulouse   Attack   21 1303.0  4.0 6.0  0.69              6000000      0.85       0.06
+               Umar Sadiq                   Valencia CF   Attack   29 1055.0  4.0 4.0  0.68              4000000      0.84       0.15
+            Gerard Moreno                 Villarreal CF   Attack   34 1350.0 10.0 0.0  0.67              2500000      0.83       0.28
+                    Pedro Società Sportiva Lazio S.p.A.   Attack   39  972.0  5.0 2.0  0.65              1000000      0.81       0.06
+               Iago Aspas                 Celta de Vigo   Attack   39 1130.0  5.0 3.0  0.64              1600000      0.81       0.18
+             Alimami Gory                      Paris FC   Attack   30  978.0  5.0 2.0  0.64              1500000      0.81       0.13
+               Javi Rueda                 Celta de Vigo Defender   24 1405.0  2.0 6.0  0.51              6000000      0.99       0.22
+         Cristian Volpato                   US Sassuolo Midfield   23 1064.0  2.0 4.0  0.51             10000000      0.95       0.28
+              Martim Neto                      Elche CF Midfield   23 1351.0  2.0 5.0  0.47              4000000      0.92       0.02
+           Kamory Doumbia             Stade Brestois 29 Midfield   23 1766.0  5.0 4.0  0.46              9000000      0.92       0.25
+              Pablo Torre                  RCD Mallorca Midfield   23 1603.0  4.0 4.0  0.45              5000000      0.91       0.07
+            Jonas Hofmann           Bayer 04 Leverkusen Midfield   34 1009.0  2.0 3.0  0.45              1500000      0.91       0.13
+           Sofiane Boufal          Union Saint-Gilloise Midfield   33 1028.0  1.0 4.0  0.44              1800000      0.91       0.17
+          Woo-yeong Jeong             1.FC Union Berlin Midfield   27 1193.0  4.0 1.0  0.38              3500000      0.82       0.16
+               Mert Kömür                   FC Augsburg Midfield   21 1463.0  2.0 4.0  0.37             12000000      0.81       0.19
+              Stefan Bell                1.FSV Mainz 05 Defender   35 1041.0  2.0 2.0  0.35               600000      0.97       0.03
+
+[P9.8] Q3: paid transfers with both fee and value at transfer
+ paid  with_value  pct_with_value
+17289       16188            93.6
+
+[P9.9] Q3: fee / value ratio by season (paid, value > 0)
+transfer_season    n  median_ratio  aggregate_ratio
+          18/19 1003          1.11             1.25
+          19/20 1183          1.00             1.08
+          20/21  979          1.00             1.11
+          21/22 1259          0.83             0.94
+          22/23 1642          0.83             1.00
+          23/24 1986          0.86             1.06
+          24/25 2211          0.86             1.06
+          25/26 2298          0.86             1.04
+          26/27  157          0.81             0.87
+
+[P9.10] Q3: fee / value ratio by destination league (big-5 buyers, 2023/24-2025/26)
+buyer_league   n  median_ratio  aggregate_ratio
+         ES1 253          0.83             0.87
+         FR1 340          1.11             1.10
+         GB1 514          1.25             1.24
+         IT1 489          1.00             1.04
+          L1 350          0.87             0.92
+
+[P9.11] Q4: free departures >= 5m per window (season label) and value
+transfer_season  players  value_given_away  to_without_club  club_to_club
+          23/24       97      1082000000.0                7            90
+          24/25       84       942000000.0               16            66
+          25/26       66       650500000.0                6            60
+          26/27       39       431000000.0               27            12
+
+[P9.12] Q4: clubs that lost the most value on free departures, 23/24
+ from_club_name  players  value_lost                                                          who
+      Leicester        4  58000000.0 Youri Tielemans, Çağlar Söyüncü, Daniel Amartey, Ayoze Pérez
+      Frankfurt        2  55000000.0                                   Evan Ndicka, Daichi Kamada
+Mönchengladbach        2  52000000.0                               Marcus Thuram, Ramy Bensebaini
+    Real Madrid        2  50000000.0                                 Karim Benzema, Marco Asensio
+          Inter        1  50000000.0                                               Milan Škriniar
+
+[P9.13] Q4: clubs that lost the most value on free departures, 24/25
+from_club_name  players  value_lost                                        who
+           PSG        2 187500000.0               Kylian Mbappé, Ismaël Gharbi
+      Juventus        2  41000000.0           Adrien Rabiot, Wojciech Szczesny
+      Atlético        2  35000000.0               Mario Hermoso, Memphis Depay
+     Tottenham        3  30000000.0 Eric Dier, Ryan Sessegnon, Tanguy Ndombélé
+       Man Utd        2  30000000.0            Raphaël Varane, Anthony Martial
+
+[P9.14] Q4: clubs that lost the most value on free departures, 25/26
+from_club_name  players  value_lost                                                        who
+         Lille        2  65000000.0                                Jonathan David, Angel Gomes
+       Arsenal        4  47000000.0 Takehiro Tomiyasu, Thomas Partey, Kieran Tierney, Jorginho
+ Bayern Munich        3  46000000.0                       Leroy Sané, Eric Dier, Thomas Müller
+      Al-Hilal        2  31000000.0                            Aleksandar Mitrović, Renan Lodi
+       Burnley        2  30000000.0                              CJ Egan-Riley, Josh Brownhill
+
+[P9.15] Q4: clubs that lost the most value, three windows combined (all free departures, any value)
+from_club_name  players  value_lost
+           PSG        8 230900000.0
+         Lille       11 108800000.0
+     Leicester       11  83200000.0
+       Arsenal       10  81100000.0
+         Inter       15  80350000.0
+   Real Madrid        8  74000000.0
+       Everton       14  69300000.0
+       Man Utd        9  69000000.0
+      Atlético       11  66500000.0
+       Chelsea       12  63100000.0
+
+[P9.16] Q5: value trend in the 12 months before a free departure (>= 5m, 23/24-25/26)
+ departures  with_value_12m_before  fell  flat  rose  median_change_pct  avg_valuation_points_in_window
+        247                    247   162    25    60              -25.0                             2.8
+
+[P9.17] Q5: examples
+   player_name transfer_date  from_club_name  v_12m_before  v_peak_12m      v_exit  change_pct
+ Kylian Mbappé    2024-07-01             PSG     180000000   180000000 180000000.0         0.0
+Milan Škriniar    2023-07-06           Inter      65000000    60000000  50000000.0       -23.1
+Jonathan David    2025-07-04           Lille      50000000    45000000  45000000.0       -10.0
+  Lionel Messi    2023-07-15             PSG      50000000    50000000  35000000.0       -30.0
+ Adrien Rabiot    2024-07-01        Juventus      40000000    40000000  35000000.0       -12.5
+ Marcus Thuram    2023-07-01 Mönchengladbach      20000000    32000000  32000000.0        60.0
+    Leroy Sané    2025-07-01   Bayern Munich      70000000    60000000  32000000.0       -54.3
+ Konrad Laimer    2023-07-01         Leipzig      28000000    28000000  28000000.0         0.0
+   Evan Ndicka    2023-07-01       Frankfurt      32000000    32000000  28000000.0       -12.5
+ Daichi Kamada    2023-08-04       Frankfurt      22000000    30000000  27000000.0        22.7
+
+[P9.18] Q5 comparison: players worth >= 5m who STAYED or were SOLD - 12-month change before their mid-2025 valuation
+          grp    n  median_change_pct
+sold in 25/26  552               25.0
+        other 1746                0.0
+
+[P9.19] Backtest feasibility: contracts as of a past date are not stored (only one snapshot column)
+ contract_columns
+                1
+
+[P9.20] Backtest proxy (look-ahead): of players who left free in 25/26 with value >= 5m, how many still show a contract date?
+ free_departures_5m  with_contract_now  new_contract_after_cutoff
+                 66                 59                         58
+

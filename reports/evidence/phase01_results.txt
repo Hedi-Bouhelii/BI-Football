@@ -1,0 +1,313 @@
+Phase 1: Time coverage and cut-offs
+======================================================================
+
+[P1.1] games date range
+  min_date   max_date     n
+2006-06-09 2026-07-06 88958
+
+[P1.2] appearances date range
+  min_date   max_date       n
+2012-07-03 2026-06-28 1894350
+
+[P1.3] player_valuations date range
+  min_date   max_date      n
+2000-01-20 2026-06-12 656301
+
+[P1.4] transfers date range
+  min_date   max_date      n
+1993-07-01 2030-06-30 175165
+
+[P1.5] game_events / game_lineups date range
+           t   min_date   max_date       n
+ game_events 2006-06-09 2026-07-06 1274469
+game_lineups 2013-07-02 2026-07-06 3179016
+
+[P1.6] Rows after the notice cut-offs (should all be 0)
+ games_after_0706  appearances_after_0628  valuations_after_0612  transfers_after_0706
+                0                       0                      0                   520
+
+[P1.7] Transfers dated after the cut-off, by season label
+transfer_season   n      min_d      max_d
+          25/26  15 2026-08-15 2030-06-30
+          26/27 492 2026-07-07 2027-06-30
+          27/28  13 2027-07-01 2028-02-02
+
+[P1.8] Monthly row counts in the last 6 months before the cut-off
+  month  games  appearances  valuations  transfers
+2026-01  776.0      15668.0       446.0     3286.0
+2026-02  969.0      15331.0        35.0     1154.0
+2026-03  900.0      13890.0      3781.0      220.0
+2026-04 1006.0      13782.0       235.0       83.0
+2026-05  758.0      11486.0      8780.0      207.0
+2026-06   74.0       2251.0      7575.0     1622.0
+2026-07   14.0          0.0         0.0     1209.0
+2026-08    0.0          0.0         0.0       18.0
+2026-09    0.0          0.0         0.0        2.0
+2026-10    0.0          0.0         0.0       13.0
+2026-11    0.0          0.0         0.0       21.0
+2026-12    0.0          0.0         0.0      396.0
+2027-01    0.0          0.0         0.0       12.0
+2027-05    0.0          0.0         0.0        9.0
+2027-06    0.0          0.0         0.0       23.0
+2027-07    0.0          0.0         0.0        4.0
+2028-02    0.0          0.0         0.0        9.0
+2030-06    0.0          0.0         0.0        1.0
+
+[P1.9] Confirm major league codes in competitions
+competition_id           name country_name            type   sub_type
+           ES1         laliga        Spain domestic_league first_tier
+           FR1        ligue-1       France domestic_league first_tier
+           GB1 premier-league      England domestic_league first_tier
+           IT1        serie-a        Italy domestic_league first_tier
+            L1     bundesliga      Germany domestic_league first_tier
+
+[P1.10] All domestic first-tier leagues in the dataset
+competition_id                          name   country_name
+          ARG1               torneo-apertura      Argentina
+          AUS1                  a-league-men      Australia
+            A1                    bundesliga        Austria
+           BE1            jupiler-pro-league        Belgium
+          BRA1 campeonato-brasileiro-serie-a         Brazil
+           KR1                supersport-hnl        Croatia
+           TS1                   chance-liga Czech Republic
+           DK1                     superliga        Denmark
+           GB1                premier-league        England
+           FR1                       ligue-1         France
+            L1                    bundesliga        Germany
+           GR1                super-league-1         Greece
+           IT1                       serie-a          Italy
+          JAP1                     j1-league          Japan
+          RSK1                    k-league-1   Korea, South
+          MEX1              liga-mx-clausura         Mexico
+           NL1                    eredivisie    Netherlands
+           NO1                   eliteserien         Norway
+           PL1            pko-bp-ekstraklasa         Poland
+           PO1                 liga-portugal       Portugal
+           RO1                     superliga        Romania
+           RU1                  premier-liga         Russia
+           SA1              saudi-pro-league   Saudi Arabia
+           SC1          scottish-premiership       Scotland
+          SER1             super-liga-srbije         Serbia
+           ES1                        laliga          Spain
+           SE1                   allsvenskan         Sweden
+            C1                  super-league    Switzerland
+           TR1                     super-lig        Türkiye
+          UKR1                  premier-liga        Ukraine
+          MLS1           major-league-soccer  United States
+
+[P1.11] Season label format and range in games
+season  games      min_d      max_d
+  2005     64 2006-06-09 2006-07-09
+  2007     31 2008-06-07 2008-06-29
+  2009     64 2010-06-11 2010-07-11
+  2011     31 2012-06-08 2012-07-01
+  2012   5700 2012-07-03 2013-06-01
+  2013   5826 2013-07-02 2014-07-13
+  2014   5836 2014-07-01 2015-06-07
+  2015   5759 2015-06-30 2016-07-10
+  2016   5699 2016-06-28 2017-06-03
+  2017   5660 2017-06-27 2018-07-15
+  2018   5723 2018-06-26 2019-06-01
+  2019   5469 2019-06-25 2021-04-03
+  2020   5564 2020-08-01 2021-07-11
+  2021   5939 2021-06-22 2022-12-18
+  2022   6008 2022-06-21 2024-02-25
+  2023   5951 2023-06-27 2024-08-28
+  2024  10036 2024-01-12 2025-12-07
+  2025   9598 2021-09-22 2026-07-06
+
+[P1.12] Games per season, five major leagues (wide)
+season   ES1   FR1   GB1   IT1    L1
+  2012 380.0 380.0 380.0 380.0 306.0
+  2013 380.0 380.0 380.0 380.0 306.0
+  2014 380.0 380.0 380.0 380.0 306.0
+  2015 380.0 380.0 380.0 380.0 306.0
+  2016 380.0 380.0 380.0 380.0 306.0
+  2017 380.0 380.0 380.0 380.0 306.0
+  2018 380.0 380.0 380.0 380.0 306.0
+  2019 380.0 279.0 380.0 380.0 306.0
+  2020 380.0 380.0 380.0 380.0 306.0
+  2021 380.0 380.0 380.0 380.0 306.0
+  2022 380.0 380.0 380.0 380.0 306.0
+  2023 380.0 306.0 380.0 380.0 306.0
+  2024 380.0 306.0 380.0 380.0 306.0
+  2025 380.0 306.0 380.0 380.0 306.0
+
+[P1.13] Completeness: games vs expected (n_clubs * (n_clubs - 1)) per league-season
+competition_id season  games  clubs  expected  pct_complete
+           ES1   2012    380     20       380         100.0
+           ES1   2013    380     20       380         100.0
+           ES1   2014    380     20       380         100.0
+           ES1   2015    380     20       380         100.0
+           ES1   2016    380     20       380         100.0
+           ES1   2017    380     20       380         100.0
+           ES1   2018    380     20       380         100.0
+           ES1   2019    380     20       380         100.0
+           ES1   2020    380     20       380         100.0
+           ES1   2021    380     20       380         100.0
+           ES1   2022    380     20       380         100.0
+           ES1   2023    380     20       380         100.0
+           ES1   2024    380     20       380         100.0
+           ES1   2025    380     20       380         100.0
+           FR1   2012    380     20       380         100.0
+           FR1   2013    380     20       380         100.0
+           FR1   2014    380     20       380         100.0
+           FR1   2015    380     20       380         100.0
+           FR1   2016    380     20       380         100.0
+           FR1   2017    380     20       380         100.0
+           FR1   2018    380     20       380         100.0
+           FR1   2019    279     20       380          73.4
+           FR1   2020    380     20       380         100.0
+           FR1   2021    380     20       380         100.0
+           FR1   2022    380     20       380         100.0
+           FR1   2023    306     18       306         100.0
+           FR1   2024    306     18       306         100.0
+           FR1   2025    306     18       306         100.0
+           GB1   2012    380     20       380         100.0
+           GB1   2013    380     20       380         100.0
+           GB1   2014    380     20       380         100.0
+           GB1   2015    380     20       380         100.0
+           GB1   2016    380     20       380         100.0
+           GB1   2017    380     20       380         100.0
+           GB1   2018    380     20       380         100.0
+           GB1   2019    380     20       380         100.0
+           GB1   2020    380     20       380         100.0
+           GB1   2021    380     20       380         100.0
+           GB1   2022    380     20       380         100.0
+           GB1   2023    380     20       380         100.0
+           GB1   2024    380     20       380         100.0
+           GB1   2025    380     20       380         100.0
+           IT1   2012    380     20       380         100.0
+           IT1   2013    380     20       380         100.0
+           IT1   2014    380     20       380         100.0
+           IT1   2015    380     20       380         100.0
+           IT1   2016    380     20       380         100.0
+           IT1   2017    380     20       380         100.0
+           IT1   2018    380     20       380         100.0
+           IT1   2019    380     20       380         100.0
+           IT1   2020    380     20       380         100.0
+           IT1   2021    380     20       380         100.0
+           IT1   2022    380     20       380         100.0
+           IT1   2023    380     20       380         100.0
+           IT1   2024    380     20       380         100.0
+           IT1   2025    380     20       380         100.0
+            L1   2012    306     18       306         100.0
+            L1   2013    306     18       306         100.0
+            L1   2014    306     18       306         100.0
+            L1   2015    306     18       306         100.0
+            L1   2016    306     18       306         100.0
+            L1   2017    306     18       306         100.0
+            L1   2018    306     18       306         100.0
+            L1   2019    306     18       306         100.0
+            L1   2020    306     18       306         100.0
+            L1   2021    306     18       306         100.0
+            L1   2022    306     18       306         100.0
+            L1   2023    306     18       306         100.0
+            L1   2024    306     18       306         100.0
+            L1   2025    306     18       306         100.0
+
+[P1.14] Appearances per game, major leagues by season (games with >= 1 appearance row)
+season  games  games_with_appearances  pct_games_with_app  avg_app_rows_per_game
+  2012   1826                    1825                99.9                   27.6
+  2013   1826                    1826               100.0                   27.7
+  2014   1826                    1826               100.0                   26.4
+  2015   1826                    1826               100.0                   27.7
+  2016   1826                    1826               100.0                   27.7
+  2017   1826                    1826               100.0                   27.7
+  2018   1826                    1826               100.0                   27.7
+  2019   1725                    1725               100.0                   28.4
+  2020   1826                    1826               100.0                   29.5
+  2021   1826                    1826               100.0                   29.4
+  2022   1826                    1826               100.0                   30.7
+  2023   1752                    1752               100.0                   30.9
+  2024   1752                    1752               100.0                   31.0
+  2025   1752                    1751                99.9                   31.0
+
+[P1.15] Season-level completeness summary per league (seasons with >=95% games and >=95% games having appearances)
+competition_id  seasons_present first_season last_season  complete_seasons incomplete_seasons
+           ES1               14         2012        2025                14                NaN
+           FR1               14         2012        2025                13               2019
+           GB1               14         2012        2025                14                NaN
+           IT1               14         2012        2025                14                NaN
+            L1               14         2012        2025                14                NaN
+
+[P1.16] Gap years: seasons missing per major league between first and last season
+(0 rows)
+
+[P1.17] Season 2025 (= 2025/26) progress per major league: last game date and games played
+competition_id  games  last_game first_game
+           ES1    380 2026-05-24 2025-08-15
+           FR1    306 2026-05-17 2025-08-15
+           GB1    380 2026-05-24 2025-08-15
+           IT1    380 2026-05-24 2025-08-23
+            L1    306 2026-05-16 2025-08-22
+
+[P1.18] Valuations per year (history depth)
+  yr     n
+2000     1
+2001     1
+2003     2
+2004  2305
+2005  2439
+2006  2673
+2007  5617
+2008  9305
+2009 12067
+2010 13795
+2011 17788
+2012 19714
+2013 22636
+2014 23707
+2015 30479
+2016 34653
+2017 35923
+2018 41097
+2019 46088
+2020 48749
+2021 58412
+2022 59564
+2023 57576
+2024 45376
+2025 45482
+2026 20852
+
+[P1.19] Transfers per year
+  yr     n
+1993     2
+1994     4
+1995     3
+1996     7
+1997     7
+1998    26
+1999    27
+2000    41
+2001    98
+2002   123
+2003   180
+2004   287
+2005   480
+2006   691
+2007  1063
+2008  1349
+2009  1853
+2010  2332
+2011  3080
+2012  3771
+2013  4669
+2014  5579
+2015  6890
+2016  7984
+2017  9503
+2018 10956
+2019 12598
+2020 13085
+2021 14163
+2022 15951
+2023 16657
+2024 17242
+2025 16175
+2026  8231
+2027    48
+2028     9
+2030     1
+

@@ -1,0 +1,51 @@
+Phase 10b: SQL Server staging load test
+======================================================================
+Server: (localdb)\MSSQLLocalDB (SQL Server 2025 Express LocalDB 17.0.4025.3), database: BI_DatasetCheck_Staging
+Method: BULK INSERT ... WITH (FORMAT='CSV', FIELDQUOTE='"', CODEPAGE='65001', ROWTERMINATOR='0x0a', FIRSTROW=2, MAXERRORS=0)
+
+appearances: sample of 1000 rows (8 chosen as hard cases) -> appearances_sample.csv
+club_games: sample of 1000 rows (11 chosen as hard cases) -> club_games_sample.csv
+clubs: sample of 796 rows (17 chosen as hard cases) -> clubs_sample.csv
+competitions: sample of 65 rows (8 chosen as hard cases) -> competitions_sample.csv
+countries: sample of 124 rows (6 chosen as hard cases) -> countries_sample.csv
+game_events: sample of 1000 rows (12 chosen as hard cases) -> game_events_sample.csv
+game_lineups: sample of 1000 rows (8 chosen as hard cases) -> game_lineups_sample.csv
+games: sample of 1000 rows (34 chosen as hard cases) -> games_sample.csv
+national_teams: sample of 124 rows (10 chosen as hard cases) -> national_teams_sample.csv
+player_valuations: sample of 1000 rows (8 chosen as hard cases) -> player_valuations_sample.csv
+players: sample of 1000 rows (38 chosen as hard cases) -> players_sample.csv
+transfers: sample of 1000 rows (13 chosen as hard cases) -> transfers_sample.csv
+
+CREATE DATABASE: rc=0 
+CREATE TABLES: rc=0 
+
+BULK INSERT results (rc=0):
+LOADED|appearances|1000
+LOADED|club_games|1000
+LOADED|clubs|796
+LOADED|competitions|65
+LOADED|countries|124
+LOADED|game_events|1000
+LOADED|game_lineups|1000
+LOADED|games|1000
+LOADED|national_teams|124
+LOADED|player_valuations|1000
+LOADED|players|1000
+LOADED|transfers|1000
+
+Round-trip checks (rc=0):
+accent|players.name with non-ASCII (binary collation)|144
+accent|exact match Aurélien Joachim in appearances|3
+quote|games.stadium containing a double quote|2
+quote|example|Stadion "Galgenwaard"
+null|game_events.description NULL vs empty string|3 NULL / 0 empty
+null|players.contract_expiration_date NULL|951
+nbsp|players.city_of_birth ending in NCHAR(160)|997
+decimal|transfers max fee|145000000.000
+datetime|players min/max date_of_birth|1970-10-20 00:00:00 / 2006-08-16 00:00:00
+text|game_lineups.number non-numeric|0
+
+Full-file loads (rc=0):
+FULL LOADED|players|50149
+FULL LOADED|transfers|175165
+FULL LOADED|player_valuations|656301

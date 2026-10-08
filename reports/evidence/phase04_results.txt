@@ -1,0 +1,536 @@
+Phase 4: Transfers
+======================================================================
+
+[P4.1] Schema
+        column_name   column_type null  key default extra
+          player_id       INTEGER  YES None    None  None
+      transfer_date          DATE  YES None    None  None
+    transfer_season       VARCHAR  YES None    None  None
+       from_club_id       INTEGER  YES None    None  None
+         to_club_id       INTEGER  YES None    None  None
+     from_club_name       VARCHAR  YES None    None  None
+       to_club_name       VARCHAR  YES None    None  None
+       transfer_fee DECIMAL(18,3)  YES None    None  None
+market_value_in_eur DECIMAL(18,3)  YES None    None  None
+        player_name       VARCHAR  YES None    None  None
+
+[P4.2] Rows per transfer_season (latest 15)
+transfer_season     n      min_d      max_d
+          99/00    32 1999-07-01 2000-05-01
+          98/99    24 1998-07-01 1998-08-28
+          97/98     9 1997-07-01 1998-03-30
+          96/97     6 1996-07-01 1996-08-23
+          95/96     4 1995-07-01 1996-04-04
+          94/95     4 1994-07-01 1994-08-23
+          93/94     2 1993-07-01 1993-07-01
+          27/28    13 2027-07-01 2028-02-02
+          26/27  1706 2025-07-01 2027-06-30
+          25/26 15676 2016-06-30 2030-06-30
+          24/25 16686 2023-11-27 2026-06-30
+          23/24 17379 2022-01-01 2024-12-31
+          22/23 16386 2021-11-28 2024-07-01
+          21/22 15045 2020-07-01 2025-01-01
+          20/21 13647 2019-07-01 2022-08-02
+
+[P4.3] All transfer_season labels (format check)
+transfer_season     n
+          00/01    48
+          01/02   100
+          02/03   138
+          03/04   185
+          04/05   344
+          05/06   550
+          06/07   791
+          07/08  1170
+          08/09  1469
+          09/10  2028
+          10/11  2537
+          11/12  3383
+          12/13  4055
+          13/14  5048
+          14/15  6166
+          15/16  7353
+          16/17  8495
+          17/18 10125
+          18/19 11761
+          19/20 12800
+          20/21 13647
+          21/22 15045
+          22/23 16386
+          23/24 17379
+          24/25 16686
+          25/26 15676
+          26/27  1706
+          27/28    13
+          93/94     2
+          94/95     4
+          95/96     4
+          96/97     6
+          97/98     9
+          98/99    24
+          99/00    32
+
+[P4.4] Fee null / zero / positive
+ fee_null  fee_zero  fee_positive  fee_negative  total
+    61526     96085         17554             0 175165
+
+[P4.5] market_value_in_eur (value at transfer) null / zero / positive
+ mv_null  mv_zero  mv_positive
+   68160        0       107005
+
+[P4.6] Top from_club_name
+from_club_name  from_club_id    n
+  Without Club           515 2490
+       Unknown            75  877
+         Inter            46  325
+    Olympiacos           683  315
+         Genoa           252  315
+       Benfica           294  290
+       Chelsea           631  273
+ Hellas Verona           276  256
+      Juventus           506  251
+    Fiorentina           430  251
+      Man City           281  231
+          Roma            12  228
+   Shakhtar D.           660  224
+      Red Star           159  222
+ Dinamo Zagreb           419  211
+      Salzburg           409  210
+      AC Milan             5  209
+        Torino           416  208
+   Dynamo Kyiv           338  206
+  Boca Juniors           189  202
+      Sassuolo          6574  199
+         Porto           720  199
+        Wolves           543  198
+       Udinese           410  196
+      Sporting           336  195
+
+[P4.7] Top to_club_name
+ to_club_name  to_club_id    n
+ Without Club         515 3785
+   Olympiacos         683  355
+        Inter          46  350
+        Genoa         252  346
+      Chelsea         631  316
+      Benfica         294  314
+Hellas Verona         276  298
+   Fiorentina         430  290
+     Juventus         506  279
+  Shakhtar D.         660  269
+      Unknown          75  268
+     Man City         281  263
+     Red Star         159  256
+         Roma          12  254
+ Boca Juniors         189  253
+  Dynamo Kyiv         338  249
+Dinamo Zagreb         419  246
+     Salzburg         409  242
+     AC Milan           5  240
+       Torino         416  238
+      Udinese         410  234
+     Sassuolo        6574  231
+ Slavia Praha          62  231
+       Wolves         543  229
+        Porto         720  229
+
+[P4.8] Special club names (Without Club, Retired, Unknown, Career break, U-teams, ...)
+        name    id      n
+Without Club   515 6275.0
+     Unknown    75 1145.0
+     Retired   123  185.0
+Career break  2113  125.0
+   Own Youth 12604   35.0
+
+[P4.9] Any column carrying loan information? (text search in club names)
+ loan_in_names
+             0
+
+[P4.10] Sample rows, fee NULL
+ player_id transfer_date transfer_season  from_club_id  to_club_id  from_club_name   to_club_name  transfer_fee  market_value_in_eur       player_name
+    402135    2027-07-04           27/28          6505         515 Gimcheon Sangmu   Without Club           NaN             300000.0        Jun-su Ahn
+    716435    2027-07-04           27/28          6505         515 Gimcheon Sangmu   Without Club           NaN             300000.0     Kang-hyun Lee
+     63463    2027-07-01           27/28           206         123      Bröndby IF        Retired           NaN             400000.0       Daniel Wass
+    417084    2027-01-01           26/27          6600         515   Internacional   Without Club           NaN             500000.0           Keiller
+   1527143    2027-01-01           26/27         24113         672  JEF United U18 JEF Utd. Chiba           NaN                  NaN      Shunji Saito
+    915016    2026-12-25           25/26          1804        4941          Toluca           León           NaN            2500000.0    Juan Domínguez
+    448414    2026-09-01           26/27          4961        7633    Querétaro FC     UNAM Pumas           NaN            1500000.0       Alan Medina
+    343153    2026-07-13           26/27           813       51828        Columbus           LAFC           NaN            1200000.0   Yevgen Cheberko
+      3333    2026-07-01           26/27          1237         123        Brighton        Retired           NaN             500000.0      James Milner
+     15185    2026-07-01           26/27           428         123   Górnik Zabrze        Retired           NaN             100000.0    Lukas Podolski
+     15452    2026-07-01           26/27          4172         515            Pisa   Without Club           NaN             700000.0       Raúl Albiol
+     16136    2026-07-01           26/27           417         123            Nice        Retired           NaN             500000.0             Dante
+     16306    2026-07-01           26/27           985         515         Man Utd   Without Club           NaN            6000000.0          Casemiro
+     16756    2026-07-01           26/27          2698         123     Rubin Kazan        Retired           NaN             100000.0       Oleg Ivanov
+     16911    2026-07-01           26/27           371         123          Celtic        Retired           NaN             150000.0 Kasper Schmeichel
+     18940    2026-07-01           26/27         10004         515        Paris FC   Without Club           NaN             100000.0         Rémy Riou
+     23523    2026-07-01           26/27           206         515      Bröndby IF   Without Club           NaN              25000.0  Thomas Mikkelsen
+     25520    2026-07-01           26/27          1304         515 Heracles Almelo   Without Club           NaN             100000.0     Remko Pasveer
+     27706    2026-07-01           26/27           964         123      Zenit S-Pb        Retired           NaN             100000.0 Mikhail Kerzhakov
+     29241    2026-07-01           26/27           720         515           Porto   Without Club           NaN             500000.0      Thiago Silva
+
+[P4.11] Sample rows, fee = 0
+ player_id transfer_date transfer_season  from_club_id  to_club_id  from_club_name    to_club_name  transfer_fee  market_value_in_eur        player_name
+    467994    2030-06-30           25/26          5621         749        Reggiana       FC Empoli           0.0             700000.0  Luca Belardinelli
+    645842    2028-02-02           27/28          6505       19684 Gimcheon Sangmu         Jeju SK           0.0             150000.0         Chan-gi An
+    677470    2028-02-02           27/28          6505        3535 Gimcheon Sangmu        Ulsan HD           0.0             400000.0           Yool Heo
+    709155    2028-02-02           27/28          6505       19684 Gimcheon Sangmu         Jeju SK           0.0             325000.0       Jae-hyeok Oh
+    728133    2028-02-02           27/28          6505       35759 Gimcheon Sangmu      Bucheon FC           0.0             175000.0     Sang-hyeok Lee
+    730364    2028-02-02           27/28          6505       38898 Gimcheon Sangmu       FC Anyang           0.0             150000.0     Gyu-hyeon Choe
+    746780    2028-02-02           27/28          6505        2996 Gimcheon Sangmu    Incheon Utd.           0.0             125000.0     Young-hun Kang
+    755355    2028-02-02           27/28          6505       30925 Gimcheon Sangmu      Gwangju FC           0.0             350000.0         Jin-ho Kim
+    862094    2028-02-02           27/28          6505       21459 Gimcheon Sangmu      Gangwon FC           0.0             400000.0      Jun-seok Song
+    929007    2028-02-02           27/28          6505       19684 Gimcheon Sangmu         Jeju SK           0.0             350000.0         Jun-ha Kim
+    784335    2027-07-18           27/28          6505        6502 Gimcheon Sangmu Jeonbuk Hyundai           0.0             450000.0      Jun-soo Byeon
+    422281    2027-06-30           26/27           159         449        Red Star     Trabzonspor           0.0            3500000.0      Muhammed Cham
+    426781    2027-06-30           26/27         35387       25444   Ratchaburi FC  BG Pathum Utd.           0.0             400000.0       Ekanit Panya
+    622722    2027-06-30           26/27           257          80   FC St. Gallen      VfL Bochum           0.0             800000.0 Colin Kleine-Bekel
+    641765    2027-06-30           26/27         41061         952        Corvinul        UTA Arad           0.0             350000.0      Denis Hrezdac
+    659352    2027-06-30           26/27           541          26     A. Lustenau           Basel           0.0             600000.0        Dion Kacuri
+    726526    2027-06-30           26/27           448         276       Vojvodina   Hellas Verona           0.0             800000.0    Stefan Mitrović
+    803933    2027-06-30           26/27          4467          14    TSV Hartberg  Austria Vienna           0.0             500000.0      Luca Pazourek
+    842479    2027-06-30           26/27             9          43        Kalamata  Heart of Midl.           0.0             700000.0     Kenneth Vargas
+    863745    2027-06-30           26/27           242          26   FC Winterthur           Basel           0.0             200000.0    Emmanuel Essiam
+
+[P4.12] Sample rows, fee > 0 (largest)
+ player_id transfer_date transfer_season  from_club_id  to_club_id from_club_name  to_club_name  transfer_fee  market_value_in_eur       player_name
+     68290    2017-08-03           17/18           131         583      Barcelona           PSG   222000000.0          100000000.0            Neymar
+    342229    2018-07-01           18/19           162         583         Monaco           PSG   180000000.0          120000000.0     Kylian Mbappé
+    288230    2017-08-25           17/18            16         131       Dortmund     Barcelona   148000000.0           33000000.0   Ousmane Dembélé
+    349066    2025-09-01           25/26           762          31      Newcastle     Liverpool   145000000.0          120000000.0    Alexander Isak
+     80444    2018-01-08           17/18            31         131      Liverpool     Barcelona   135000000.0           90000000.0 Philippe Coutinho
+    462250    2019-07-03           19/20           294          13        Benfica      Atlético   127200000.0           70000000.0        João Félix
+    581678    2023-07-01           23/24            16         418       Dortmund   Real Madrid   127000000.0          120000000.0   Jude Bellingham
+    598577    2025-07-01           25/26            15          31     Leverkusen     Liverpool   125000000.0          140000000.0     Florian Wirtz
+    648195    2023-01-31           22/23           294         631        Benfica       Chelsea   121000000.0           55000000.0    Enzo Fernández
+    125781    2019-07-14           19/20            13         131       Atlético     Barcelona   120000000.0          130000000.0 Antoine Griezmann
+    203460    2021-08-05           21/22           405         281    Aston Villa      Man City   117500000.0           65000000.0     Jack Grealish
+      8198    2018-07-10           18/19           418         506    Real Madrid      Juventus   117000000.0          100000000.0 Cristiano Ronaldo
+    357662    2023-07-15           23/24           379          11       West Ham       Arsenal   116600000.0           90000000.0       Declan Rice
+    687626    2023-08-14           23/24          1237         631       Brighton       Chelsea   116000000.0           75000000.0    Moisés Caicedo
+     96341    2021-08-12           21/22            46         631          Inter       Chelsea   113000000.0          100000000.0     Romelu Lukaku
+    122153    2016-08-09           16/17           506         985       Juventus       Man Utd   105000000.0           70000000.0        Paul Pogba
+    309400    2020-09-04           20/21            15         631     Leverkusen       Chelsea   100000000.0           81000000.0       Kai Havertz
+    709726    2025-07-23           25/26            24          31      Frankfurt     Liverpool    95000000.0           75000000.0      Hugo Ekitiké
+    132098    2023-08-12           23/24           148          27      Tottenham Bayern Munich    95000000.0           90000000.0        Harry Kane
+    602105    2022-08-30           22/23           610         985           Ajax       Man Utd    95000000.0           35000000.0            Antony
+
+[P4.13] Round trips: A->B followed by B->A for the same player (loan + end-of-loan signature)
+ round_trips  within_2y  out_fee_null  out_fee_zero  out_fee_pos  back_fee_null  back_fee_zero  back_fee_pos
+       37211      36493          1335         35158          718           2114          32648          2449
+
+[P4.14] Round trip examples with dates (loan-like)
+         player_name   out_date from_club_name  to_club_name    out_fee  back_date   back_fee          mv
+      Victor Osimhen 2024-09-04         Napoli   Galatasaray        0.0 2025-06-30        0.0 100000000.0
+         Xavi Simons 2025-01-29        Leipzig           PSG        0.0 2025-01-30 50000000.0  80000000.0
+      Victor Osimhen 2025-06-30    Galatasaray        Napoli        0.0 2025-07-31 75000000.0  70000000.0
+      Rasmus Højlund 2026-06-30         Napoli       Man Utd        0.0 2026-07-01 44000000.0  60000000.0
+     Marcus Rashford 2025-02-02        Man Utd   Aston Villa        0.0 2025-06-30        0.0  55000000.0
+         Loïs Openda 2025-09-01        Leipzig      Juventus        0.0 2026-06-30        0.0  50000000.0
+     Marcus Rashford 2025-07-23        Man Utd     Barcelona        0.0 2026-06-30        0.0  50000000.0
+     Nicolas Jackson 2025-09-01        Chelsea Bayern Munich        0.0 2026-06-30        0.0  50000000.0
+      Piero Hincapié 2026-06-30        Arsenal    Leverkusen        0.0 2026-07-01 52000000.0  50000000.0
+      Piero Hincapié 2025-09-01     Leverkusen       Arsenal        0.0 2026-06-30        0.0  50000000.0
+Giorgi Mamardashvili 2024-08-28      Liverpool      Valencia        0.0 2025-06-30        0.0  45000000.0
+Giorgi Mamardashvili 2024-08-27       Valencia     Liverpool 30000000.0 2024-08-28        0.0  45000000.0
+       Donyell Malen 2026-06-30           Roma   Aston Villa        0.0 2026-07-01 25000000.0  45000000.0
+       Evan Ferguson 2025-02-03       Brighton      West Ham        0.0 2025-06-30        0.0  40000000.0
+     Victor Boniface 2025-09-01     Leverkusen Werder Bremen        0.0 2026-06-30        0.0  40000000.0
+       Ethan Nwaneri 2026-01-23        Arsenal     Marseille        0.0 2026-06-30        0.0  40000000.0
+              Antony 2025-06-30     Real Betis       Man Utd        0.0 2025-09-01 22000000.0  35000000.0
+   Jean-Clair Todibo 2024-08-10           Nice      West Ham        0.0 2025-06-30        0.0  35000000.0
+    Odilon Kossounou 2024-08-28     Leverkusen      Atalanta        0.0 2025-06-30        0.0  35000000.0
+          Mathys Tel 2025-06-30      Tottenham Bayern Munich        0.0 2025-07-01 35000000.0  35000000.0
+
+[P4.15] Return dates: share of 'back' legs dated 30 June / 31 Dec / 1 July etc.
+back_mmdd     n
+    06-30 15272
+    12-31  4580
+    07-01  2805
+    05-31  1672
+    01-01   950
+    11-30   767
+    01-31   700
+    08-01   426
+    07-31   349
+    02-01   301
+
+[P4.16] Check against the raw CSV: does transfers.csv carry the original fee text (e.g. 'loan', 'free transfer')?
+ player_id transfer_date transfer_season  from_club_id  to_club_id  from_club_name to_club_name  transfer_fee  market_value_in_eur       player_name
+    467994    2030-06-30           25/26          5621         749        Reggiana    FC Empoli           0.0             700000.0 Luca Belardinelli
+    645842    2028-02-02           27/28          6505       19684 Gimcheon Sangmu      Jeju SK           0.0             150000.0        Chan-gi An
+    677470    2028-02-02           27/28          6505        3535 Gimcheon Sangmu     Ulsan HD           0.0             400000.0          Yool Heo
+
+[P4.17] Round-trip gap distribution (days between out leg and return leg)
+       gap     n
+     a <7d  3369
+   b 7-59d  2010
+ c 60-149d  6363
+d 150-399d 22352
+e 400-759d  2531
+   f 760d+   585
+
+[P4.18] Fee NULL rows: breakdown by special clubs
+             kind     n
+     club to club 54565
+  to Without Club  3768
+from Without Club  2404
+     Unknown club   605
+       to Retired   184
+
+[P4.19] Fee 0 rows: breakdown by special clubs
+             kind     n
+     club to club 95468
+     Unknown club   525
+from Without Club    75
+  to Without Club    17
+
+[P4.20] Youth / reserve team name patterns among NULL-fee club-to-club rows
+ from_club_name    to_club_name   n
+    Benfica U17     Benfica U19 101
+     Ajax Youth        Ajax U17 100
+    Benfica U15     Benfica U17  98
+    Benfica Yth     Benfica U15  94
+Sporting Sub-15    Sporting U17  91
+  Sporting Yth. Sporting Sub-15  81
+Dynamo Kyiv U17 Dynamo Kyiv U19  81
+    Barça Youth       Barça U16  81
+   Sporting U17    Sporting U19  81
+   Paris SG U17    Paris SG U19  77
+Real Madrid U18 Real Madrid U19  77
+      PSG Youth    Paris SG U17  70
+      Barça U18       Barça U19  70
+Real Madrid U19     RM Castilla  68
+      Barça U16       Barça U18  64
+       Ajax U19        Ajax U21  63
+   Shakhtar U17    Shakhtar U19  59
+   Red Star U17    Red Star U19  59
+Din. Zagreb U17 Din. Zagreb U19  58
+River Plate U20  River Plate II  58
+Feyenoord Youth   Feyenoord U17  58
+       Ajax U17        Ajax U19  56
+Real Madrid U17 Real Madrid U18  56
+      FCK Youth  Copenhagen U19  55
+  FC Bayern U17   FC Bayern U19  55
+
+[P4.21] Rows where one side is a youth/reserve team (name regex)
+    n  fee_null  fee_zero  fee_pos
+52675     36492     15194      989
+
+[P4.22] Season label vs date-derived season (July-June) mismatch
+ label_matches_date      n
+               True 173465
+              False   1700
+
+[P4.23] Season label mismatch examples
+transfer_season transfer_date  from_club_name    to_club_name  transfer_fee       player_name
+          25/26    2016-06-30    Abahani Ltd.   Bangl. Police           0.0        Isa Faysal
+          25/26    2024-07-01 St. Johnst. U18   St. Johnst. B           NaN  Bayley Klimionek
+          25/26    2025-01-01  Fluminense U20      Fluminense           NaN            Isaque
+          25/26    2025-01-01 Corinthians U17 Corinthians U20           NaN         Gui Negão
+          25/26    2025-01-19         Peñarol          Necaxa           0.0   Facundo Batista
+          25/26    2025-01-29          Avs FS        Feirense           0.0        Zé Ricardo
+          25/26    2025-03-26       Juventude        Amazonas           0.0              Ênio
+          25/26    2025-03-31   Real Monarchs       Salt Lake           0.0       Zavier Gozo
+          25/26    2025-04-02    Without Club      Cavalry FC           NaN Michael Baldisimo
+          25/26    2025-04-11     Chapecoense       São Paulo           0.0     Matheus Belém
+
+[P4.24] Free-agent signings and releases dated 30 June vs 1 July (when do contract-end exits get dated?)
+ mmdd     n
+07-01 47424
+06-30 15591
+01-01 13720
+12-31  4666
+08-01  2557
+02-01  2533
+01-31  2206
+09-01  1758
+05-31  1699
+08-31  1592
+
+[P4.25] Create transfers_classified (classification rule, see checklib.TRANSFER_CLASS_SQL)
+ Count
+175165
+
+[P4.26] CLASSIFICATION RESULT: rows per class
+transfer_class     n   pct
+          free 42849 24.46
+      internal 42223 24.10
+   end of loan 30376 17.34
+          loan 30376 17.34
+          paid 17289  9.87
+       unknown 12052  6.88
+
+[P4.27] CLASSIFICATION RESULT: rows per subclass
+transfer_class               transfer_subclass     n   pct
+   end of loan                     end of loan 30376 17.34
+          free              free: club to club 36283 20.71
+          free free: released / contract ended  3846  2.20
+          free         free: free agent signed  2536  1.45
+          free                   free: retired   184  0.11
+      internal    internal: youth/reserve move 42223 24.10
+          loan                            loan 30111 17.19
+          loan                   loan with fee   265  0.15
+          paid                            paid 17289  9.87
+       unknown      unknown: fee not disclosed 10918  6.23
+       unknown                    unknown club  1134  0.65
+
+[P4.28] DECISION METRIC: share classified as paid/free/loan/end of loan (strict) and incl. internal youth moves
+ total  classified_strict  pct_strict  classified_incl_internal  pct_incl_internal  unknown
+175165             120890        69.0                    163113               93.1    12052
+
+[P4.29] Same metric, senior moves only (neither side a youth/reserve team)
+ total  pct_classified  unknown
+107249            89.1    11649
+
+[P4.30] Same metric, senior moves in the last three seasons (23/24-25/26), value >= 1m
+ total  pct_classified  unknown
+ 12979            95.7      385
+
+[P4.31] Validation sample: known 2022-2026 moves (loans, loan-backs, same-day legs, free transfers)
+           player_name transfer_date  from_club_name  to_club_name  transfer_fee  market_value_in_eur            transfer_subclass
+        Bryan Zaragoza    2022-07-01   Recre Granada    Granada CF           NaN             200000.0   unknown: fee not disclosed
+        Bryan Zaragoza    2024-02-01      Granada CF Bayern Munich           0.0           12000000.0                         loan
+        Bryan Zaragoza    2024-06-30   Bayern Munich    Granada CF           0.0           12000000.0                  end of loan
+        Bryan Zaragoza    2024-07-01      Granada CF Bayern Munich    13000000.0           12000000.0                         paid
+        Bryan Zaragoza    2024-08-09   Bayern Munich    CA Osasuna           0.0           12000000.0                         loan
+        Bryan Zaragoza    2025-06-30      CA Osasuna Bayern Munich           0.0           12000000.0                  end of loan
+        Bryan Zaragoza    2025-07-30   Bayern Munich Celta de Vigo           0.0           12000000.0                         loan
+        Bryan Zaragoza    2026-02-02   Bayern Munich          Roma           0.0           10000000.0                         loan
+        Bryan Zaragoza    2026-02-02   Celta de Vigo Bayern Munich           0.0           10000000.0                  end of loan
+        Bryan Zaragoza    2026-06-30            Roma Bayern Munich           0.0            8000000.0                  end of loan
+        Destiny Udogie    2022-07-01   Hellas Verona       Udinese     5200000.0           17000000.0                         paid
+        Destiny Udogie    2022-08-16       Tottenham       Udinese           0.0           17000000.0                         loan
+        Destiny Udogie    2022-08-16         Udinese     Tottenham    18000000.0           17000000.0                         paid
+        Destiny Udogie    2023-06-30         Udinese     Tottenham           0.0           25000000.0                  end of loan
+  Giorgi Mamardashvili    2024-08-27        Valencia     Liverpool    30000000.0           45000000.0                         paid
+  Giorgi Mamardashvili    2024-08-28       Liverpool      Valencia           0.0           45000000.0                         loan
+  Giorgi Mamardashvili    2025-06-30        Valencia     Liverpool           0.0           30000000.0                  end of loan
+        Jonathan David    2025-07-04           Lille      Juventus           0.0           45000000.0           free: club to club
+          Jonathan Tah    2025-06-09      Leverkusen Bayern Munich     2000000.0           30000000.0                         paid
+       Kevin De Bruyne    2025-07-01        Man City        Napoli           0.0           20000000.0           free: club to club
+          Leo Østigård    2022-07-18        Brighton        Napoli     5500000.0            5000000.0                         paid
+          Leo Østigård    2024-07-30          Napoli Stade Rennais     7370000.0            8000000.0                         paid
+          Leo Østigård    2025-02-03   Stade Rennais    Hoffenheim           0.0            7000000.0                         loan
+          Leo Østigård    2025-06-30      Hoffenheim Stade Rennais           0.0           10000000.0                  end of loan
+          Leo Østigård    2025-07-29   Stade Rennais         Genoa           0.0           10000000.0                         loan
+          Leo Østigård    2026-01-31   Stade Rennais         Genoa     2500000.0           10000000.0                         paid
+          Leo Østigård    2026-01-31           Genoa Stade Rennais           0.0           10000000.0                  end of loan
+            Leroy Sané    2025-07-01   Bayern Munich   Galatasaray           0.0           32000000.0           free: club to club
+           Loïs Openda    2022-07-06     Club Brugge          Lens    15390000.0            7500000.0                         paid
+           Loïs Openda    2023-07-14            Lens       Leipzig    40000000.0           35000000.0                         paid
+           Loïs Openda    2025-09-01         Leipzig      Juventus           0.0           50000000.0                         loan
+           Loïs Openda    2026-06-30        Juventus       Leipzig           0.0           25000000.0                  end of loan
+           Loïs Openda    2026-07-01         Leipzig      Juventus    42750000.0           25000000.0                         paid
+             Marc Guiu    2022-07-01       Barça U16     Barça U18           NaN                  NaN internal: youth/reserve move
+             Marc Guiu    2023-01-01       Barça U18     Barça U19           NaN                  NaN internal: youth/reserve move
+             Marc Guiu    2024-01-01       Barça U19     Barcelona           NaN            2500000.0 internal: youth/reserve move
+             Marc Guiu    2024-07-01       Barcelona       Chelsea     6000000.0            7500000.0                         paid
+             Marc Guiu    2025-08-06         Chelsea    Sunderland           0.0            8000000.0                         loan
+             Marc Guiu    2025-09-01      Sunderland       Chelsea           0.0            8000000.0                  end of loan
+       Marcus Rashford    2025-02-02         Man Utd   Aston Villa           0.0           55000000.0                         loan
+       Marcus Rashford    2025-06-30     Aston Villa       Man Utd           0.0           50000000.0                  end of loan
+       Marcus Rashford    2025-07-23         Man Utd     Barcelona           0.0           50000000.0                         loan
+       Marcus Rashford    2026-06-30       Barcelona       Man Utd           0.0           40000000.0                  end of loan
+       Nicolas Jackson    2022-07-01 Villarreal CF B    Villarreal           NaN            1000000.0 internal: youth/reserve move
+       Nicolas Jackson    2023-07-01      Villarreal       Chelsea    37000000.0           30000000.0                         paid
+       Nicolas Jackson    2025-09-01         Chelsea Bayern Munich           0.0           50000000.0                         loan
+       Nicolas Jackson    2026-06-30   Bayern Munich       Chelsea           0.0           40000000.0                  end of loan
+        Piero Hincapié    2025-09-01      Leverkusen       Arsenal           0.0           50000000.0                         loan
+        Piero Hincapié    2026-06-30         Arsenal    Leverkusen           0.0           50000000.0                  end of loan
+        Piero Hincapié    2026-07-01      Leverkusen       Arsenal    52000000.0           50000000.0                         paid
+        Sofyan Amrabat    2023-09-01      Fiorentina       Man Utd           0.0           30000000.0                         loan
+        Sofyan Amrabat    2024-06-30         Man Utd    Fiorentina           0.0           22000000.0                  end of loan
+        Sofyan Amrabat    2024-08-31      Fiorentina    Fenerbahçe           0.0           22000000.0                         loan
+        Sofyan Amrabat    2025-06-30      Fenerbahçe    Fiorentina           0.0           17000000.0                  end of loan
+        Sofyan Amrabat    2025-07-01      Fiorentina    Fenerbahçe    12000000.0           17000000.0                         paid
+        Sofyan Amrabat    2025-09-01      Fenerbahçe    Real Betis           0.0           17000000.0                         loan
+        Sofyan Amrabat    2026-06-30      Real Betis    Fenerbahçe           0.0           10000000.0                  end of loan
+Trent Alexander-Arnold    2025-06-01       Liverpool   Real Madrid    10000000.0           75000000.0                         paid
+        Victor Osimhen    2024-09-04          Napoli   Galatasaray           0.0          100000000.0                         loan
+        Victor Osimhen    2025-06-30     Galatasaray        Napoli           0.0           70000000.0                  end of loan
+... (67 rows total, first 60 shown)
+
+[P4.32] Unknown rows: what remains (by subclass and top club pairs)
+ from_club_name    to_club_name  transfer_fee  n
+ Atl. Madrileño        Atlético           NaN 23
+     Young Reds   Royal Antwerp           NaN 14
+  Barça Atlètic       Barcelona           NaN 13
+Loko-Kazanka M.     Loko Moscow           NaN 13
+        Tapatío          Chivas           NaN 13
+Barranquilla FC       Junior FC           NaN 12
+Valladolid Prom Real Valladolid           NaN 12
+Tacoma Defiance         Seattle           NaN 12
+Akad Chertanovo      Chertanovo           NaN 12
+  Celta Fortuna   Celta de Vigo           NaN 12
+   Atl. Levante         Levante           NaN 12
+        SL16 FC  Standard Liège           NaN 11
+        Unknown   Academia Hagi           0.0 11
+   Zébra Élites  R Charleroi SC           NaN 11
+  Juve Next Gen        Juventus           NaN 10
+
+[P4.33] Unknown rows by season (are they concentrated in old data?)
+transfer_season  unknown  total  pct_unknown
+          15/16      507   7353          6.9
+          16/17      608   8495          7.2
+          17/18      710  10125          7.0
+          18/19      782  11761          6.6
+          19/20      850  12800          6.6
+          20/21      886  13647          6.5
+          21/22      916  15045          6.1
+          22/23     1051  16386          6.4
+          23/24     1184  17379          6.8
+          24/25     1203  16686          7.2
+          25/26     1195  15676          7.6
+          26/27       56   1706          3.3
+          27/28        0     13          0.0
+
+[P4.34] Possible misclassification check: 'free: club to club' legs whose player later goes back to the from-club (any gap)
+ free_legs  later_returned
+     36283             655
+
+[P4.35] Free departures with value at transfer >= 5m, per season (label-based, loans excluded)
+transfer_season  free_departures_5m_plus  value_given_away
+          22/23                       94      1182000000.0
+          23/24                       97      1082000000.0
+          24/25                       84       942000000.0
+          25/26                       66       650500000.0
+          26/27                       39       431000000.0
+
+[P4.36] Instruction template version (fee 0 or NULL, value >= 5m, season 25/26) WITHOUT loan exclusion, for comparison
+ naive_count
+         725
+
+[P4.37] Summer windows only (transfer_date June-September) - free departures >= 5m
+ summer  n        value
+   2023 88 1052500000.0
+   2024 81  941000000.0
+   2025 53  530000000.0
+   2026 43  476500000.0
+
+[P4.38] Top 10 free departures by value, last three complete seasons (23/24-25/26)
+transfer_season transfer_date    player_name  from_club_name  to_club_name               transfer_subclass  market_value_in_eur
+          24/25    2024-07-01  Kylian Mbappé             PSG   Real Madrid              free: club to club          180000000.0
+          23/24    2023-07-06 Milan Škriniar           Inter           PSG              free: club to club           50000000.0
+          25/26    2025-07-04 Jonathan David           Lille      Juventus              free: club to club           45000000.0
+          23/24    2023-07-15   Lionel Messi             PSG         Miami              free: club to club           35000000.0
+          24/25    2024-07-01  Adrien Rabiot        Juventus  Without Club free: released / contract ended           35000000.0
+          23/24    2023-07-01  Marcus Thuram Mönchengladbach         Inter              free: club to club           32000000.0
+          25/26    2025-07-01     Leroy Sané   Bayern Munich   Galatasaray              free: club to club           32000000.0
+          23/24    2023-07-01  Konrad Laimer         Leipzig Bayern Munich              free: club to club           28000000.0
+          23/24    2023-07-01    Evan Ndicka       Frankfurt          Roma              free: club to club           28000000.0
+          23/24    2023-08-04  Daichi Kamada       Frankfurt         Lazio              free: club to club           27000000.0
+
+[P4.39] Top 10 free departures, partial season 26/27 (data up to cut-off)
+transfer_date          player_name from_club_name to_club_name               transfer_subclass  market_value_in_eur
+   2026-07-01      Ibrahima Konaté      Liverpool Without Club free: released / contract ended           45000000.0
+   2026-07-01       Dušan Vlahović       Juventus Without Club free: released / contract ended           35000000.0
+   2026-07-01        Marcos Senesi    Bournemouth    Tottenham              free: club to club           25000000.0
+   2026-07-01       Bernardo Silva       Man City Without Club free: released / contract ended           22000000.0
+   2026-07-01        Mohamed Salah      Liverpool Without Club free: released / contract ended           22000000.0
+   2026-07-01         Jadon Sancho        Man Utd Without Club free: released / contract ended           18000000.0
+   2026-07-01 Souffian El Karouani        Utrecht   Al-Qadsiah              free: club to club           15000000.0
+   2026-07-01        Julian Brandt       Dortmund Without Club free: released / contract ended           15000000.0
+   2026-07-01          Bamba Dieng     FC Lorient Without Club free: released / contract ended           15000000.0
+   2026-07-01       Danilho Doekhi   Union Berlin Without Club free: released / contract ended           13000000.0
+

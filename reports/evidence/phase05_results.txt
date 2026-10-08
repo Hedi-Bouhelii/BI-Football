@@ -1,0 +1,242 @@
+Phase 5: Appearances
+======================================================================
+
+[P5.1] Size and range
+   rows  players  games      min_d      max_d
+1894350    29531  73426 2012-07-03 2026-06-28
+
+[P5.2] Appearances by competition (top 15) with competition type
+competition_id                 name            type      n
+           IT1              serie-a domestic_league 155187
+           ES1               laliga domestic_league 153877
+           GB1       premier-league domestic_league 149751
+           FR1              ligue-1 domestic_league 143395
+           TR1            super-lig domestic_league 132464
+            L1           bundesliga domestic_league 124613
+           NL1           eredivisie domestic_league 120019
+           PO1        liga-portugal domestic_league 119936
+           BE1   jupiler-pro-league domestic_league 100926
+           RU1         premier-liga domestic_league  95397
+           GR1       super-league-1 domestic_league  87752
+           SC1 scottish-premiership domestic_league  81189
+          UKR1         premier-liga domestic_league  76312
+           DK1            superliga domestic_league  65284
+            EL   uefa-europa-league           other  55834
+
+[P5.3] Appearances by competition type
+                     type       n  pct
+          domestic_league 1606102 84.8
+             domestic_cup  118769  6.3
+                    other   91729  4.8
+        international_cup   60523  3.2
+                      NaN   14200  0.7
+national_team_competition    3027  0.2
+
+[P5.4] Nulls, zeros and maxima
+ minutes_null  minutes_zero  minutes_neg  minutes_over_120  max_minutes  goals_null  max_goals  assists_null  max_assists  card_anomalies   total
+            0             3            0                 3          148           0          6             0            6               0 1894350
+
+[P5.5] Minutes distribution
+   band      n
+    a 0      3
+ b 1-14 185533
+c 15-44 230574
+d 45-89 476663
+   e 90 990536
+  f >90  11041
+
+[P5.6] Rows with minutes > 90: are they extra-time games?
+ minutes_played    n
+             91  185
+             92   18
+             93   24
+             94   38
+             95   45
+             96   43
+             97   57
+             98   56
+             99   65
+            100   82
+            101   70
+            102   81
+            103   61
+            104   43
+            105  197
+            106  161
+            107   18
+            108   42
+            109   48
+            110   55
+            111   55
+            112   55
+            113   51
+            114   35
+            115   52
+            116   31
+            117   30
+            118   41
+            119   37
+            120 9262
+            135    2
+            148    1
+
+[P5.7] Players with 4+ goals in one game (plausibility spot check)
+      date     player_name  goals  assists  minutes_played competition_id
+2014-09-24 Arkadiusz Milik      6        2              90            NLP
+2024-05-19 Mateo Cassierra      5        0              90            RU1
+2024-02-27  Erling Haaland      5        0              77            FAC
+2023-03-14  Erling Haaland      5        0              63             CL
+2022-05-22 Mario Balotelli      5        0              90            TR1
+2021-08-08    Michael Frey      5        0              76            BE1
+2020-10-24  Lassina Traoré      5        3              90            NL1
+2019-09-25     Kasper Kusk      5        0              90            DKP
+2019-09-14   Donyell Malen      5        0              90            NL1
+2018-10-19      Luka Jović      5        0              86             L1
+
+[P5.8] DECISION METRIC: share of appearances with goals, assists, minutes present and plausible
+  total  plausible   pct
+1894350    1894344 100.0
+
+[P5.9] Consistency: sum of appearance goals vs final score, big-5 league games 2012-2025
+ games  equal  app_less  app_more  pct_equal  score_goals  app_goals  avg_total_minutes_per_game  avg_rows_per_game
+ 25239  22994      2243         2       91.1      69827.0    67376.0                      1964.0               28.8
+
+[P5.10] Own goals explain the gap? (game_events goal descriptions mentioning own goal, big-5)
+ own_goal_events
+            2066
+
+[P5.11] Do appearances include unused substitutes? (lineup rows vs appearance rows, big-5 2024)
+ lineup_rows  starters  appearance_rows
+       74240     38544            54295
+
+[P5.12] TASK: value >= 5m players with >= 10 appearances in seasons 2024/25 + 2025/26
+ players_5m  with_10_apps  pct  with_no_apps
+       2518          2029 80.6           291
+
+[P5.13] Same, by date window (2024-07-06..2026-07-06) and split by whether the club plays in a covered league
+ covered_club  players_5m  pct_10_apps
+        False          20         25.0
+         True        2498         81.0
+
+[P5.14] Value >= 5m players without 10 apps: who are they? (sample)
+           name               current_club_name comp last_season  market_value_in_eur  apps
+     Kurt Zouma                        CFR Cluj  RO1        2025             25000000     0
+Vasilije Kostov               Red Star Belgrade SER1        2025             25000000     8
+     Kaio Jorge          Cruzeiro Esporte Clube BRA1        2025             25000000     0
+   Perr Schuurs                       Torino FC  IT1        2024             25000000     0
+ Marco Verratti             Paris Saint-Germain  FR1        2022             25000000     0
+    Rúben Neves    Al-Hilal Saudi Football Club  SA1        2025             25000000     6
+   Moussa Diaby        Al-Ittihad Football Club  SA1        2025             25000000     0
+    Flaco López   Sociedade Esportiva Palmeiras BRA1        2025             25000000     5
+   Yuri Alberto Sport Club Corinthians Paulista BRA1        2025             23000000     0
+    Breno Bidon Sport Club Corinthians Paulista BRA1        2025             22000000     0
+   Zan Vipotnik                    Swansea City  GB1        2025             22000000     5
+Mohamed Simakan          Al-Nassr Football Club  SA1        2025             20000000     2
+ Raphaël Varane                       Como 1907  IT1        2024             20000000     1
+ Mohamed Camara                       AS Monaco  FR1        2023             20000000     0
+     Ivan Toney     Al-Ahli Saudi Football Club  SA1        2025             20000000     0
+
+[P5.15] game_events types and description examples
+         type      n                                                  example
+Substitutions 631339                                           , Not reported
+        Cards 381753                                           1. Yellow card
+        Goals 247803 , Penalty, 4. Goal of the Season Assist: , Fouled player
+     Shootout  13574                                                 , Scored
+
+[P5.16] game_lineups positions (per-game position)
+          position      n
+       Centre-Back 551970
+    Centre-Forward 394661
+        Goalkeeper 357844
+  Central Midfield 329361
+Defensive Midfield 279364
+        Right-Back 230225
+         Left-Back 219387
+       Left Winger 205392
+Attacking Midfield 203736
+      Right Winger 203171
+    Right Midfield  79966
+     Left Midfield  78194
+    Second Striker  31981
+            Attack   3648
+          midfield   3631
+          Defender   3288
+          Midfield   2755
+           Sweeper    439
+                        3
+
+[P5.17] players.position / sub_position
+  position       sub_position    n
+    Attack     Centre-Forward 6749
+    Attack        Left Winger 3297
+    Attack       Right Winger 3170
+    Attack     Second Striker  286
+  Defender        Centre-Back 8766
+  Defender         Right-Back 3700
+  Defender          Left-Back 3495
+Goalkeeper         Goalkeeper 5828
+  Midfield   Central Midfield 5498
+  Midfield Defensive Midfield 4123
+  Midfield Attacking Midfield 3520
+  Midfield      Left Midfield  566
+  Midfield     Right Midfield  565
+   Missing                NaN  586
+
+[P5.18] club_games columns usable for defenders/GK (goals conceded, clean sheets): sample
+game_id  club_id  own_goals  own_position own_manager_name  opponent_id  opponent_goals  opponent_position opponent_manager_name hosting  is_win
+1026846     3449          2          <NA>    Óscar Tabárez         3589               1               <NA>          Jung-moo Huh    Home       1
+1026846     3589          1          <NA>     Jung-moo Huh         3449               2               <NA>         Óscar Tabárez    Away       0
+1026847     3437          3          <NA>   Diego Maradona         6303               1               <NA>        Javier Aguirre    Home       1
+
+[P5.19] Appearance coverage per first-tier league: seasons with games vs seasons with appearances
+competition_id   country_name first_season_games last_season_games first_season_app  games_2025  games_with_app_2025
+           BE1        Belgium               2012              2025             2012       240.0                240.0
+           DK1        Denmark               2012              2025             2012       132.0                132.0
+           ES1          Spain               2012              2025             2012       380.0                380.0
+           FR1         France               2012              2025             2012       306.0                305.0
+           GB1        England               2012              2025             2012       380.0                380.0
+           GR1         Greece               2012              2025             2012       182.0                182.0
+           IT1          Italy               2012              2025             2012       380.0                380.0
+            L1        Germany               2012              2025             2012       306.0                306.0
+           NL1    Netherlands               2012              2025             2012       306.0                306.0
+           PO1       Portugal               2012              2025             2012       306.0                306.0
+           RU1         Russia               2012              2025             2012       240.0                240.0
+           SC1       Scotland               2012              2025             2012       198.0                198.0
+           TR1        Türkiye               2012              2025             2012       306.0                306.0
+          UKR1        Ukraine               2012              2025             2012       240.0                239.0
+            A1        Austria               2024              2025              NaN       192.0                  NaN
+          ARG1      Argentina               2024              2025              NaN       240.0                  NaN
+          AUS1      Australia               2024              2025              NaN       156.0                  NaN
+          BRA1         Brazil               2024              2025              NaN       177.0                  NaN
+            C1    Switzerland               2024              2025              NaN       228.0                  NaN
+          JAP1          Japan               2024              2024              NaN         NaN                  NaN
+           KR1        Croatia               2024              2025              NaN       180.0                  NaN
+          MEX1         Mexico               2024              2025              NaN       153.0                  NaN
+          MLS1  United States               2024              2025              NaN       218.0                  NaN
+           NO1         Norway               2024              2025              NaN        89.0                  NaN
+           PL1         Poland               2024              2025              NaN       306.0                  NaN
+           RO1        Romania               2024              2025              NaN       240.0                  NaN
+          RSK1   Korea, South               2024              2025              NaN        96.0                  NaN
+           SA1   Saudi Arabia               2024              2025              NaN       306.0                  NaN
+           SE1         Sweden               2024              2025              NaN        89.0                  NaN
+          SER1         Serbia               2024              2025              NaN       240.0                  NaN
+           TS1 Czech Republic               2024              2025              NaN       240.0                  NaN
+
+[P5.20] Games with no appearance rows at all, by competition (all seasons)
+competition_id  games_without_app
+           RUP                800
+           ELQ                770
+          UCOL                728
+          MLS1                727
+           SFA                700
+           FAC                654
+           NLP                625
+           SA1                612
+           PL1                612
+           CDR                611
+           DKP                585
+          BRA1                557
+           RO1                480
+          SER1                480
+           TS1                480
+

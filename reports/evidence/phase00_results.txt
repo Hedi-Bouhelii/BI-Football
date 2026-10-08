@@ -1,0 +1,278 @@
+Phase 0: Inventory
+======================================================================
+
+[P0.1] List tables
+             name
+      appearances
+       club_games
+            clubs
+     competitions
+        countries
+      game_events
+     game_lineups
+            games
+   national_teams
+player_valuations
+          players
+        transfers
+          version
+
+[P0.2] Row count of appearances
+      n
+1894350
+
+[P0.3] Schema of appearances
+           column_name column_type null  key default extra
+         appearance_id     VARCHAR  YES None    None  None
+               game_id     INTEGER  YES None    None  None
+             player_id     INTEGER  YES None    None  None
+        player_club_id     INTEGER  YES None    None  None
+player_current_club_id     VARCHAR  YES None    None  None
+                  date        DATE  YES None    None  None
+           player_name     VARCHAR  YES None    None  None
+        competition_id     VARCHAR  YES None    None  None
+          yellow_cards     INTEGER  YES None    None  None
+             red_cards     INTEGER  YES None    None  None
+                 goals     INTEGER  YES None    None  None
+               assists     INTEGER  YES None    None  None
+        minutes_played     INTEGER  YES None    None  None
+
+[P0.4] Row count of club_games
+     n
+177916
+
+[P0.5] Schema of club_games
+          column_name column_type null  key default extra
+              game_id     VARCHAR  YES None    None  None
+              club_id     INTEGER  YES None    None  None
+            own_goals     INTEGER  YES None    None  None
+         own_position     INTEGER  YES None    None  None
+     own_manager_name     VARCHAR  YES None    None  None
+          opponent_id     INTEGER  YES None    None  None
+       opponent_goals     INTEGER  YES None    None  None
+    opponent_position     INTEGER  YES None    None  None
+opponent_manager_name     VARCHAR  YES None    None  None
+              hosting     VARCHAR  YES None    None  None
+               is_win     INTEGER  YES None    None  None
+
+[P0.6] Row count of clubs
+  n
+796
+
+[P0.7] Schema of clubs
+            column_name column_type null  key default extra
+                club_id     VARCHAR  YES None    None  None
+              club_code     VARCHAR  YES None    None  None
+                   name     VARCHAR  YES None    None  None
+domestic_competition_id     VARCHAR  YES None    None  None
+     total_market_value       FLOAT  YES None    None  None
+             squad_size     INTEGER  YES None    None  None
+            average_age       FLOAT  YES None    None  None
+      foreigners_number     INTEGER  YES None    None  None
+  foreigners_percentage       FLOAT  YES None    None  None
+  national_team_players     INTEGER  YES None    None  None
+           stadium_name     VARCHAR  YES None    None  None
+          stadium_seats     INTEGER  YES None    None  None
+    net_transfer_record     VARCHAR  YES None    None  None
+             coach_name     VARCHAR  YES None    None  None
+            last_season     VARCHAR  YES None    None  None
+               filename     VARCHAR  YES None    None  None
+                    url     VARCHAR  YES None    None  None
+
+[P0.8] Row count of competitions
+ n
+65
+
+[P0.9] Schema of competitions
+         column_name column_type null  key default extra
+      competition_id     VARCHAR  YES None    None  None
+    competition_code     VARCHAR  YES None    None  None
+                name     VARCHAR  YES None    None  None
+            sub_type     VARCHAR  YES None    None  None
+                type     VARCHAR  YES None    None  None
+          country_id     INTEGER  YES None    None  None
+        country_name     VARCHAR  YES None    None  None
+domestic_league_code     VARCHAR  YES None    None  None
+       confederation     VARCHAR  YES None    None  None
+         total_clubs     INTEGER  YES None    None  None
+                 url     VARCHAR  YES None    None  None
+
+[P0.10] Row count of countries
+  n
+124
+
+[P0.11] Schema of countries
+  column_name column_type null  key default extra
+   country_id     VARCHAR  YES None    None  None
+ country_name     VARCHAR  YES None    None  None
+ country_code     VARCHAR  YES None    None  None
+confederation     VARCHAR  YES None    None  None
+  total_clubs     INTEGER  YES None    None  None
+total_players     INTEGER  YES None    None  None
+  average_age       FLOAT  YES None    None  None
+          url     VARCHAR  YES None    None  None
+
+[P0.12] Row count of game_events
+      n
+1274469
+
+[P0.13] Schema of game_events
+     column_name column_type null  key default extra
+   game_event_id     VARCHAR  YES None    None  None
+            date        DATE  YES None    None  None
+         game_id     VARCHAR  YES None    None  None
+          minute     INTEGER  YES None    None  None
+            type     VARCHAR  YES None    None  None
+         club_id     INTEGER  YES None    None  None
+       club_name     VARCHAR  YES None    None  None
+       player_id     INTEGER  YES None    None  None
+     description     VARCHAR  YES None    None  None
+    player_in_id     INTEGER  YES None    None  None
+player_assist_id     INTEGER  YES None    None  None
+
+[P0.14] Row count of game_lineups
+      n
+3179016
+
+[P0.15] Schema of game_lineups
+    column_name column_type null  key default extra
+game_lineups_id     VARCHAR  YES None    None  None
+           date        DATE  YES None    None  None
+        game_id     INTEGER  YES None    None  None
+      player_id     INTEGER  YES None    None  None
+        club_id     INTEGER  YES None    None  None
+    player_name     VARCHAR  YES None    None  None
+           type     VARCHAR  YES None    None  None
+       position     VARCHAR  YES None    None  None
+         number     VARCHAR  YES None    None  None
+   team_captain     INTEGER  YES None    None  None
+
+[P0.16] Row count of games
+    n
+88958
+
+[P0.17] Schema of games
+           column_name column_type null  key default extra
+               game_id     VARCHAR  YES None    None  None
+        competition_id     VARCHAR  YES None    None  None
+                season     VARCHAR  YES None    None  None
+                 round     VARCHAR  YES None    None  None
+                  date        DATE  YES None    None  None
+          home_club_id     INTEGER  YES None    None  None
+          away_club_id     INTEGER  YES None    None  None
+       home_club_goals     INTEGER  YES None    None  None
+       away_club_goals     INTEGER  YES None    None  None
+    home_club_position     INTEGER  YES None    None  None
+    away_club_position     INTEGER  YES None    None  None
+home_club_manager_name     VARCHAR  YES None    None  None
+away_club_manager_name     VARCHAR  YES None    None  None
+               stadium     VARCHAR  YES None    None  None
+            attendance     INTEGER  YES None    None  None
+               referee     VARCHAR  YES None    None  None
+                   url     VARCHAR  YES None    None  None
+   home_club_formation     VARCHAR  YES None    None  None
+   away_club_formation     VARCHAR  YES None    None  None
+        home_club_name     VARCHAR  YES None    None  None
+        away_club_name     VARCHAR  YES None    None  None
+             aggregate     VARCHAR  YES None    None  None
+      competition_type     VARCHAR  YES None    None  None
+
+[P0.18] Row count of national_teams
+  n
+124
+
+[P0.19] Schema of national_teams
+          column_name column_type null  key default extra
+     national_team_id     VARCHAR  YES None    None  None
+                 name     VARCHAR  YES None    None  None
+            team_code     VARCHAR  YES None    None  None
+           country_id     VARCHAR  YES None    None  None
+         country_name     VARCHAR  YES None    None  None
+         country_code     VARCHAR  YES None    None  None
+        confederation     VARCHAR  YES None    None  None
+       team_image_url     VARCHAR  YES None    None  None
+           squad_size     INTEGER  YES None    None  None
+          average_age       FLOAT  YES None    None  None
+    foreigners_number     INTEGER  YES None    None  None
+foreigners_percentage       FLOAT  YES None    None  None
+   total_market_value     INTEGER  YES None    None  None
+           coach_name     VARCHAR  YES None    None  None
+         fifa_ranking     INTEGER  YES None    None  None
+          last_season     VARCHAR  YES None    None  None
+                  url     VARCHAR  YES None    None  None
+
+[P0.20] Row count of player_valuations
+     n
+656301
+
+[P0.21] Schema of player_valuations
+                        column_name column_type null  key default extra
+                          player_id     INTEGER  YES None    None  None
+                               date        DATE  YES None    None  None
+                market_value_in_eur     INTEGER  YES None    None  None
+                  current_club_name     VARCHAR  YES None    None  None
+                    current_club_id     INTEGER  YES None    None  None
+player_club_domestic_competition_id     VARCHAR  YES None    None  None
+
+[P0.22] Row count of players
+    n
+50149
+
+[P0.23] Schema of players
+                         column_name column_type null  key default extra
+                           player_id     INTEGER  YES None    None  None
+                          first_name     VARCHAR  YES None    None  None
+                           last_name     VARCHAR  YES None    None  None
+                                name     VARCHAR  YES None    None  None
+                         last_season     VARCHAR  YES None    None  None
+                     current_club_id     VARCHAR  YES None    None  None
+                         player_code     VARCHAR  YES None    None  None
+                    country_of_birth     VARCHAR  YES None    None  None
+                       city_of_birth     VARCHAR  YES None    None  None
+              country_of_citizenship     VARCHAR  YES None    None  None
+                       date_of_birth   TIMESTAMP  YES None    None  None
+                        sub_position     VARCHAR  YES None    None  None
+                            position     VARCHAR  YES None    None  None
+                                foot     VARCHAR  YES None    None  None
+                        height_in_cm     INTEGER  YES None    None  None
+            contract_expiration_date   TIMESTAMP  YES None    None  None
+                          agent_name     VARCHAR  YES None    None  None
+                           image_url     VARCHAR  YES None    None  None
+                  international_caps     INTEGER  YES None    None  None
+                 international_goals     INTEGER  YES None    None  None
+            current_national_team_id     VARCHAR  YES None    None  None
+                                 url     VARCHAR  YES None    None  None
+current_club_domestic_competition_id     VARCHAR  YES None    None  None
+                   current_club_name     VARCHAR  YES None    None  None
+                 market_value_in_eur     INTEGER  YES None    None  None
+         highest_market_value_in_eur     INTEGER  YES None    None  None
+
+[P0.24] Row count of transfers
+     n
+175165
+
+[P0.25] Schema of transfers
+        column_name   column_type null  key default extra
+          player_id       INTEGER  YES None    None  None
+      transfer_date          DATE  YES None    None  None
+    transfer_season       VARCHAR  YES None    None  None
+       from_club_id       INTEGER  YES None    None  None
+         to_club_id       INTEGER  YES None    None  None
+     from_club_name       VARCHAR  YES None    None  None
+       to_club_name       VARCHAR  YES None    None  None
+       transfer_fee DECIMAL(18,3)  YES None    None  None
+market_value_in_eur DECIMAL(18,3)  YES None    None  None
+        player_name       VARCHAR  YES None    None  None
+
+[P0.26] Row count of version
+ n
+ 1
+
+[P0.27] Schema of version
+column_name column_type null  key default extra
+commit_hash     VARCHAR  YES None    None  None
+
+NOTE: Column profile per table/column used:
+SELECT COUNT(*) FILTER (WHERE "<col>" IS NULL), COUNT(DISTINCT "<col>") FROM <table>;
+SELECT DISTINCT CAST("<col>" AS VARCHAR) FROM (SELECT "<col>" FROM <table> WHERE "<col>" IS NOT NULL LIMIT 2000) LIMIT 3;
+

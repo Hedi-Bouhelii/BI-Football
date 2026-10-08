@@ -1,0 +1,358 @@
+Phase 2: Contract data
+======================================================================
+
+[P2.1] Meaning of players.last_season: distribution (VARCHAR, cast to INT)
+last_season  players  with_contract  pct_with_contract  with_value
+       2012     1658            313               18.9        1594
+       2013     2061            491               23.8        1997
+       2014     1660            517               31.1        1598
+       2015     1651            519               31.4        1590
+       2016     1831            718               39.2        1747
+       2017     1661            698               42.0        1581
+       2018     2065           1085               52.5        1983
+       2019     1566            931               59.5        1499
+       2020     1843           1182               64.1        1757
+       2021     1817           1357               74.7        1687
+       2022     1877           1186               63.2        1734
+       2023     2092           1455               69.6        1854
+       2024     6075           3908               64.3        2503
+       2025    22292          17220               77.2       18404
+
+[P2.2] last_season vs the player's last appearance season (sample check of the meaning)
+ matches_last_app_season  players
+                   False     4553
+                    True    24977
+
+[P2.3] Overall contract completeness
+ players  with_contract  pct
+   50149          31580 63.0
+
+[P2.4] Recently active players (last_season >= 2025) by current competition
+comp    n  pct_with_contract  pct_contract_running_at_cutoff
+ NaN 2986               64.7                            42.1
+ARG1  954               98.4                            97.6
+MLS1  856               99.8                            98.7
+ GB1  826               84.7                            82.2
+ IT1  770               84.0                            82.6
+ ES1  748               91.7                            90.1
+JAP1  740               69.1                            40.3
+ TR1  726               76.0                            75.1
+BRA1  706               98.3                            96.7
+MEX1  674               45.4                            43.3
+ FR1  673               82.3                            80.5
+ NL1  645               84.3                            82.8
+SER1  636               67.0                            55.3
+ RO1  630               53.8                            46.3
+ SA1  616               57.6                            53.6
+
+[P2.5] DECISION METRIC: recently active players at big-5 clubs with a valid contract date
+   n  with_contract  pct_with_contract  valid_range  pct_valid_range  running_at_cutoff  pct_running_at_cutoff
+3627           3075               84.8         3075             84.8               3009                   83.0
+
+[P2.6] Same, restricted to players with market value >= 1m EUR
+   n  pct_with_contract  pct_running_at_cutoff
+2474               91.4                   90.4
+
+[P2.7] Distribution of expiry years (all players)
+ expiry_year     n
+        2000     1
+        2023  5135
+        2024  2771
+        2025  1659
+        2026  6481
+        2027  6475
+        2028  4890
+        2029  2733
+        2030  1184
+        2031   222
+        2032    17
+        2033     9
+        2034     2
+        2035     1
+        <NA> 18569
+
+[P2.8] Distribution of expiry month-day (are dates mostly 30 June?)
+ mmdd     n
+06-30 23252
+12-31  5838
+05-31  1418
+11-30   345
+01-31   282
+07-31    54
+06-15    39
+05-30    25
+09-30    20
+03-31    17
+
+[P2.9] Expiry year by last_season (shows that the date is frozen at the player's last scrape)
+last_season    min_exp median_exp    max_exp     n
+       2012 2023-05-31 2024-06-30 2027-06-30   313
+       2013 2023-04-30 2024-06-30 2026-06-30   491
+       2014 2023-05-10 2023-06-30 2026-06-30   517
+       2015 2023-05-31 2023-06-30 2027-06-30   519
+       2016 2023-05-31 2023-06-30 2026-06-30   718
+       2017 2023-03-31 2023-06-30 2026-06-30   698
+       2018 2023-01-01 2023-06-30 2026-12-31  1085
+       2019 2023-01-31 2023-06-30 2027-06-30   931
+       2020 2023-03-31 2023-06-30 2027-12-31  1182
+       2021 2023-03-15 2023-06-30 2027-07-31  1357
+       2022 2023-05-31 2024-06-30 2028-06-30  1186
+       2023 2000-05-31 2025-06-30 2029-06-30  1455
+       2024 2026-01-31 2026-12-31 2031-06-30  3908
+       2025 2026-01-10 2027-12-31 2035-06-30 17220
+
+[P2.10] At-risk cohort: value >= 5m, contract ends 2026-07-06..2027-07-06 (top 50)
+                 name                       current_club_name comp last_season  market_value_in_eur contract_end
+      Vinicius Junior                             Real Madrid  ES1        2025            140000000   2027-06-30
+           Phil Foden                         Manchester City  GB1        2025             70000000   2027-06-30
+           Harry Kane                           Bayern Munich   L1        2025             60000000   2027-06-30
+     Federico Dimarco                             Inter Milan  IT1        2025             50000000   2027-06-30
+                Rodri                         Manchester City  GB1        2025             50000000   2027-06-30
+        Ferran Torres                            FC Barcelona  ES1        2025             50000000   2027-06-30
+   Gabriel Martinelli                              Arsenal FC  GB1        2025             45000000   2027-06-30
+              Éderson                             Atalanta BC  IT1        2025             45000000   2027-06-30
+         Senny Mayulu                     Paris Saint-Germain  FR1        2025             40000000   2027-06-30
+    Christian Pulisic                                AC Milan  IT1        2025             40000000   2027-06-30
+        Karim Adeyemi                       Borussia Dortmund   L1        2025             40000000   2027-06-30
+    Lisandro Martínez                       Manchester United  GB1        2025             40000000   2027-06-30
+          Yasin Ayari                  Brighton & Hove Albion  GB1        2025             35000000   2027-06-30
+      Bruno Fernandes                       Manchester United  GB1        2025             35000000   2027-06-30
+          Brahim Díaz                             Real Madrid  ES1        2025             35000000   2027-06-30
+         Curtis Jones                            Liverpool FC  GB1        2025             35000000   2027-06-30
+        Konrad Laimer                           Bayern Munich   L1        2025             32000000   2027-06-30
+          Fabián Ruiz                     Paris Saint-Germain  FR1        2025             30000000   2027-06-30
+ Jean-Philippe Mateta                          Crystal Palace  GB1        2025             30000000   2027-06-30
+           João Félix                  Al-Nassr Football Club  SA1        2025             28000000   2027-06-30
+        Calvin Bassey                               Fulham FC  GB1        2025             28000000   2027-06-30
+       Chris Richards                          Crystal Palace  GB1        2025             28000000   2027-06-30
+         Noah Atubolu                             SC Freiburg   L1        2025             25000000   2027-06-30
+      Tyrick Mitchell                          Crystal Palace  GB1        2025             25000000   2027-06-30
+           David Raum                              RB Leipzig   L1        2025             25000000   2027-06-30
+          Richarlison                       Tottenham Hotspur  GB1        2025             25000000   2027-06-30
+        António Silva                              SL Benfica  PO1        2025             25000000   2027-06-30
+     Raphael Onyedika                          Club Brugge KV  BE1        2025             23000000   2027-06-30
+          Oumar Solet                          Udinese Calcio  IT1        2025             23000000   2027-06-30
+     Brenden Aaronson                            Leeds United  GB1        2025             22000000   2027-06-30
+          Jhon Lucumí              Bologna Football Club 1909  IT1        2025             22000000   2027-06-30
+         Kaoru Mitoma                  Brighton & Hove Albion  GB1        2025             22000000   2027-06-30
+       Ryan Sessegnon                               Fulham FC  GB1        2025             22000000   2027-06-30
+       Thiago Pitarch                             Real Madrid  ES1        2025             20000000   2027-06-30
+        Jack Grealish                              Everton FC  GB1        2025             20000000   2027-06-30
+       Harvey Elliott                            Liverpool FC  GB1        2025             20000000   2027-06-30
+      Marcos Llorente                      Atlético de Madrid  ES1        2025             20000000   2027-06-30
+    David Affengruber                                Elche CF  ES1        2025             20000000   2027-06-30
+          Arthur Avom                              FC Lorient  FR1        2025             20000000   2027-06-30
+         Fábio Vieira                            Hamburger SV   L1        2025             18000000   2027-06-30
+         Roger Ibañez             Al-Ahli Saudi Football Club  SA1        2025             18000000   2027-06-30
+        Dwight McNeil                              Everton FC  GB1        2025             18000000   2027-06-30
+                 Beto                              Everton FC  GB1        2025             18000000   2027-06-30
+               Malcom            Al-Hilal Saudi Football Club  SA1        2025             18000000   2027-06-30
+           Paul Nebel                          1.FSV Mainz 05   L1        2025             18000000   2027-06-30
+       Tim Iroegbunam                              Everton FC  GB1        2025             18000000   2027-06-30
+           Yann Gboho                             FC Toulouse  FR1        2025             18000000   2027-06-30
+     Leandro Trossard                              Arsenal FC  GB1        2025             18000000   2027-06-30
+Konstantinos Tzolakis Olympiakos Syndesmos Filathlon Peiraios  GR1        2025             18000000   2027-06-30
+        Gabriel Jesus                              Arsenal FC  GB1        2025             17000000   2027-06-30
+
+[P2.11] At-risk cohort size, total and big-5
+ at_risk_total  at_risk_big5  at_risk_active
+           348           214             332
+
+[P2.12] Any other table carrying a contract date? (column search)
+table_name              column_name
+   players contract_expiration_date
+
+[P2.13] Snapshot test 1: players whose latest transfer (<= cut-off) was in 2025 to their current club - contract end vs transfer date
+ players_moved_2025  with_contract  contract_after_move  contract_before_or_at_move  pct_consistent
+               6241           5272                 5210                          62            98.8
+
+[P2.14] Snapshot test 1b: sample of 2025 movers with their current contract
+                 name transfer_date from_club_name  to_club_name  transfer_fee   current_club_name contract_end  market_value_in_eur
+Khvicha Kvaratskhelia    2025-01-17         Napoli           PSG    80000000.0 Paris Saint-Germain   2029-06-30            140000000
+        Florian Wirtz    2025-07-01     Leverkusen     Liverpool   125000000.0        Liverpool FC   2030-06-30            100000000
+         Rayan Cherki    2025-06-10           Lyon      Man City    36500000.0     Manchester City   2030-06-30             90000000
+         Yan Diomande    2025-07-16     CD Leganés       Leipzig    20000000.0          RB Leipzig   2030-06-30             90000000
+       Alexander Isak    2025-09-01      Newcastle     Liverpool   145000000.0        Liverpool FC   2031-06-30             85000000
+              Estêvão    2025-07-14      Palmeiras       Chelsea    45000000.0          Chelsea FC   2033-06-30             80000000
+         Hugo Ekitiké    2025-07-23      Frankfurt     Liverpool    95000000.0        Liverpool FC   2031-06-30             80000000
+           João Pedro    2025-07-02       Brighton       Chelsea    63700000.0          Chelsea FC   2033-06-30             80000000
+       Victor Osimhen    2025-07-31         Napoli   Galatasaray    75000000.0         Galatasaray   2029-06-30             75000000
+     Martín Zubimendi    2025-07-06  Real Sociedad       Arsenal    70000000.0          Arsenal FC   2030-06-30             75000000
+        Matheus Cunha    2025-07-01         Wolves       Man Utd    74200000.0   Manchester United   2030-06-30             75000000
+         Bryan Mbeumo    2025-07-21      Brentford       Man Utd    75000000.0   Manchester United   2030-06-30             75000000
+       Benjamin Sesko    2025-08-09        Leipzig       Man Utd    76500000.0   Manchester United   2030-06-30             75000000
+            Luis Díaz    2025-07-30      Liverpool Bayern Munich    70000000.0       Bayern Munich   2029-06-30             70000000
+        Junior Kroupi    2025-06-30     FC Lorient   Bournemouth           0.0     AFC Bournemouth   2030-06-30             70000000
+
+[P2.15] Snapshot test 2: one row per player in players (no history possible)
+ rows  players
+50149    50149
+
+[P2.16] Snapshot test 3: does current_club_id agree with the latest transfer destination (<= cut-off)?
+ agrees  players
+  False     3208
+   True    15823
+
+[P2.17] Contract dates in the past (< 2026-07-06) for players with a current club, by last_season
+last_season  n_past_contract    min_exp    max_exp
+       2012              312 2023-05-31 2026-06-30
+       2013              491 2023-04-30 2026-06-30
+       2014              517 2023-05-10 2026-06-30
+       2015              518 2023-05-31 2026-06-30
+       2016              718 2023-05-31 2026-06-30
+       2017              698 2023-03-31 2026-06-30
+       2018             1084 2023-01-01 2026-06-30
+       2019              929 2023-01-31 2026-06-30
+       2020             1179 2023-03-31 2026-06-30
+       2021             1349 2023-03-15 2026-06-30
+       2022             1149 2023-05-31 2026-06-30
+       2023             1219 2000-05-31 2026-06-30
+       2024             1590 2026-01-31 2026-06-30
+       2025              808 2026-01-10 2026-07-01
+
+[P2.18] Recently active (last_season >= 2025) with contract already expired at cut-off, by expiry date
+contract_end    n
+  2026-06-30 1134
+  2026-01-31  172
+  2026-05-31  151
+  2026-05-30   13
+  2026-06-19    2
+  2026-06-15    2
+  2026-04-30    2
+  2026-01-10    1
+  2026-07-01    1
+  2026-03-05    1
+
+[P2.19] Sample: active big-5 players whose contract ended before the cut-off
+                  name   current_club_name contract_end  market_value_in_eur last_season
+             Ansu Fati           AS Monaco   2026-06-30             15000000        2025
+             Wout Faes           AS Monaco   2026-06-30             10000000        2025
+         Krépin Diatta           AS Monaco   2026-06-30              6000000        2025
+            Javi López         Real Oviedo   2026-06-30              5000000        2025
+          Lewis Koumas           Hull City   2026-06-30              4000000        2025
+          Tyler Bindon    Sheffield United   2026-06-30              3500000        2025
+        James Abankwah          Watford FC   2026-06-30              3500000        2025
+             Leo Walta        Swansea City   2026-06-30              3000000        2025
+            Jan Mlakar           Amiens SC   2026-06-30              2800000        2025
+Rhys Norrington-Davies Queens Park Rangers   2026-06-30              2500000        2025
+          Armindo Sieb      1.FSV Mainz 05   2026-06-30              2500000        2025
+       Nathanaël Mbuku     Montpellier HSC   2026-06-30              2000000        2025
+            Arne Maier         FC Augsburg   2026-06-30              2000000        2025
+         Sota Kawasaki      1.FSV Mainz 05   2026-06-30              2000000        2025
+      Jozhua Vertrouwd      Rayo Vallecano   2026-06-30              2000000        2025
+
+[P2.20] Implausible contract dates (before 2000 or after 2035)
+ before_2000  after_2035    min_exp    max_exp
+           0           0 2000-05-31 2035-06-30
+
+[P2.21] Players whose current club looks like a placeholder (no club name)
+current_club_id  n  with_contract
+            515 34              0
+              7 17             17
+          14320 17             17
+           6356 17              6
+          68653 15              5
+            184 15             15
+          57337 15              0
+           2557 15              2
+          15758 14              2
+          15817 14             14
+
+[P2.22] clubs tagged with a big-5 domestic_competition_id, by clubs.last_season
+domestic_competition_id last_season  clubs
+                    ES1        2012      1
+                    ES1        2014      1
+                    ES1        2016      1
+                    ES1        2017      2
+                    ES1        2020      2
+                    ES1        2023      3
+                    ES1        2024      3
+                    ES1        2025     20
+                    FR1        2013      2
+                    FR1        2014      1
+                    FR1        2015      1
+                    FR1        2016      2
+                    FR1        2018      2
+                    FR1        2019      1
+                    FR1        2020      2
+                    FR1        2021      1
+                    FR1        2022      2
+                    FR1        2023      1
+                    FR1        2024      3
+                    FR1        2025     18
+                    GB1        2012      2
+                    GB1        2014      1
+                    GB1        2016      2
+                    GB1        2017      2
+                    GB1        2018      2
+                    GB1        2020      1
+                    GB1        2021      2
+                    GB1        2023      2
+                    GB1        2024      3
+                    GB1        2025     20
+                    IT1        2012      1
+                    IT1        2013      2
+                    IT1        2014      1
+                    IT1        2015      1
+                    IT1        2016      2
+                    IT1        2018      1
+                    IT1        2019      2
+                    IT1        2020      2
+                    IT1        2022      2
+                    IT1        2023      2
+                    IT1        2024      3
+                    IT1        2025     20
+                     L1        2013      1
+                     L1        2016      1
+                     L1        2018      2
+                     L1        2019      2
+                     L1        2021      2
+                     L1        2022      2
+                     L1        2023      1
+                     L1        2024      2
+                     L1        2025     18
+
+[P2.23] Example: big-5-tagged clubs that did not play in the big-5 in 2025/26
+club_id               name domestic_competition_id last_season
+    180     Southampton FC                     GB1        2024
+   2919           AC Monza                     IT1        2024
+    269      Holstein Kiel                      L1        2024
+   1244         CD Leganés                     ES1        2024
+    472      UD Las Palmas                     ES1        2024
+   1421        Stade Reims                     FR1        2024
+    607         Venezia FC                     IT1        2024
+   1003     Leicester City                     GB1        2024
+    366 Real Valladolid CF                     ES1        2024
+    618   AS Saint-Étienne                     FR1        2024
+
+[P2.24] Number of clubs that actually played in a big-5 league in 2025/26
+ clubs
+    96
+
+[P2.25] DECISION METRIC (corrected): recently active players at clubs that played big-5 2025/26
+   n  with_contract  pct_with_contract  running_at_cutoff  pct_running_at_cutoff
+3464           2918               84.2               2880                   83.1
+
+[P2.26] Same, value >= 1m EUR
+   n  pct_with_contract  pct_running_at_cutoff
+2359               91.2                   90.8
+
+[P2.27] At-risk cohort (value >= 5m, ends 2026-07-06..2027-07-06) at clubs that played big-5 2025/26
+ at_risk_big5_current  total_value_eur
+                  206     2859000000.0
+
+[P2.28] Missing contract dates among active big-5 players: who are they? (value bands)
+value_band  missing_contract
+  no value               206
+      1-5m               149
+       <1m               132
+       5m+                59
+
+[P2.29] Players with current_club_id 515 (placeholder with no club row)
+                   name last_season  market_value_in_eur contract_expiration_date
+Jóhann Berg Gudmundsson        2025               350000                      NaT
+            Ali Ahamada        2025               150000                      NaT
+       Varazdat Haroyan        2025               300000                      NaT
+           Plamen Iliev        2025                 <NA>                      NaT
+           Wilker Ángel        2025               100000                      NaT
+

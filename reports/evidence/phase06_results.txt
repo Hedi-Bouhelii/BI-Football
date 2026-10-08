@@ -1,0 +1,209 @@
+Phase 6: Keys and referential integrity
+======================================================================
+
+[P6.1] Key type mismatches (from DESCRIBE)
+       table_name              column_name data_type
+            games             away_club_id   INTEGER
+       club_games                  club_id   INTEGER
+            clubs                  club_id   VARCHAR
+      game_events                  club_id   INTEGER
+     game_lineups                  club_id   INTEGER
+      appearances           competition_id   VARCHAR
+     competitions           competition_id   VARCHAR
+            games           competition_id   VARCHAR
+     competitions               country_id   INTEGER
+        countries               country_id   VARCHAR
+   national_teams               country_id   VARCHAR
+player_valuations          current_club_id   INTEGER
+          players          current_club_id   VARCHAR
+          players current_national_team_id   VARCHAR
+            clubs  domestic_competition_id   VARCHAR
+        transfers             from_club_id   INTEGER
+      appearances                  game_id   INTEGER
+       club_games                  game_id   VARCHAR
+      game_events                  game_id   VARCHAR
+     game_lineups                  game_id   INTEGER
+            games                  game_id   VARCHAR
+            games             home_club_id   INTEGER
+   national_teams         national_team_id   VARCHAR
+       club_games              opponent_id   INTEGER
+      appearances           player_club_id   INTEGER
+      appearances   player_current_club_id   VARCHAR
+      appearances                player_id   INTEGER
+      game_events                player_id   INTEGER
+     game_lineups                player_id   INTEGER
+player_valuations                player_id   INTEGER
+          players                player_id   INTEGER
+        transfers                player_id   INTEGER
+        transfers               to_club_id   INTEGER
+
+[P6.2] Orphans: appearances -> players
+ orphans  pct
+       2  0.0
+
+[P6.3] Orphans: appearances -> games (cast games.game_id VARCHAR -> INT)
+ orphans  pct
+       0  0.0
+
+[P6.4] Can games.game_id always be cast to INTEGER?
+ not_castable
+            0
+
+[P6.5] Orphans: player_valuations -> players
+ orphans  pct
+       0  0.0
+
+[P6.6] Orphans: transfers -> players
+ orphans  pct
+       0  0.0
+
+[P6.7] Players' current club not in clubs (current_club_id VARCHAR vs clubs.club_id VARCHAR)
+ players_without_club  pct
+                 2986 5.95
+
+[P6.8] ...and those players: do they have a current_club_name / competition? (explains the orphan)
+ no_club_name  no_comp    n
+         True     True 2986
+
+[P6.9] Orphans: appearances.player_club_id -> clubs
+ orphans  pct
+   11062 0.58
+
+[P6.10] Orphan appearance clubs by competition type (expected: cup / European opponents outside covered leagues)
+                     type    n
+                    other 3301
+             domestic_cup 3075
+national_team_competition 3027
+        international_cup 1286
+                      NaN  373
+
+[P6.11] Orphans: games home/away club -> clubs
+ home_orphans  away_orphans  games
+        12818         11242  88958
+
+[P6.12] Orphans: games home/away club -> clubs, domestic league games only
+ games_with_orphan_club  league_games
+                      0         63382
+
+[P6.13] games with null home/away club id or name
+ null_ids  null_names
+        0         122
+
+[P6.14] Orphans: transfers from/to club -> clubs (expected high: clubs outside covered leagues)
+ pct_from_orphan  pct_to_orphan  distinct_from_clubs_missing
+            62.6           52.9                        16612
+
+[P6.15] Orphans: player_valuations.current_club_id -> clubs
+ orphans  pct
+   92973 14.2
+
+[P6.16] Orphans: competition ids (games, appearances, clubs, players) -> competitions
+        src  orphans                     ids
+      games     1214 KLUB,CGB,POCP,UKRS,COL1
+appearances    14200      CGB,UKRS,POCP,KLUB
+      clubs       20                    COL1
+    players      806                    COL1
+
+[P6.17] game_lineups / game_events -> players and games
+ lineup_player_orphans  lineup_rows  lineup_game_orphans  event_player_orphans  event_rows  event_game_orphans
+                315555      3179016                    0                128274     1274469                   0
+
+[P6.18] Duplicate keys in every table
+                               key  dup_keys
+                 players.player_id         0
+                     games.game_id         0
+         appearances.appearance_id         0
+   appearances.(game_id,player_id)         0
+                     clubs.club_id         0
+       competitions.competition_id         0
+player_valuations.(player_id,date)         0
+transfers.(player_id,date,from,to)         0
+      club_games.(game_id,club_id)         0
+      game_lineups.game_lineups_id         0
+  game_lineups.(game_id,player_id)        12
+         game_events.game_event_id         0
+
+[P6.19] Exact duplicate transfer rows (all columns)
+ exact_duplicate_rows
+                    0
+
+[P6.20] Duplicate transfer keys: sample
+(0 rows)
+
+[P6.21] Duplicate lineup (game_id, player_id): sample
+                 game_lineups_id       date  game_id  player_id  club_id      player_name            type           position number  team_captain
+2ed5d7933b5a7251c3de4916a5c6dccd 2013-07-18  2345078      38957     2531 Mariyan Ognyanov starting_lineup Attacking Midfield      7             0
+ba6b9ef1ae0a7e5328d77438372d939b 2013-07-18  2345078      38957     2531 Mariyan Ognyanov starting_lineup     Centre-Forward      7             0
+9fc8e99311bfc9d7ecafd940c6cb075d 2013-07-18  2345078      44398     2531    Veselin Minev starting_lineup          Left-Back     14             0
+65b158ffe7515b50311f6b9e4097826c 2013-07-18  2345078      44398     2531    Veselin Minev starting_lineup          Left-Back     14             1
+8470ea4ad987c3aebbc65eaa02cbbb3b 2013-07-18  2345078      46381     6808  Milan Muminovic starting_lineup Defensive Midfield     23             0
+5419d9054e3eb4c42e5fc678c3aa3afb 2013-07-18  2345078      46381     6808  Milan Muminovic starting_lineup       Right Winger     23             0
+
+[P6.22] appearance_id format = '<game_id>_<player_id>'?
+ mismatches
+          0
+
+[P6.23] appearances: player_club_id is one of the two clubs in the game; dates agree with games
+ club_not_in_game  date_mismatch  comp_mismatch   total
+                0              0              0 1894350
+
+[P6.24] club_games: exactly two rows per game?
+ n_rows  games
+      2  88958
+
+[P6.25] Clubs table coverage: clubs per domestic competition
+domestic_competition_id  clubs
+                    TR1     43
+                    IT1     39
+                   UKR1     39
+                    GB1     37
+                    FR1     36
+                    PO1     35
+                    RU1     34
+                    ES1     33
+                   ARG1     32
+                     L1     31
+                   MLS1     30
+                    GR1     29
+                    NL1     29
+                    BE1     28
+                   BRA1     24
+                   JAP1     23
+                    DK1     21
+                    SA1     21
+                    PL1     21
+                   COL1     20
+                    SE1     19
+                    RO1     19
+                    NO1     19
+                   SER1     18
+                   MEX1     18
+                    TS1     17
+                    SC1     17
+                   RSK1     14
+                   AUS1     13
+                     C1     13
+                     A1     13
+                    KR1     11
+
+[P6.26] Missing competitions: what are they? (games referencing codes absent from competitions)
+competition_id competition_type  games first_season last_season
+          POCP             None    602         2012        2025
+           CGB             None    246         2022        2025
+          COL1             None    200         2025        2025
+          KLUB             None    156         2012        2025
+          UKRS             None     10         2012        2025
+
+[P6.27] Players in lineups but not in players: which clubs/competitions? (top)
+competition_id     n
+           ELQ 42979
+           FAC 34020
+           RUP 29402
+          ECLQ 26603
+           SFA 25862
+           CDR 25193
+           NLP 23864
+           DKP 17892
+           CLQ 16765
+           GRP 13047
+

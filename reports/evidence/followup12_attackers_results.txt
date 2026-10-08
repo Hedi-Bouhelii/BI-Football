@@ -1,0 +1,223 @@
+Phase 12: Attacker check
+======================================================================
+
+[P12.1] 1a. Distinct players.position with counts
+  position  players
+  Defender    15961
+  Midfield    14272
+    Attack    13502
+Goalkeeper     5828
+   Missing      586
+
+[P12.2] 1b. Distinct players.sub_position with counts (NULL included)
+      sub_position  players
+       Centre-Back     8766
+    Centre-Forward     6749
+        Goalkeeper     5828
+  Central Midfield     5498
+Defensive Midfield     4123
+        Right-Back     3700
+Attacking Midfield     3520
+         Left-Back     3495
+       Left Winger     3297
+      Right Winger     3170
+               NaN      586
+     Left Midfield      566
+    Right Midfield      565
+    Second Striker      286
+
+[P12.3] 1c. position x sub_position combinations
+  position       sub_position  players
+    Attack     Centre-Forward     6749
+    Attack        Left Winger     3297
+    Attack       Right Winger     3170
+    Attack     Second Striker      286
+  Defender        Centre-Back     8766
+  Defender         Right-Back     3700
+  Defender          Left-Back     3495
+Goalkeeper         Goalkeeper     5828
+  Midfield   Central Midfield     5498
+  Midfield Defensive Midfield     4123
+  Midfield Attacking Midfield     3520
+  Midfield      Left Midfield      566
+  Midfield     Right Midfield      565
+   Missing                NaN      586
+
+[P12.4] 2a. Scope check: 2025/26 league games per league (all 14 leagues complete?)
+competition_id  games first_game  last_game  games_without_appearances
+           BE1    240 2025-07-25 2026-03-22                          0
+           DK1    132 2025-07-18 2026-03-01                          0
+           ES1    380 2025-08-15 2026-05-24                          0
+           FR1    306 2025-08-15 2026-05-17                          1
+           GB1    380 2025-08-15 2026-05-24                          0
+           GR1    182 2025-08-23 2026-03-22                          0
+           IT1    380 2025-08-23 2026-05-24                          0
+            L1    306 2025-08-22 2026-05-16                          0
+           NL1    306 2025-08-08 2026-05-17                          0
+           PO1    306 2025-08-08 2026-05-16                          0
+           RU1    240 2025-07-18 2026-05-17                          0
+           SC1    198 2025-08-02 2026-04-12                          0
+           TR1    306 2025-08-08 2026-05-17                          0
+          UKR1    240 2025-08-01 2026-05-24                          1
+
+[P12.5] 2b. Attackers (position = 'Attack') with >= 900 league minutes in 2025/26, 14 leagues
+ attackers_900_plus  attackers_with_any_minutes
+                911                        2026
+
+[P12.6] 2c. Same, by sub_position
+  sub_position  attackers_900_plus
+Centre-Forward                 405
+   Left Winger                 263
+  Right Winger                 225
+Second Striker                  18
+
+[P12.7] 2d. Attackers >= 900 min by main league (league with most minutes)
+main_league  attackers_900_plus
+        ES1                 103
+        GB1                  87
+        IT1                  80
+        PO1                  75
+        TR1                  73
+        NL1                  73
+        FR1                  71
+         L1                  68
+       UKR1                  55
+        RU1                  53
+        BE1                  50
+        GR1                  46
+        SC1                  43
+        DK1                  34
+
+[P12.8] 2e. Do BE1/DK1/GR1/SC1 have games after their last 2025/26 league game (split-season play-off rounds)?
+league last_league_game  later_games_same_code  later_games_other_codes    other_codes
+   BE1       2026-03-22                      0                       72 BPO4,POBE,EJPL
+   DK1       2026-03-01                      0                        4         EL,DKP
+   GR1       2026-03-22                      0                        3       UCOL,GRP
+   SC1       2026-04-12                      0                        2            SFA
+
+[P12.9] 2f. Expected regular-season size vs games present (BE1 16 clubs, DK1 12, GR1 14, SC1 12)
+competition_id  games  clubs
+           BE1    240     16
+           DK1    132     12
+           GR1    182     14
+           SC1    198     12
+
+[P12.10] 2g. Sensitivity: Belgian play-off codes (EJPL, POBE, BPO4) - in competitions? appearances? effect on the 900-min count
+                                                                                                          in_competitions  playoff_games  playoff_appearance_rows  attackers_900_incl_playoffs
+BPO4:jupiler-pro-league-relegation-play-offs, EJPL:jupiler-pro-league-playoff-i, POBE:jupiler-pro-league-europe-play-offs             72                     2232                          926
+
+[P12.11] 3a. Distribution of (goals + assists) per 90, attackers >= 900 min
+ players  min_ga90  median_ga90  p90_ga90  max_ga90  mean_ga90
+     911       0.0        0.425     0.757     1.549      0.454
+
+[P12.12] 3b. Attackers >= 900 min with zero goal contributions
+          name sub_position  current_club_name   mins  apps
+ Serdar Gürler  Left Winger           Eyüpspor 1290.0    17
+   Artem Gusol Right Winger    Kolos Kovalivka 1236.0    24
+  Carles Pérez Right Winger Aris Thessalonikis 1189.0    18
+  Mamadou Fall Right Winger          Kasimpasa 1169.0    20
+Igor Medynskyi Right Winger        Obolon Kyiv 1114.0    20
+
+[P12.13] 3c. Top 20 attackers by (goals + assists) per 90 (>= 900 min)
+              name   sub_position                       current_club_name leagues  apps   mins  goals  assists  ga90  market_value_in_eur
+        Harry Kane Centre-Forward                           Bayern Munich      L1    31 2382.0   36.0      5.0  1.55             60000000
+   Ousmane Dembélé Centre-Forward                     Paris Saint-Germain     FR1    22 1063.0   10.0      7.0  1.44            100000000
+       Aral Şimşir    Left Winger                          FC Midtjylland     DK1    21 1342.0    8.0     13.0  1.41             10000000
+        Franculino Centre-Forward                          FC Midtjylland     DK1    17 1220.0   16.0      3.0  1.40             22000000
+     Michael Olise   Right Winger                           Bayern Munich      L1    32 2320.0   15.0     21.0  1.40            150000000
+         Luis Díaz    Left Winger                           Bayern Munich      L1    32 2451.0   15.0     17.0  1.18             70000000
+      Mehdi Taremi Centre-Forward Olympiakos Syndesmos Filathlon Peiraios     GR1    19 1077.0   10.0      4.0  1.17              2000000
+       Luis Suárez Centre-Forward                             Sporting CP     PO1    32 2699.0   28.0      7.0  1.17             30000000
+      Lamine Yamal   Right Winger                            FC Barcelona     ES1    28 2270.0   16.0     12.0  1.11            200000000
+Matviy Ponomarenko Centre-Forward                             Dynamo Kyiv    UKR1    15 1063.0   13.0      0.0  1.10             12000000
+      Ricardo Pepi Centre-Forward                           PSV Eindhoven     NL1    26 1415.0   16.0      1.0  1.08             30000000
+    Erling Haaland Centre-Forward                         Manchester City     GB1    35 2959.0   27.0      8.0  1.06            200000000
+    Victor Osimhen Centre-Forward                             Galatasaray     TR1    22 1713.0   15.0      5.0  1.05             75000000
+     Dorgeles Nene   Right Winger           Fußballclub Red Bull Salzburg     TR1    25 1466.0   10.0      7.0  1.04             20000000
+          Raphinha    Left Winger                            FC Barcelona     ES1    22 1389.0   13.0      3.0  1.04             70000000
+     Kylian Mbappé Centre-Forward                             Real Madrid     ES1    31 2606.0   25.0      5.0  1.04            180000000
+      Mauro Icardi Centre-Forward                             Galatasaray     TR1    31 1313.0   14.0      1.0  1.03              4000000
+      Serge Gnabry Second Striker                           Bayern Munich      L1    21 1228.0    8.0      6.0  1.03             18000000
+       Deniz Undav Centre-Forward                           VfB Stuttgart      L1    29 2249.0   19.0      6.0  1.00             22000000
+        Mika Godts    Left Winger                          Ajax Amsterdam     NL1    32 2686.0   17.0     12.0  0.97             35000000
+
+[P12.14] 4a. Watch list size (should be 206) and attackers in it
+ watch_list  attackers  attackers_value
+        206         46      872000000.0
+
+[P12.15] 4b. Watch list by position
+  position  players       value
+  Midfield       76 999000000.0
+  Defender       70 846000000.0
+    Attack       46 872000000.0
+Goalkeeper       14 142000000.0
+
+[P12.16] 4c. Watch-list attackers with >= 900 league minutes in 2025/26 (14 leagues)
+ watch_attackers  with_900_plus  under_900  no_league_minutes
+              46             34          9                  3
+
+[P12.17] 4d. Watch-list attackers: detail
+                name   sub_position             current_club_name  market_value_in_eur contract_end   mins  goals  assists  ga90  min_900
+     Vinicius Junior    Left Winger                   Real Madrid            140000000   2027-06-30 2825.0   16.0      6.0  0.70     True
+          Harry Kane Centre-Forward                 Bayern Munich             60000000   2027-06-30 2382.0   36.0      5.0  1.55     True
+       Ferran Torres Centre-Forward                  FC Barcelona             50000000   2027-06-30 1975.0   16.0      2.0  0.82     True
+  Gabriel Martinelli    Left Winger                    Arsenal FC             45000000   2027-06-30 1073.0    1.0      4.0  0.42     True
+   Christian Pulisic   Right Winger                      AC Milan             40000000   2027-06-30 1612.0    8.0      4.0  0.67     True
+       Karim Adeyemi   Right Winger             Borussia Dortmund             40000000   2027-06-30 1196.0    7.0      4.0  0.83     True
+         Brahim Díaz   Right Winger                   Real Madrid             35000000   2027-06-30 1252.0    1.0      8.0  0.65     True
+Jean-Philippe Mateta Centre-Forward                Crystal Palace             30000000   2027-06-30 2223.0   12.0      0.0  0.49     True
+         Richarlison Centre-Forward             Tottenham Hotspur             25000000   2027-06-30 1960.0   11.0      4.0  0.69     True
+        Kaoru Mitoma    Left Winger        Brighton & Hove Albion             22000000   2027-06-30 1722.0    3.0      1.0  0.21     True
+       Jack Grealish    Left Winger                    Everton FC             20000000   2027-06-30 1632.0    2.0      6.0  0.44     True
+          Yann Gboho    Left Winger                   FC Toulouse             18000000   2027-06-30 2610.0    8.0      3.0  0.38     True
+    Leandro Trossard    Left Winger                    Arsenal FC             18000000   2027-06-30 2008.0    6.0      6.0  0.54     True
+                Beto Centre-Forward                    Everton FC             18000000   2027-06-30 1565.0    9.0      1.0  0.58     True
+       Dwight McNeil    Left Winger                    Everton FC             18000000   2027-06-30 1169.0    0.0      1.0  0.08     True
+       Gabriel Jesus Centre-Forward                    Arsenal FC             17000000   2027-06-30  421.0    3.0      0.0  0.64    False
+    Emiliano Buendía    Left Winger                   Aston Villa             16000000   2027-06-30 1760.0    6.0      2.0  0.41     True
+    Viktor Tsygankov   Right Winger                     Girona FC             15000000   2027-06-30 2642.0    6.0      5.0  0.37     True
+    Andrea Pinamonti Centre-Forward                   US Sassuolo             15000000   2027-06-30 2575.0    9.0      4.0  0.45     True
+        Sofiane Diop    Left Winger                      OGC Nice             15000000   2027-06-30 2145.0    8.0      2.0  0.42     True
+   Riccardo Orsolini   Right Winger    Bologna Football Club 1909             15000000   2027-06-30 2117.0   10.0      1.0  0.47     True
+         Pablo Pagis    Left Winger                    FC Lorient             15000000   2027-06-30 1772.0   10.0      5.0  0.76     True
+         Leon Bailey   Right Winger    Associazione Sportiva Roma             14000000   2027-06-30  634.0    0.0      1.0  0.14    False
+        Jacob Murphy   Right Winger              Newcastle United             12000000   2027-06-30 1620.0    3.0      2.0  0.28     True
+    Lassine Sinayoko Centre-Forward                    AJ Auxerre             10000000   2027-06-30 2781.0   12.0      4.0  0.52     True
+        Lukas Nmecha Centre-Forward                  Leeds United             10000000   2027-06-30 1073.0    6.0      1.0  0.59     True
+     Takumi Minamino    Left Winger                     AS Monaco             10000000   2027-06-30  950.0    3.0      2.0  0.47     True
+          Joël Piroe Centre-Forward                  Leeds United             10000000   2027-06-30  246.0    0.0      0.0  0.00    False
+         Andrej Ilic Centre-Forward             1.FC Union Berlin              9000000   2027-06-30 2257.0    5.0     10.0  0.60     True
+   Antoine Griezmann Second Striker            Atlético de Madrid              8000000   2027-06-30 1468.0    7.0      4.0  0.67     True
+         Terem Moffi Centre-Forward                      OGC Nice              8000000   2027-06-30  729.0    3.0      1.0  0.49    False
+        Ethan Mbappé   Right Winger                    LOSC Lille              8000000   2027-06-30  559.0    3.0      1.0  0.64    False
+       Taiwo Awoniyi Centre-Forward             Nottingham Forest              8000000   2027-06-30  481.0    4.0      2.0  1.12    False
+        Reiss Nelson    Left Winger                  Brentford FC              8000000   2027-06-30  118.0    0.0      1.0  0.76    False
+ Romain Del Castillo   Right Winger             Stade Brestois 29              7000000   2027-06-30 2646.0    9.0      3.0  0.41     True
+  Matteo Cancellieri   Right Winger Società Sportiva Lazio S.p.A.              7000000   2027-06-30 1731.0    4.0      2.0  0.31     True
+        Joe Gelhardt Centre-Forward                  Leeds United              7000000   2027-06-30    0.0    0.0      0.0   NaN    False
+       Germán Valera    Left Winger                      Elche CF              6000000   2027-06-30 2871.0    4.0      5.0  0.28     True
+       Borja Mayoral Centre-Forward                     Getafe CF              6000000   2027-06-30 1059.0    4.0      1.0  0.42     True
+       Romelu Lukaku Centre-Forward                    SSC Napoli              6000000   2027-06-30   40.0    1.0      0.0  2.25    False
+         Ellis Simms Centre-Forward                    Everton FC              6000000   2027-06-30    0.0    0.0      0.0   NaN    False
+           Ché Adams Centre-Forward                     Torino FC              5000000   2027-06-30 1897.0    6.0      3.0  0.43     True
+         Amine Harit    Left Winger           Olympique Marseille              5000000   2027-06-30 1566.0    2.0      4.0  0.34     True
+          Chris Wood Centre-Forward             Nottingham Forest              5000000   2027-06-30  907.0    3.0      0.0  0.30     True
+         Wisdom Mike    Left Winger                 Bayern Munich              5000000   2027-06-30   27.0    0.0      0.0  0.00    False
+       Benson Manuel   Right Winger                    Burnley FC              5000000   2027-06-30    0.0    0.0      0.0   NaN    False
+
+[P12.18] 5. All columns in appearances (with type)
+           column_name data_type
+         appearance_id   VARCHAR
+               game_id   INTEGER
+             player_id   INTEGER
+        player_club_id   INTEGER
+player_current_club_id   VARCHAR
+                  date      DATE
+           player_name   VARCHAR
+        competition_id   VARCHAR
+          yellow_cards   INTEGER
+             red_cards   INTEGER
+                 goals   INTEGER
+               assists   INTEGER
+        minutes_played   INTEGER
+

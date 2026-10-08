@@ -1,0 +1,162 @@
+Phase 8: Star schema feasibility
+======================================================================
+
+[P8.1] Create transfers_classified (classification rule, see checklib.TRANSFER_CLASS_SQL)
+ Count
+175165
+
+[P8.2] Grain: FactValuation (player_id, date) unique; club id present
+  rows  distinct_grain  with_club_id
+656301          656301        656301
+
+[P8.3] Grain: FactAppearance (player_id, game_id) unique; measures present
+   rows  distinct_grain   goals  assists  minutes
+1894350         1894350 1894350  1894350  1894350
+
+[P8.4] Grain: FactTransfer (player_id, transfer_date, from, to) unique; fee and value coverage
+  rows  distinct_grain  with_fee  with_value_at_transfer
+175165          175165    113639                  107005
+
+[P8.5] DimClub: distinct club ids referenced anywhere vs rows in clubs
+ distinct_club_ids_referenced  clubs_rows  ids_without_club_row
+                        18636         796                 17840
+
+[P8.6] DimClub fallback: every referenced club id has at least a name somewhere?
+  ids  ids_without_any_name
+18636                   100
+
+[P8.7] DimCompetition: competitions rows vs codes referenced
+ referenced  rows  missing
+         70    65        5
+
+[P8.8] DimPosition: values available (players.position x sub_position) and lineups per-game position
+         src  combos
+     players      14
+game_lineups      19
+
+[P8.9] Club history for SCD2 / bridge: club per player per date available from valuations and transfers
+ players_with_club_history
+                     23379
+
+[P8.10] Value at transfer: does transfers.market_value_in_eur equal the latest valuation on or before the transfer date?
+  rows  with_prior_valuation  equal  pct_equal
+106528                106381 106345      100.0
+
+[P8.11] KPI 1 sample: market value change over 12 months as of 2026-07-06 (top risers, big-5)
+                 name   current_club_name     v_ago     v_now  change_eur  change_pct
+         Yan Diomande          RB Leipzig   1500000  90000000    88500000      5900.0
+              Vitinha Paris Saint-Germain  80000000 140000000    60000000        75.0
+           João Neves Paris Saint-Germain  80000000 140000000    60000000        75.0
+         Lennart Karl       Bayern Munich   1500000  60000000    58500000      3900.0
+        Junior Kroupi     AFC Bournemouth  15000000  70000000    55000000       366.7
+        Nico O'Reilly     Manchester City  18000000  70000000    52000000       288.9
+Khvicha Kvaratskhelia Paris Saint-Germain  90000000 140000000    50000000        55.6
+         Fermín López        FC Barcelona  50000000 100000000    50000000       100.0
+        Michael Olise       Bayern Munich 100000000 150000000    50000000        50.0
+        Luka Vuskovic   Tottenham Hotspur  12000000  60000000    48000000       400.0
+
+[P8.12] KPI 1 sample: biggest fallers
+             name current_club_name     v_ago     v_now  change_eur
+            Rodri   Manchester City 110000000  50000000   -60000000
+  Jude Bellingham       Real Madrid 180000000 130000000   -50000000
+          Rodrygo       Real Madrid  90000000  45000000   -45000000
+Federico Valverde       Real Madrid 130000000  90000000   -40000000
+    Florian Wirtz      Liverpool FC 140000000 100000000   -40000000
+
+[P8.13] KPI 2 sample: goal contributions per 90, big-5 league games 2025/26, >= 900 minutes (top 10)
+           name       sub_position   mins    g    a  ga_per90
+     Harry Kane     Centre-Forward 2382.0 36.0  5.0      1.55
+Ousmane Dembélé     Centre-Forward 1063.0 10.0  7.0      1.44
+  Michael Olise       Right Winger 2320.0 15.0 21.0      1.40
+      Luis Díaz        Left Winger 2451.0 15.0 17.0      1.18
+   Lamine Yamal       Right Winger 2270.0 16.0 12.0      1.11
+ Erling Haaland     Centre-Forward 2959.0 27.0  8.0      1.06
+  Kylian Mbappé     Centre-Forward 2606.0 25.0  5.0      1.04
+       Raphinha        Left Winger 1389.0 13.0  3.0      1.04
+   Serge Gnabry     Second Striker 1228.0  8.0  6.0      1.03
+       Can Uzun Attacking Midfield 1164.0  8.0  5.0      1.01
+
+[P8.14] KPI 3 sample: value per goal contribution, big-5 2025/26 (cheapest output among >= 900 min, >= 5 G+A)
+           name             current_club_name  market_value_in_eur   ga  eur_per_ga
+    Kike García        RCD Espanyol Barcelona               700000  9.0     77778.0
+    Jamie Vardy                  US Cremonese              1000000 10.0    100000.0
+  Idrissa Gueye                    Everton FC               500000  5.0    100000.0
+ Olivier Giroud                    LOSC Lille               900000  8.0    112500.0
+Andrej Kramaric           TSG 1899 Hoffenheim              2500000 20.0    125000.0
+     Pere Milla        RCD Espanyol Barcelona              1000000  8.0    125000.0
+ Yuri Berchiche               Athletic Bilbao              1000000  7.0    142857.0
+ Djibril Sidibé                   FC Toulouse              1000000  7.0    142857.0
+          Pedro Società Sportiva Lazio S.p.A.              1000000  7.0    142857.0
+  Álvaro García                Rayo Vallecano              1500000 10.0    150000.0
+
+[P8.15] KPI 4 sample: fee vs market value at transfer (paid transfers 2023-2026), ratio distribution
+ paid_with_value  median_ratio  p10  p90  fee_above_value
+            6644          0.86 0.26 2.24             2535
+
+[P8.16] KPI 4 sample: largest overpayments in euros (paid transfers since 2023-07)
+   player_name transfer_date from_club_name to_club_name  transfer_fee  market_value_in_eur  premium_eur  ratio
+Nick Woltemade    2025-08-30      Stuttgart    Newcastle    75000000.0           30000000.0   45000000.0   2.50
+ Nico González    2025-02-03          Porto     Man City    60000000.0           18000000.0   42000000.0   3.33
+Moisés Caicedo    2023-08-14       Brighton      Chelsea   116000000.0           75000000.0   41000000.0   1.55
+    Jhon Durán    2025-01-31    Aston Villa     Al-Nassr    77000000.0           40000000.0   37000000.0   1.93
+Rasmus Højlund    2023-08-05       Atalanta      Man Utd    79800000.0           45000000.0   34800000.0   1.77
+   Jérémy Doku    2023-08-24  Stade Rennais     Man City    60000000.0           28000000.0   32000000.0   2.14
+   Roméo Lavia    2023-08-18    Southampton      Chelsea    62100000.0           32000000.0   30100000.0   1.94
+        Neymar    2023-08-15            PSG     Al-Hilal    90000000.0           60000000.0   30000000.0   1.50
+
+[P8.17] KPI 5 sample: months until contract end as of 2026-07-06 (distribution, active big-5 players)
+months_left  players
+  a expired       66
+      b 0-6        4
+     c 7-12      852
+    d 13-24      856
+    e 25-36      689
+      f 37+      608
+
+[P8.18] KPI 5 sample rows: months until contract end
+           name current_club_name contract_end  months_left  market_value_in_eur
+     Harry Kane     Bayern Munich   2027-06-30           11             60000000
+Vinicius Junior       Real Madrid   2027-06-30           11            140000000
+     Phil Foden   Manchester City   2027-06-30           11             70000000
+  Florian Wirtz      Liverpool FC   2030-06-30           47            100000000
+   Lamine Yamal      FC Barcelona   2031-06-30           59            200000000
+
+[P8.19] KPI 6 sample: value-gap score = performance rank - value rank within sub_position (big-5 2025/26, >= 900 min, outfield)
+                     name   sub_position  market_value_in_eur  ga90  perf_rank  value_rank  value_gap
+      Michael Gregoritsch Centre-Forward              1500000  0.88         13         178        165
+           Borja Iglesias Centre-Forward              2800000  0.76         23         164        141
+Pierre-Emerick Aubameyang Centre-Forward              2500000  0.70         38         166        128
+               Iago Aspas Centre-Forward              1600000  0.64         49         177        128
+            Gerard Moreno Centre-Forward              2500000  0.67         45         166        121
+              Raúl García Centre-Forward              3000000  0.71         37         152        115
+       Robert Lewandowski Centre-Forward              7000000  0.92          9         112        103
+               Umar Sadiq Centre-Forward              4000000  0.68         44         131         87
+             Vedat Muriqi Centre-Forward              4500000  0.69         43         130         87
+              Ayoze Pérez Centre-Forward              5000000  0.72         35         121         86
+
+[P8.20] KPI 7 sample: free departures above 5m per season - see Phase 4 (P4.35); club totals here
+from_club_name  n  value_lost
+           PSG  3 222500000.0
+         Lille  4  95000000.0
+       Arsenal  6  73000000.0
+     Leicester  5  70000000.0
+   Real Madrid  3  60000000.0
+       Everton  6  57000000.0
+       Man Utd  5  56000000.0
+     Frankfurt  2  55000000.0
+      Atlético  5  55000000.0
+ Bayern Munich  4  54000000.0
+
+[P8.21] KPI 8 sample: squad value at risk (contracts ending 2026-07-06..2027-07-06) per big-5 club
+     current_club_name  value_at_risk  squad_value  pct_at_risk
+           Real Madrid    231500000.0 1262050000.0         18.3
+       Manchester City    145300000.0 1383800000.0         10.5
+        Crystal Palace    118400000.0  435200000.0         27.2
+          Liverpool FC    111000000.0  980100000.0         11.3
+         Bayern Munich    103650000.0  974650000.0         10.6
+            Everton FC    102300000.0  438600000.0         23.3
+     Manchester United     97100000.0  722600000.0         13.4
+             Fulham FC     86200000.0  285200000.0         30.2
+            Arsenal FC     85000000.0 1281050000.0          6.6
+Brighton & Hove Albion     80500000.0  530600000.0         15.2
+
