@@ -1,0 +1,12 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="CM_FootballBI"
+  DTS:DTSID="{08FEB0D9-36C2-40D6-AE5F-4D392144E03F}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=localhost;Initial Catalog=FootballBI;Provider=MSOLEDBSQL19.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-BI-Football-{08FEB0D9-36C2-40D6-AE5F-4D392144E03F}localhost.FootballBI;Trust Server Certificate=True;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>
