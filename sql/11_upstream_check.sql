@@ -1,18 +1,3 @@
-/* =========================================================
-   11_upstream_check.sql
-   A "gate" at the start of each package: refuse to run if the
-   previous package's LAST run did not finish with Success.
-
-     package 02 checks package 01
-     package 03 checks package 02
-     package 04 checks package 03
-
-   Why: if package 01 is interrupted halfway, staging is half-loaded.
-   Without this gate, package 02 would clean incomplete data and report
-   Success. With it, package 02 stops immediately with a clear message.
-   Safe to run more than once.
-   ========================================================= */
-
 USE FootballBI;
 GO
 
@@ -44,15 +29,12 @@ BEGIN
 END;
 GO
 
--- Close runs that were interrupted and stayed "Running" (they can never finish now)
 UPDATE etl.Run
    SET status = N'Aborted', ended_at = COALESCE(ended_at, started_at),
        error_message = COALESCE(error_message, N'Interrupted before SQL End run (closed manually).')
  WHERE status = N'Running'
    AND started_at < DATEADD(MINUTE, -30, SYSDATETIME());   -- leave a run that is genuinely running now
 GO
-
--- Check: the gate passes for package 01 if its last run succeeded
 EXEC etl.usp_CheckUpstream N'01_Extract_Staging';
 SELECT 'Upstream check passed for 01_Extract_Staging' AS result;
 

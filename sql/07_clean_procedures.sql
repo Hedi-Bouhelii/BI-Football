@@ -1,39 +1,7 @@
-/* =========================================================
-   07_clean_procedures.sql
-   Package 02, SQL part (decision D-005):
-     - SSIS data flows clean: players, transfers, competitions, club_games
-     - these SQL procedures clean the 5 "typical" tables:
-         clubs, games, appearances, game_lineups, player_valuations
-     - etl.usp_ClassifyTransfers: the transfer classification rule
-       (T-SQL port of scripts/checklib.py), run by SSIS right after
-       the transfers data flow.
-
-   Every etl.usp_Clean_<table> procedure follows the same 5 steps:
-     1. empty cln.<table>
-     2. convert every column to its real type (TRY_CONVERT: a bad value
-        becomes NULL instead of crashing) and decide, row by row, whether
-        the row is valid; if not, give a reject reason
-     3. write rejected rows to etl.RejectedRows (with the reason)
-     4. write valid rows to cln.<table>, stamped with the run id
-     5. reconcile: rows read = rows clean + rows rejected (etl.usp_LogCleanTable)
-
-   Reject reasons used:
-     BAD_KEY            a key column is missing or not a number
-     MISSING_VALUE      a required column is empty
-     CONVERSION_FAILED  a value exists but cannot be converted to its type
-     OUT_OF_RANGE       a value is impossible (negative fee, 200 minutes...)
-     DUPLICATE          the same natural key appears twice (first one kept)
-
-   Requires SQL Server 2025 with database compatibility level 170
-   (REGEXP_LIKE for youth-team names, STRING_SPLIT with ordinal).
-   Safe to run more than once.
-   ========================================================= */
 
 USE FootballBI;
 GO
 
-/* ---------- 0. Prerequisites ---------- */
--- These three tables are now cleaned by SSIS data flows: remove older procedure versions if present
 DROP PROCEDURE IF EXISTS etl.usp_Clean_Competitions;
 DROP PROCEDURE IF EXISTS etl.usp_Clean_ClubGames;
 DROP PROCEDURE IF EXISTS etl.usp_Clean_Transfers;
@@ -42,14 +10,10 @@ GO
 ALTER DATABASE FootballBI SET COMPATIBILITY_LEVEL = 170;
 GO
 
--- The source season label is kept to compare with the dataset check (97 / 84 / 66)
 IF COL_LENGTH('cln.transfers', 'transfer_season_label') IS NULL
     ALTER TABLE cln.transfers ADD transfer_season_label NVARCHAR(5) NULL;
 GO
 
-/* =========================================================
-   1. clubs
-   ========================================================= */
 CREATE OR ALTER PROCEDURE etl.usp_Clean_Clubs @run_id INT
 AS
 BEGIN
@@ -88,9 +52,6 @@ BEGIN
 END;
 GO
 
-/* =========================================================
-   2. games
-   ========================================================= */
 CREATE OR ALTER PROCEDURE etl.usp_Clean_Games @run_id INT
 AS
 BEGIN
@@ -135,9 +96,6 @@ BEGIN
 END;
 GO
 
-/* =========================================================
-   3. appearances  (1.9 M rows)
-   ========================================================= */
 CREATE OR ALTER PROCEDURE etl.usp_Clean_Appearances @run_id INT
 AS
 BEGIN
@@ -181,10 +139,6 @@ BEGIN
 END;
 GO
 
-/* =========================================================
-   4. game_lineups  (3.2 M rows; 12 duplicated game+player pairs;
-      position case variants, e.g. 'midfield' -> 'Midfield')
-   ========================================================= */
 CREATE OR ALTER PROCEDURE etl.usp_Clean_GameLineups @run_id INT
 AS
 BEGIN
@@ -222,9 +176,6 @@ BEGIN
 END;
 GO
 
-/* =========================================================
-   5. player_valuations
-   ========================================================= */
 CREATE OR ALTER PROCEDURE etl.usp_Clean_PlayerValuations @run_id INT
 AS
 BEGIN
@@ -259,26 +210,6 @@ BEGIN
 END;
 GO
 
-/* =========================================================
-   TRANSFER CLASSIFICATION (port of checklib.TRANSFER_CLASS_SQL)
-      Fills transfer_class, transfer_subclass, is_free_departure,
-      is_future_dated and seq in cln.transfers.
-
-   The rule, in plain words:
-     1. Order each player's moves by date. Same-day moves: first the one that
-        starts at the club the player was at before that day, then by fee
-        (highest first), then by destination club id.
-     2. A move "returns" the previous one when it reverses it (from/to swapped),
-        comes 14 to 760 days later, has no fee, and no side is a special club.
-     3. Consecutive returns form a chain: odd positions = loan,
-        even positions = end of loan.
-     4. Other moves: fee > 0 -> paid; Unknown club -> unknown; to Retired /
-        Without Club / Career break -> free; from Without Club / Career break ->
-        free (free agent signed); fee 0 -> free; fee NULL with a youth or
-        reserve side -> internal; otherwise unknown (fee not disclosed).
-     5. is_free_departure: a real senior club lost the player without a fee
-        (loans, loan returns, youth moves and special clubs excluded).
-   ========================================================= */
 CREATE OR ALTER PROCEDURE etl.usp_ClassifyTransfers
 AS
 BEGIN

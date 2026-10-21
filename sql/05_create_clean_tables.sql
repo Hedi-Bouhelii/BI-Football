@@ -1,23 +1,3 @@
-/* =========================================================
-   05_create_clean_tables.sql
-   Layer: CLEAN (schema cln) - between staging and the warehouse
-
-   stg  = exact copy of the CSV files, all text            (package 01)
-   cln  = same subjects, but TYPED, VALIDATED, DEDUPLICATED,
-          STANDARDISED and ENRICHED (e.g. transfer type)  (package 02)  <- this script
-   dw   = facts and dimensions built from cln             (packages 03-04)
-
-   Rules for every cln table
-     - real data types (INT, DATE, BIGINT...) instead of text
-     - a PRIMARY KEY on the natural key: duplicates cannot get in
-     - only the columns the warehouse needs (technical columns such as
-       URLs slugs or glued ids are dropped, see the column-by-column rule)
-     - rows that fail validation go to etl.RejectedRows, not here
-     - etl_run_id: the run that produced the row
-
-   Safe to run more than once: drops and recreates the cln tables
-   (package 02 refills them at every run).
-   ========================================================= */
 
 USE FootballBI;
 GO
@@ -35,7 +15,6 @@ DROP TABLE IF EXISTS cln.competitions;
 DROP TABLE IF EXISTS cln.clubs;
 GO
 
--- clubs.csv (796 clubs with details; the other 17,840 club ids come from other files in package 03)
 CREATE TABLE cln.clubs (
     club_id                  INT           NOT NULL CONSTRAINT PK_cln_clubs PRIMARY KEY,
     club_name                NVARCHAR(100) NOT NULL,
@@ -48,7 +27,6 @@ CREATE TABLE cln.clubs (
     etl_run_id               INT           NULL
 );
 
--- competitions.csv
 CREATE TABLE cln.competitions (
     competition_id        NVARCHAR(10)  NOT NULL CONSTRAINT PK_cln_competitions PRIMARY KEY,
     competition_code      NVARCHAR(100) NOT NULL,   -- URL slug, e.g. 'premier-league'
@@ -60,7 +38,6 @@ CREATE TABLE cln.competitions (
     etl_run_id            INT           NULL
 );
 
--- players.csv
 CREATE TABLE cln.players (
     player_id                  INT           NOT NULL CONSTRAINT PK_cln_players PRIMARY KEY,
     player_name                NVARCHAR(100) NOT NULL,
@@ -85,7 +62,6 @@ CREATE TABLE cln.players (
     etl_run_id                 INT           NULL
 );
 
--- games.csv
 CREATE TABLE cln.games (
     game_id            INT          NOT NULL CONSTRAINT PK_cln_games PRIMARY KEY,
     competition_id     NVARCHAR(10) NOT NULL,
@@ -101,7 +77,6 @@ CREATE TABLE cln.games (
     etl_run_id         INT          NULL
 );
 
--- club_games.csv (one row per club per game: used to add opponent, home/away and team goals to appearances)
 CREATE TABLE cln.club_games (
     game_id         INT     NOT NULL,
     club_id         INT     NOT NULL,
@@ -129,7 +104,6 @@ CREATE TABLE cln.appearances (
     CONSTRAINT PK_cln_appearances PRIMARY KEY (game_id, player_id)
 );
 
--- game_lineups.csv (12 duplicated game+player pairs are removed: the PK forbids them)
 CREATE TABLE cln.game_lineups (
     game_id        INT          NOT NULL,
     player_id      INT          NOT NULL,
@@ -141,7 +115,6 @@ CREATE TABLE cln.game_lineups (
     CONSTRAINT PK_cln_game_lineups PRIMARY KEY (game_id, player_id)
 );
 
--- player_valuations.csv
 CREATE TABLE cln.player_valuations (
     player_id         INT          NOT NULL,
     valuation_date    DATE         NOT NULL,
@@ -152,7 +125,6 @@ CREATE TABLE cln.player_valuations (
     CONSTRAINT PK_cln_player_valuations PRIMARY KEY (player_id, valuation_date)
 );
 
--- transfers.csv + the classification rule (the business logic of KPIs C3 and MV2)
 CREATE TABLE cln.transfers (
     player_id           INT           NOT NULL,
     transfer_date       DATE          NOT NULL,
@@ -175,7 +147,6 @@ CREATE TABLE cln.transfers (
 );
 GO
 
--- Check: 9 clean tables, all empty for now
 SELECT t.name AS table_name,
        (SELECT COUNT(*) FROM sys.columns c WHERE c.object_id = t.object_id) AS columns
 FROM sys.tables t

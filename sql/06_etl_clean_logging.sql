@@ -1,18 +1,3 @@
-/* =========================================================
-   06_etl_clean_logging.sql
-   Logging for package 02 (stg -> cln).
-
-   The reconciliation rule for a cleaning step is:
-        rows read from stg  =  rows written to cln  +  rows rejected
-   Nothing may disappear silently: every staging row is either clean or rejected.
-
-   Adds:
-     - etl.RunLog.rows_rejected  (new column)
-     - etl.usp_LogCleanTable     (counts stg, cln and rejects; fails the package on a mismatch)
-     - etl.vw_RunSummary         (updated to show rows_rejected)
-   Safe to run more than once.
-   ========================================================= */
-
 USE FootballBI;
 GO
 
