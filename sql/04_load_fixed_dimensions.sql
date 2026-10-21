@@ -1,11 +1,10 @@
 USE FootballBI;
 GO
-SET LANGUAGE us_english;   -- so month and day names are in English whatever the server language
+SET LANGUAGE us_english;   
 SET NOCOUNT ON;
 GO
 
 
--- 1a. The Unknown date (used e.g. when a contract end date is missing)
 IF NOT EXISTS (SELECT 1 FROM dw.DimDate WHERE date_key = -1)
 INSERT INTO dw.DimDate (date_key, full_date, [year], [quarter], [month], month_name,
                         day_of_month, day_of_week, day_name, is_weekend,
@@ -52,7 +51,6 @@ SELECT
     ssy                                                    AS season_start_year,
     CONCAT(ssy, N'/', RIGHT(CAST(ssy + 1 AS VARCHAR(4)), 2)) AS season_label,  -- '2025/26'
     (m + 5) % 12 + 1                                       AS season_month_no,  -- July = 1 ... June = 12
-    -- Approximation of the European windows: summer = June-August, winter = January
     CASE WHEN m IN (6, 7, 8) THEN N'Summer'
          WHEN m = 1          THEN N'Winter'
          ELSE N'Closed' END                                AS transfer_window,
@@ -61,7 +59,6 @@ FROM attrs
 WHERE NOT EXISTS (SELECT 1 FROM dw.DimDate x WHERE x.full_date = attrs.d);
 GO
 
-/* ---------- 2. DimAgeBand (business rule: bands used to compare players fairly, KPI MV4) ---------- */
 INSERT INTO dw.DimAgeBand (age_band_key, age_band, min_age, max_age, sort_order)
 SELECT v.age_band_key, v.age_band, v.min_age, v.max_age, v.sort_order
 FROM (VALUES
@@ -74,9 +71,6 @@ FROM (VALUES
 WHERE NOT EXISTS (SELECT 1 FROM dw.DimAgeBand x WHERE x.age_band_key = v.age_band_key);
 GO
 
-/* ---------- 3. DimTransferType (the output vocabulary of the classification rule) ----------
-   transfer_subclass must match EXACTLY the labels produced by the rule in package 02
-   (same texts as transfer_subclass in scripts/checklib.py).                         */
 INSERT INTO dw.DimTransferType (transfer_type_key, transfer_class, transfer_subclass, is_permanent, sort_order)
 SELECT v.k, v.cls, v.sub, v.perm, v.so
 FROM (VALUES
@@ -95,12 +89,6 @@ FROM (VALUES
      ) v(k, cls, sub, perm, so)
 WHERE NOT EXISTS (SELECT 1 FROM dw.DimTransferType x WHERE x.transfer_type_key = v.k);
 GO
-
-/* ---------- 4. Unknown member (-1) in the dimensions that SSIS fills ----------
-   These tables use IDENTITY keys (1, 2, 3...). To force the value -1 we switch
-   IDENTITY_INSERT on for one insert, then off again.
-   Note: Transfermarkt also has a REAL pseudo-club called "Unknown" (club_id 75).
-   That one gets a normal row from the ETL; key -1 means "no match found at all". */
 
 IF NOT EXISTS (SELECT 1 FROM dw.DimPlayer WHERE player_key = -1)
 BEGIN
@@ -129,9 +117,7 @@ BEGIN
 END;
 GO
 
-/* ---------- 5. Checks ---------- */
 
--- 5a. Row counts. Expected: DimDate 16,802 | DimAgeBand 5 | DimTransferType 12 | others 1 (the -1 row)
 SELECT 'DimDate' AS table_name, COUNT(*) AS rows FROM dw.DimDate
 UNION ALL SELECT 'DimAgeBand',      COUNT(*) FROM dw.DimAgeBand
 UNION ALL SELECT 'DimTransferType', COUNT(*) FROM dw.DimTransferType
@@ -139,12 +125,10 @@ UNION ALL SELECT 'DimPlayer',       COUNT(*) FROM dw.DimPlayer
 UNION ALL SELECT 'DimClub',         COUNT(*) FROM dw.DimClub
 UNION ALL SELECT 'DimCompetition',  COUNT(*) FROM dw.DimCompetition;
 
--- 5b. Spot-check DimDate on dates you know
 SELECT date_key, full_date, day_name, month_name, season_label, season_month_no, transfer_window
 FROM dw.DimDate
 WHERE date_key IN (-1, 20190223, 20250830, 20260115, 20260706)
 ORDER BY date_key;
 
--- 5c. The two small reference tables in full
 SELECT * FROM dw.DimAgeBand      ORDER BY sort_order;
 SELECT * FROM dw.DimTransferType ORDER BY sort_order;

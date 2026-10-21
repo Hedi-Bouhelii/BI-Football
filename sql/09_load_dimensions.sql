@@ -1,24 +1,7 @@
-/* =========================================================
-   09_load_dimensions.sql
-   Package 03 - load the 3 integrated dimensions from the clean layer:
-       cln.*  ->  dw.DimCompetition  ->  dw.DimClub  ->  dw.DimPlayer
-   (order matters: DimClub copies the league name from DimCompetition)
-
-   Technique: MERGE (an "upsert") = for each source row,
-     - the key is new           -> INSERT a new dimension row (new surrogate key)
-     - the key exists, changed  -> UPDATE the row in place     (SCD type 1)
-     - the key exists, same     -> do nothing
-   Rows are never deleted: facts may point to them.
-
-   Each procedure logs: rows read, inserted, updated, and FAILS if any
-   source key is missing from the dimension afterwards (reconciliation).
-   Safe to run more than once.
-   ========================================================= */
 
 USE FootballBI;
 GO
 
-/* ---------- 0. Logging columns for dimension loads ---------- */
 IF COL_LENGTH('etl.RunLog', 'rows_inserted') IS NULL ALTER TABLE etl.RunLog ADD rows_inserted INT NULL;
 IF COL_LENGTH('etl.RunLog', 'rows_updated')  IS NULL ALTER TABLE etl.RunLog ADD rows_updated  INT NULL;
 GO
@@ -34,7 +17,6 @@ FROM etl.Run r
 LEFT JOIN etl.RunLog l ON l.run_id = r.run_id;
 GO
 
--- Shared log + reconciliation for dimension loads
 CREATE OR ALTER PROCEDURE etl.usp_LogDimLoad
     @run_id INT, @table_name SYSNAME,
     @rows_read INT, @rows_inserted INT, @rows_updated INT, @keys_missing INT
@@ -57,7 +39,6 @@ BEGIN
 END;
 GO
 
--- Youth / reserve team names (same rule as the transfer classification)
 CREATE OR ALTER FUNCTION etl.fn_IsYouthTeam (@club_name NVARCHAR(200))
 RETURNS BIT
 AS
@@ -70,11 +51,6 @@ BEGIN
 END;
 GO
 
-/* =========================================================
-   1. DimCompetition
-      = competitions.csv (65) + every code used elsewhere but missing there
-        (POCP, CGB, COL1, KLUB, UKRS), marked is_seeded = 1
-   ========================================================= */
 CREATE OR ALTER PROCEDURE etl.usp_Load_DimCompetition @run_id INT
 AS
 BEGIN
@@ -125,19 +101,11 @@ BEGIN
 END;
 GO
 
-/* =========================================================
-   2. DimClub  - THE integration example
-      every club id found in clubs, transfers, valuations, games,
-      appearances, club_games and players (18,719 ids, only 796 have
-      full details in clubs.csv)
-      name priority: clubs file > games (official names) > transfers > players
-   ========================================================= */
 CREATE OR ALTER PROCEDURE etl.usp_Load_DimClub @run_id INT
 AS
 BEGIN
     SET NOCOUNT ON; SET XACT_ABORT ON;
 
-    -- 2a. every club id, from every clean table that mentions a club
     SELECT club_id INTO #ids FROM cln.clubs
     UNION SELECT from_club_id   FROM cln.transfers
     UNION SELECT to_club_id     FROM cln.transfers
@@ -149,7 +117,6 @@ BEGIN
     UNION SELECT opponent_id    FROM cln.club_games
     UNION SELECT current_club_id FROM cln.players WHERE current_club_id IS NOT NULL;
 
-    -- 2b. every name seen for each club, with the priority of its source
     SELECT club_id, nm, prio INTO #names FROM (
               SELECT club_id,        club_name         AS nm, 1 AS prio FROM cln.clubs
     UNION ALL SELECT home_club_id,   home_club_name,          2         FROM cln.games
@@ -160,7 +127,6 @@ BEGIN
     ) n
     WHERE nm IS NOT NULL AND nm <> N'';
 
-    -- 2c. best name = highest-priority source, then the most frequent spelling
     WITH ranked AS (
         SELECT club_id, nm,
                ROW_NUMBER() OVER (PARTITION BY club_id ORDER BY MIN(prio), COUNT(*) DESC, nm) AS rn
@@ -226,11 +192,6 @@ BEGIN
 END;
 GO
 
-/* =========================================================
-   3. DimPlayer  (SCD type 1)
-      = players.csv + any player used by appearances / transfers /
-        valuations but missing from players.csv (placeholder row)
-   ========================================================= */
 CREATE OR ALTER PROCEDURE etl.usp_Load_DimPlayer @run_id INT
 AS
 BEGIN
@@ -247,7 +208,6 @@ BEGIN
     INTO #src
     FROM cln.players p;
 
-    -- placeholders: players used by a fact but absent from players.csv
     INSERT INTO #src (player_id, player_name, position_group, sub_position, contract_status)
     SELECT x.player_id,
            COALESCE((SELECT TOP (1) t.player_name FROM cln.transfers t
@@ -302,7 +262,6 @@ BEGIN
 END;
 GO
 
-/* ---------- Check: the objects exist ---------- */
 SELECT name, type_desc FROM sys.objects
 WHERE schema_id = SCHEMA_ID('etl')
   AND name IN ('usp_LogDimLoad', 'fn_IsYouthTeam', 'usp_Load_DimCompetition', 'usp_Load_DimClub', 'usp_Load_DimPlayer')

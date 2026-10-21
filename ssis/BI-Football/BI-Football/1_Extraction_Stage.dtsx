@@ -5,14 +5,14 @@
   DTS:CreationName="Microsoft.Package"
   DTS:CreatorComputerName="DESKTOP-EOB6ABO"
   DTS:CreatorName="DESKTOP-EOB6ABO\Hedi"
-  DTS:DTSID="{503CE011-0F9C-4811-BADA-97A6560AA393}"
+  DTS:DTSID="{AD7FCCAF-1ADC-4E84-9234-C08359D5802C}"
   DTS:ExecutableType="Microsoft.Package"
   DTS:LastModifiedProductVersion="17.0.1016.0"
   DTS:LocaleID="1033"
-  DTS:ObjectName="Extraction_Stage"
+  DTS:ObjectName="1_Extraction_Stage"
   DTS:PackageType="5"
-  DTS:VersionBuild="38"
-  DTS:VersionGUID="{7A235C25-B49E-4464-8E86-17ABBAAC459B}">
+  DTS:VersionBuild="39"
+  DTS:VersionGUID="{9DEFEFD7-2F54-483C-8EF5-2D82816AA4F1}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>

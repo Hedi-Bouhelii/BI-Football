@@ -1,0 +1,2245 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/21/2026 2:10:48 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-EOB6ABO"
+  DTS:CreatorName="DESKTOP-EOB6ABO\Hedi"
+  DTS:DTSID="{0C72CF9D-9327-43BA-9706-8C1E35B4698D}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="17.0.1016.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_Facts"
+  DTS:PackageType="5"
+  DTS:VersionBuild="19"
+  DTS:VersionGUID="{14BCF182-DE24-472C-A86F-015AF7978A4A}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{AD4B910E-7DCF-419F-8D36-0114C485E716}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RunID">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\SEQ FactTransfer"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{E62C5924-450D-4B53-82DC-D1E8D289881A}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SEQ FactTransfer">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\SEQ FactTransfer\DFT FactTransfer"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{0045A7F1-1A64-45B9-8002-2393DD34AC94}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="DFT FactTransfer"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\SEQ FactTransfer\DFT FactTransfer\etl_run_id"
+                  componentClassID="Microsoft.DerivedColumn"
+                  contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+                  name="etl_run_id"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\etl_run_id.Inputs[Derived Column Input]"
+                      description="Input to the Derived Column Transformation"
+                      name="Derived Column Input">
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\etl_run_id.Outputs[Derived Column Output]"
+                      description="Default Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      name="Derived Column Output"
+                      synchronousInputId="Package\SEQ FactTransfer\DFT FactTransfer\etl_run_id.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\etl_run_id.Outputs[Derived Column Output].Columns[etl_run_id]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\etl_run_id.Outputs[Derived Column Output].Columns[etl_run_id]"
+                          name="etl_run_id"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">@[User::RunID]</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">@[User::RunID]</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\etl_run_id.Outputs[Derived Column Error Output]"
+                      description="Error Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Derived Column Error Output"
+                      synchronousInputId="Package\SEQ FactTransfer\DFT FactTransfer\etl_run_id.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\etl_run_id.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\etl_run_id.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\etl_run_id.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\etl_run_id.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP From club"
+                  componentClassID="Microsoft.Lookup"
+                  contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+                  description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+                  name="LKP From club"
+                  usesDispositions="true"
+                  version="6">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the SQL statement that generates the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT club_id, club_key FROM dw.DimClub;</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommandParam"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT club_id, club_key FROM dw.DimClub;) [refTable]
+where [refTable].[club_id] = ?</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the type of connection used to access the reference dataset."
+                      name="ConnectionType"
+                      typeConverter="LookupConnectionType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the cache type of the lookup table."
+                      name="CacheType"
+                      typeConverter="CacheType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                      name="NoMatchBehavior"
+                      typeConverter="LookupNoMatchBehavior">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                      name="NoMatchCachePercentage">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                      name="MaxMemoryUsage">25</property>
+                    <property
+                      dataType="System.Int64"
+                      description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                      name="MaxMemoryUsage64">25</property>
+                    <property
+                      dataType="System.String"
+                      description="Indicates whether to reference metadata in an XML format."
+                      name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="club_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="club_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                      name="ParameterMap">#{Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[from_club_id]};</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                      name="TreatDuplicateKeysAsError">false</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP From club.Connections[OleDbConnection]"
+                      connectionManagerID="{08FEB0D9-36C2-40D6-AE5F-4D392144E03F}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[CM_FootballBI]"
+                      description="Connection manager used to access lookup data."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP From club.Inputs[Lookup Input]"
+                      name="Lookup Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP From club.Inputs[Lookup Input].Columns[from_club_id]"
+                          cachedDataType="i4"
+                          cachedName="from_club_id"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[from_club_id]">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table that a column joins."
+                              name="JoinToReferenceColumn">club_id</property>
+                            <property
+                              dataType="System.Null"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn" />
+                          </properties>
+                        </inputColumn>
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP From club.Outputs[Lookup Match Output]"
+                      errorOrTruncationOperation="Lookup"
+                      errorRowDisposition="IgnoreFailure"
+                      exclusionGroup="1"
+                      name="Lookup Match Output"
+                      synchronousInputId="Package\SEQ FactTransfer\DFT FactTransfer\LKP From club.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP From club.Outputs[Lookup Match Output].Columns[from_club_key]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Copy Column"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\LKP From club.Outputs[Lookup Match Output].Columns[from_club_key]"
+                          name="from_club_key"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">club_key</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP From club.Outputs[Lookup No Match Output]"
+                      description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                      exclusionGroup="1"
+                      name="Lookup No Match Output"
+                      synchronousInputId="Package\SEQ FactTransfer\DFT FactTransfer\LKP From club.Inputs[Lookup Input]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP From club.Outputs[Lookup Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Lookup Error Output"
+                      synchronousInputId="Package\SEQ FactTransfer\DFT FactTransfer\LKP From club.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP From club.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\LKP From club.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP From club.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\LKP From club.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Player"
+                  componentClassID="Microsoft.Lookup"
+                  contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+                  description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+                  name="LKP Player"
+                  usesDispositions="true"
+                  version="6">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the SQL statement that generates the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT player_id, player_key FROM dw.DimPlayer;</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommandParam"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT player_id, player_key FROM dw.DimPlayer;) [refTable]
+where [refTable].[player_id] = ?</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the type of connection used to access the reference dataset."
+                      name="ConnectionType"
+                      typeConverter="LookupConnectionType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the cache type of the lookup table."
+                      name="CacheType"
+                      typeConverter="CacheType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                      name="NoMatchBehavior"
+                      typeConverter="LookupNoMatchBehavior">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                      name="NoMatchCachePercentage">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                      name="MaxMemoryUsage">25</property>
+                    <property
+                      dataType="System.Int64"
+                      description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                      name="MaxMemoryUsage64">25</property>
+                    <property
+                      dataType="System.String"
+                      description="Indicates whether to reference metadata in an XML format."
+                      name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="player_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="player_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                      name="ParameterMap">#{Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[player_id]};</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                      name="TreatDuplicateKeysAsError">false</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Player.Connections[OleDbConnection]"
+                      connectionManagerID="{08FEB0D9-36C2-40D6-AE5F-4D392144E03F}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[CM_FootballBI]"
+                      description="Connection manager used to access lookup data."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Player.Inputs[Lookup Input]"
+                      name="Lookup Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Player.Inputs[Lookup Input].Columns[player_id]"
+                          cachedDataType="i4"
+                          cachedName="player_id"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[player_id]">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table that a column joins."
+                              name="JoinToReferenceColumn">player_id</property>
+                            <property
+                              dataType="System.Null"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn" />
+                          </properties>
+                        </inputColumn>
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Player.Outputs[Lookup Match Output]"
+                      errorOrTruncationOperation="Lookup"
+                      errorRowDisposition="IgnoreFailure"
+                      exclusionGroup="1"
+                      name="Lookup Match Output"
+                      synchronousInputId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Player.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Player.Outputs[Lookup Match Output].Columns[player_key]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Copy Column"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Player.Outputs[Lookup Match Output].Columns[player_key]"
+                          name="player_key"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">player_key</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Player.Outputs[Lookup No Match Output]"
+                      description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                      exclusionGroup="1"
+                      name="Lookup No Match Output"
+                      synchronousInputId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Player.Inputs[Lookup Input]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Player.Outputs[Lookup Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Lookup Error Output"
+                      synchronousInputId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Player.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Player.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Player.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Player.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Player.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP To club"
+                  componentClassID="Microsoft.Lookup"
+                  contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+                  description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+                  name="LKP To club"
+                  usesDispositions="true"
+                  version="6">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the SQL statement that generates the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT club_id, club_key FROM dw.DimClub;</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommandParam"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT club_id, club_key FROM dw.DimClub;) [refTable]
+where [refTable].[club_id] = ?</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the type of connection used to access the reference dataset."
+                      name="ConnectionType"
+                      typeConverter="LookupConnectionType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the cache type of the lookup table."
+                      name="CacheType"
+                      typeConverter="CacheType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                      name="NoMatchBehavior"
+                      typeConverter="LookupNoMatchBehavior">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                      name="NoMatchCachePercentage">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                      name="MaxMemoryUsage">25</property>
+                    <property
+                      dataType="System.Int64"
+                      description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                      name="MaxMemoryUsage64">25</property>
+                    <property
+                      dataType="System.String"
+                      description="Indicates whether to reference metadata in an XML format."
+                      name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="club_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="club_key" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                      name="ParameterMap">#{Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[to_club_id]};</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                      name="TreatDuplicateKeysAsError">false</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP To club.Connections[OleDbConnection]"
+                      connectionManagerID="{08FEB0D9-36C2-40D6-AE5F-4D392144E03F}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[CM_FootballBI]"
+                      description="Connection manager used to access lookup data."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP To club.Inputs[Lookup Input]"
+                      name="Lookup Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP To club.Inputs[Lookup Input].Columns[to_club_id]"
+                          cachedDataType="i4"
+                          cachedName="to_club_id"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[to_club_id]">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table that a column joins."
+                              name="JoinToReferenceColumn">club_id</property>
+                            <property
+                              dataType="System.Null"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn" />
+                          </properties>
+                        </inputColumn>
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP To club.Outputs[Lookup Match Output]"
+                      errorOrTruncationOperation="Lookup"
+                      errorRowDisposition="IgnoreFailure"
+                      exclusionGroup="1"
+                      name="Lookup Match Output"
+                      synchronousInputId="Package\SEQ FactTransfer\DFT FactTransfer\LKP To club.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP To club.Outputs[Lookup Match Output].Columns[to_club_key]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Copy Column"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\LKP To club.Outputs[Lookup Match Output].Columns[to_club_key]"
+                          name="to_club_key"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">club_key</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP To club.Outputs[Lookup No Match Output]"
+                      description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                      exclusionGroup="1"
+                      name="Lookup No Match Output"
+                      synchronousInputId="Package\SEQ FactTransfer\DFT FactTransfer\LKP To club.Inputs[Lookup Input]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP To club.Outputs[Lookup Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Lookup Error Output"
+                      synchronousInputId="Package\SEQ FactTransfer\DFT FactTransfer\LKP To club.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP To club.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\LKP To club.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP To club.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\LKP To club.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Transfer type"
+                  componentClassID="Microsoft.Lookup"
+                  contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+                  description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+                  name="LKP Transfer type"
+                  usesDispositions="true"
+                  version="6">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the SQL statement that generates the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT transfer_subclass, transfer_type_key FROM dw.DimTransferType;</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommandParam"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT transfer_subclass, transfer_type_key FROM dw.DimTransferType;) [refTable]
+where [refTable].[transfer_subclass] = ?</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the type of connection used to access the reference dataset."
+                      name="ConnectionType"
+                      typeConverter="LookupConnectionType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the cache type of the lookup table."
+                      name="CacheType"
+                      typeConverter="CacheType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                      name="NoMatchBehavior"
+                      typeConverter="LookupNoMatchBehavior">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                      name="NoMatchCachePercentage">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                      name="MaxMemoryUsage">25</property>
+                    <property
+                      dataType="System.Int64"
+                      description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                      name="MaxMemoryUsage64">25</property>
+                    <property
+                      dataType="System.String"
+                      description="Indicates whether to reference metadata in an XML format."
+                      name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="transfer_subclass" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="transfer_type_key" dataType="DT_I2" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                      name="ParameterMap">#{Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[transfer_subclass]};</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                      name="TreatDuplicateKeysAsError">false</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Transfer type.Connections[OleDbConnection]"
+                      connectionManagerID="{08FEB0D9-36C2-40D6-AE5F-4D392144E03F}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[CM_FootballBI]"
+                      description="Connection manager used to access lookup data."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Transfer type.Inputs[Lookup Input]"
+                      name="Lookup Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Transfer type.Inputs[Lookup Input].Columns[transfer_subclass]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="transfer_subclass"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[transfer_subclass]">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table that a column joins."
+                              name="JoinToReferenceColumn">transfer_subclass</property>
+                            <property
+                              dataType="System.Null"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn" />
+                          </properties>
+                        </inputColumn>
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Transfer type.Outputs[Lookup Match Output]"
+                      errorOrTruncationOperation="Lookup"
+                      errorRowDisposition="IgnoreFailure"
+                      exclusionGroup="1"
+                      name="Lookup Match Output"
+                      synchronousInputId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Transfer type.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Transfer type.Outputs[Lookup Match Output].Columns[transfer_type_key]"
+                          dataType="i2"
+                          errorOrTruncationOperation="Copy Column"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Transfer type.Outputs[Lookup Match Output].Columns[transfer_type_key]"
+                          name="transfer_type_key"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">transfer_type_key</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Transfer type.Outputs[Lookup No Match Output]"
+                      description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                      exclusionGroup="1"
+                      name="Lookup No Match Output"
+                      synchronousInputId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Transfer type.Inputs[Lookup Input]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Transfer type.Outputs[Lookup Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Lookup Error Output"
+                      synchronousInputId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Transfer type.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Transfer type.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Transfer type.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Transfer type.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Transfer type.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="OLE DB Destination"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dw].[FactTransfer]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Connections[OleDbConnection]"
+                      connectionManagerID="{08FEB0D9-36C2-40D6-AE5F-4D392144E03F}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[CM_FootballBI]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[transfer_date_key]"
+                          cachedDataType="i4"
+                          cachedName="transfer_date_key"
+                          externalMetadataColumnId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[transfer_date_key]"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[transfer_date_key]" />
+                        <inputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[age_band_key]"
+                          cachedDataType="i2"
+                          cachedName="age_band_key"
+                          externalMetadataColumnId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[age_band_key]"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[age_band_key]" />
+                        <inputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[fee_eur]"
+                          cachedDataType="numeric"
+                          cachedName="fee_eur"
+                          cachedPrecision="18"
+                          cachedScale="2"
+                          externalMetadataColumnId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[fee_eur]"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[fee_eur]" />
+                        <inputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[market_value_eur]"
+                          cachedDataType="i8"
+                          cachedName="market_value_eur"
+                          externalMetadataColumnId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[market_value_eur]"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[market_value_eur]" />
+                        <inputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[fee_to_value_ratio]"
+                          cachedDataType="numeric"
+                          cachedName="fee_to_value_ratio"
+                          cachedPrecision="9"
+                          cachedScale="4"
+                          externalMetadataColumnId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[fee_to_value_ratio]"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[fee_to_value_ratio]" />
+                        <inputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[is_free_departure]"
+                          cachedDataType="bool"
+                          cachedName="is_free_departure"
+                          externalMetadataColumnId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[is_free_departure]"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[is_free_departure]" />
+                        <inputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[is_future_dated]"
+                          cachedDataType="bool"
+                          cachedName="is_future_dated"
+                          externalMetadataColumnId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[is_future_dated]"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[is_future_dated]" />
+                        <inputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[player_key]"
+                          cachedDataType="i4"
+                          cachedName="player_key"
+                          externalMetadataColumnId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[player_key]"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Player.Outputs[Lookup Match Output].Columns[player_key]" />
+                        <inputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[from_club_key]"
+                          cachedDataType="i4"
+                          cachedName="from_club_key"
+                          externalMetadataColumnId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[from_club_key]"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\LKP From club.Outputs[Lookup Match Output].Columns[from_club_key]" />
+                        <inputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[to_club_key]"
+                          cachedDataType="i4"
+                          cachedName="to_club_key"
+                          externalMetadataColumnId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[to_club_key]"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\LKP To club.Outputs[Lookup Match Output].Columns[to_club_key]" />
+                        <inputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[transfer_type_key]"
+                          cachedDataType="i2"
+                          cachedName="transfer_type_key"
+                          externalMetadataColumnId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[transfer_type_key]"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Transfer type.Outputs[Lookup Match Output].Columns[transfer_type_key]" />
+                        <inputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[etl_run_id]"
+                          cachedDataType="i4"
+                          cachedName="etl_run_id"
+                          externalMetadataColumnId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[etl_run_id]"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\etl_run_id.Outputs[Derived Column Output].Columns[etl_run_id]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[transfer_date_key]"
+                          dataType="i4"
+                          name="transfer_date_key" />
+                        <externalMetadataColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[player_key]"
+                          dataType="i4"
+                          name="player_key" />
+                        <externalMetadataColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[from_club_key]"
+                          dataType="i4"
+                          name="from_club_key" />
+                        <externalMetadataColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[to_club_key]"
+                          dataType="i4"
+                          name="to_club_key" />
+                        <externalMetadataColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[transfer_type_key]"
+                          dataType="i2"
+                          name="transfer_type_key" />
+                        <externalMetadataColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[age_band_key]"
+                          dataType="i2"
+                          name="age_band_key" />
+                        <externalMetadataColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[fee_eur]"
+                          dataType="numeric"
+                          name="fee_eur"
+                          precision="18"
+                          scale="2" />
+                        <externalMetadataColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[market_value_eur]"
+                          dataType="i8"
+                          name="market_value_eur" />
+                        <externalMetadataColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[fee_to_value_ratio]"
+                          dataType="numeric"
+                          name="fee_to_value_ratio"
+                          precision="9"
+                          scale="4" />
+                        <externalMetadataColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[is_free_departure]"
+                          dataType="bool"
+                          name="is_free_departure" />
+                        <externalMetadataColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[is_future_dated]"
+                          dataType="bool"
+                          name="is_future_dated" />
+                        <externalMetadataColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[etl_run_id]"
+                          dataType="i4"
+                          name="etl_run_id" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="OLE DB Source"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset"></property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT * FROM etl.vw_Src_FactTransfer;</property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">2</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Connections[OleDbConnection]"
+                      connectionManagerID="{08FEB0D9-36C2-40D6-AE5F-4D392144E03F}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[CM_FootballBI]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[player_id]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[player_id]"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[player_id]"
+                          name="player_id"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[from_club_id]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[from_club_id]"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[from_club_id]"
+                          name="from_club_id"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[to_club_id]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[to_club_id]"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[to_club_id]"
+                          name="to_club_id"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[transfer_subclass]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[transfer_subclass]"
+                          length="50"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[transfer_subclass]"
+                          name="transfer_subclass"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[transfer_date_key]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[transfer_date_key]"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[transfer_date_key]"
+                          name="transfer_date_key"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[age_band_key]"
+                          dataType="i2"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[age_band_key]"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[age_band_key]"
+                          name="age_band_key"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[fee_eur]"
+                          dataType="numeric"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[fee_eur]"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[fee_eur]"
+                          name="fee_eur"
+                          precision="18"
+                          scale="2"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[market_value_eur]"
+                          dataType="i8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[market_value_eur]"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[market_value_eur]"
+                          name="market_value_eur"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[fee_to_value_ratio]"
+                          dataType="numeric"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[fee_to_value_ratio]"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[fee_to_value_ratio]"
+                          name="fee_to_value_ratio"
+                          precision="9"
+                          scale="4"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[is_free_departure]"
+                          dataType="bool"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[is_free_departure]"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[is_free_departure]"
+                          name="is_free_departure"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[is_future_dated]"
+                          dataType="bool"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[is_future_dated]"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].Columns[is_future_dated]"
+                          name="is_future_dated"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[player_id]"
+                          dataType="i4"
+                          name="player_id" />
+                        <externalMetadataColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[from_club_id]"
+                          dataType="i4"
+                          name="from_club_id" />
+                        <externalMetadataColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[to_club_id]"
+                          dataType="i4"
+                          name="to_club_id" />
+                        <externalMetadataColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[transfer_subclass]"
+                          dataType="wstr"
+                          length="50"
+                          name="transfer_subclass" />
+                        <externalMetadataColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[transfer_date_key]"
+                          dataType="i4"
+                          name="transfer_date_key" />
+                        <externalMetadataColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[age_band_key]"
+                          dataType="i2"
+                          name="age_band_key" />
+                        <externalMetadataColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[fee_eur]"
+                          dataType="numeric"
+                          name="fee_eur"
+                          precision="18"
+                          scale="2" />
+                        <externalMetadataColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[market_value_eur]"
+                          dataType="i8"
+                          name="market_value_eur" />
+                        <externalMetadataColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[fee_to_value_ratio]"
+                          dataType="numeric"
+                          name="fee_to_value_ratio"
+                          precision="9"
+                          scale="4" />
+                        <externalMetadataColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[is_free_departure]"
+                          dataType="bool"
+                          name="is_free_departure" />
+                        <externalMetadataColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[is_future_dated]"
+                          dataType="bool"
+                          name="is_future_dated" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[player_id]"
+                          dataType="i4"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[player_id]"
+                          name="player_id" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[from_club_id]"
+                          dataType="i4"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[from_club_id]"
+                          name="from_club_id" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[to_club_id]"
+                          dataType="i4"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[to_club_id]"
+                          name="to_club_id" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[transfer_subclass]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[transfer_subclass]"
+                          name="transfer_subclass" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[transfer_date_key]"
+                          dataType="i4"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[transfer_date_key]"
+                          name="transfer_date_key" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[age_band_key]"
+                          dataType="i2"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[age_band_key]"
+                          name="age_band_key" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[fee_eur]"
+                          dataType="numeric"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[fee_eur]"
+                          name="fee_eur"
+                          precision="18"
+                          scale="2" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[market_value_eur]"
+                          dataType="i8"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[market_value_eur]"
+                          name="market_value_eur" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[fee_to_value_ratio]"
+                          dataType="numeric"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[fee_to_value_ratio]"
+                          name="fee_to_value_ratio"
+                          precision="9"
+                          scale="4" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[is_free_departure]"
+                          dataType="bool"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[is_free_departure]"
+                          name="is_free_departure" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[is_future_dated]"
+                          dataType="bool"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[is_future_dated]"
+                          name="is_future_dated" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\SEQ FactTransfer\DFT FactTransfer.Paths[Derived Column Output]"
+                  endId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  name="Derived Column Output"
+                  startId="Package\SEQ FactTransfer\DFT FactTransfer\etl_run_id.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\SEQ FactTransfer\DFT FactTransfer.Paths[Lookup Match Output]"
+                  endId="Package\SEQ FactTransfer\DFT FactTransfer\LKP From club.Inputs[Lookup Input]"
+                  name="Lookup Match Output"
+                  startId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Player.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\SEQ FactTransfer\DFT FactTransfer.Paths[Lookup Match Output1]"
+                  endId="Package\SEQ FactTransfer\DFT FactTransfer\LKP To club.Inputs[Lookup Input]"
+                  name="Lookup Match Output"
+                  startId="Package\SEQ FactTransfer\DFT FactTransfer\LKP From club.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\SEQ FactTransfer\DFT FactTransfer.Paths[Lookup Match Output2]"
+                  endId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Transfer type.Inputs[Lookup Input]"
+                  name="Lookup Match Output"
+                  startId="Package\SEQ FactTransfer\DFT FactTransfer\LKP To club.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\SEQ FactTransfer\DFT FactTransfer.Paths[Lookup Match Output3]"
+                  endId="Package\SEQ FactTransfer\DFT FactTransfer\etl_run_id.Inputs[Derived Column Input]"
+                  name="Lookup Match Output"
+                  startId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Transfer type.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\SEQ FactTransfer\DFT FactTransfer.Paths[OLE DB Source Output]"
+                  endId="Package\SEQ FactTransfer\DFT FactTransfer\LKP Player.Inputs[Lookup Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SEQ FactTransfer\SQL Log"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{35628D51-2FA1-4D13-9183-DD5373015E56}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL Log"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{08FEB0D9-36C2-40D6-AE5F-4D392144E03F}"
+              SQLTask:SqlStatementSource="EXEC etl.usp_LogFactLoad ?, N'FactTransfer';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::RunID"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SEQ FactTransfer\SQL Truncate"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{5847E138-A1EC-458D-9219-CB96DE3D026F}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL Truncate"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{08FEB0D9-36C2-40D6-AE5F-4D392144E03F}"
+              SQLTask:SqlStatementSource="TRUNCATE TABLE dw.FactTransfer;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\SEQ FactTransfer.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{304177CC-BF0F-4340-BDE0-15E37D3CBB82}"
+          DTS:From="Package\SEQ FactTransfer\SQL Truncate"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\SEQ FactTransfer\DFT FactTransfer" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\SEQ FactTransfer.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{9A39742C-EDD0-4777-9F78-A0F9AD5D194B}"
+          DTS:From="Package\SEQ FactTransfer\DFT FactTransfer"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\SEQ FactTransfer\SQL Log" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SEQ Load facts (SQL)"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{3099ED59-00FF-4E40-9CF8-0D1B26CF8137}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SEQ Load facts (SQL)">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\SEQ Load facts (SQL)\Load_FactAppearance"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{E71623FC-6D89-4995-A566-8D89A3AFB298}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Load_FactAppearance"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{08FEB0D9-36C2-40D6-AE5F-4D392144E03F}"
+              SQLTask:SqlStatementSource="EXEC etl.usp_Load_FactAppearance ?;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::RunID"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SEQ Load facts (SQL)\Load_FactContractSnapshot"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{439B2F73-355E-4B5A-8A44-652740C5E0D5}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Load_FactContractSnapshot"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{08FEB0D9-36C2-40D6-AE5F-4D392144E03F}"
+              SQLTask:SqlStatementSource="EXEC etl.usp_Load_FactContractSnapshot ?;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::RunID"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SEQ Load facts (SQL)\Load_FactValuation"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{0A9CBA32-DCBB-43C2-9C4D-E70BF8A500D6}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Load_FactValuation"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{08FEB0D9-36C2-40D6-AE5F-4D392144E03F}"
+              SQLTask:SqlStatementSource="EXEC etl.usp_Load_FactValuation ?;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::RunID"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\SEQ Load facts (SQL).PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{9F9CF87B-2BBA-4210-8D4B-D910D840C2F1}"
+          DTS:From="Package\SEQ Load facts (SQL)\Load_FactValuation"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\SEQ Load facts (SQL)\Load_FactAppearance" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\SEQ Load facts (SQL).PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{68206363-16E7-444B-B4D4-5526E406C524}"
+          DTS:From="Package\SEQ Load facts (SQL)\Load_FactAppearance"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\SEQ Load facts (SQL)\Load_FactContractSnapshot" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL Check upstream"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{7FE636EA-AEC2-4008-A3F9-8FC889E2ABFB}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL Check upstream"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{08FEB0D9-36C2-40D6-AE5F-4D392144E03F}"
+          SQLTask:SqlStatementSource="EXEC etl.usp_CheckUpstream N'03_Load_Dimensions';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL End run"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{63130391-71B2-49C2-A340-EB00AB9F7F6A}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL End run"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{08FEB0D9-36C2-40D6-AE5F-4D392144E03F}"
+          SQLTask:SqlStatementSource="EXEC etl.usp_EndRun ?, N'Success';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::RunID"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL Start Run"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{886F71F5-8EC7-4DAA-877E-7744D59A8BE6}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL Start Run"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{08FEB0D9-36C2-40D6-AE5F-4D392144E03F}"
+          SQLTask:SqlStatementSource="EXEC etl.usp_StartRun N'04_Load_Facts';"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::RunID" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::RunID"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{D4F29CFB-E00F-48E5-80AD-46A24D652664}"
+      DTS:From="Package\SQL Start Run"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\SQL Check upstream" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{3668E488-0CA5-4681-A2BA-98A39798B05B}"
+      DTS:From="Package\SQL Check upstream"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\SEQ Load facts (SQL)" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{38E328A8-17C4-46C8-8EB1-5AB47FF5333F}"
+      DTS:From="Package\SEQ Load facts (SQL)"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\SEQ FactTransfer" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{7475FBA5-FF9A-44F5-9D07-CFD943714326}"
+      DTS:From="Package\SEQ FactTransfer"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\SQL End run" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{2701A0D3-9D16-4B92-8839-84861E882887}"
+      DTS:EventID="-568648933"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{A268609A-CA28-4A2D-98B6-8CCB30584E87}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\SQL Run failed"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{49C02526-2ADD-450B-B1A0-EA225DE4CE21}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL Run failed"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{08FEB0D9-36C2-40D6-AE5F-4D392144E03F}"
+              SQLTask:SqlStatementSource="EXEC etl.usp_EndRun ?, N'Failed', ?;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::RunID"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="164.8,41.6"
+          Id="Package\SQL Check upstream"
+          TopLeft="37.2333331512081,264.833332236475" />
+        <NodeLayout
+          Size="138.4,41.6"
+          Id="Package\SQL End run"
+          TopLeft="1062.09994454285,258.433338672982" />
+        <NodeLayout
+          Size="145.6,41.6"
+          Id="Package\SQL Start Run"
+          TopLeft="46.8333331512081,114.699999240637" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="119.633333151208,156.299999240637">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,108.533332995838"
+              Start="0,0"
+              End="0,101.033332995838">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,101.033332995838" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="171.2,41.6"
+          Id="Package\SEQ Load facts (SQL)\Load_FactValuation"
+          TopLeft="25.1,5.49999999999995" />
+        <NodeLayout
+          Size="183.2,41.6"
+          Id="Package\SEQ Load facts (SQL)\Load_FactAppearance"
+          TopLeft="19.1,107.1" />
+        <NodeLayout
+          Size="210.4,41.6"
+          Id="Package\SEQ Load facts (SQL)\Load_FactContractSnapshot"
+          TopLeft="5.50000000000003,208.7" />
+        <EdgeLayout
+          Id="Package\SEQ Load facts (SQL).PrecedenceConstraints[Constraint]"
+          TopLeft="110.7,47.1">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,59.9999999999999"
+              Start="0,0"
+              End="0,52.4999999999999">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.4999999999999" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SEQ Load facts (SQL).PrecedenceConstraints[Constraint 1]"
+          TopLeft="110.7,148.7">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="221.6,305.6"
+          Size="221.6,348.8"
+          Id="Package\SEQ Load facts (SQL)"
+          TopLeft="372.166646632884,109.900000687043" />
+        <NodeLayout
+          Size="143.2,41.6"
+          Id="Package\SEQ FactTransfer\SQL Truncate"
+          TopLeft="13.9,5.49999999999995" />
+        <NodeLayout
+          Size="160,41.6"
+          Id="Package\SEQ FactTransfer\DFT FactTransfer"
+          TopLeft="5.50000000000003,107.1" />
+        <NodeLayout
+          Size="119.2,41.6"
+          Id="Package\SEQ FactTransfer\SQL Log"
+          TopLeft="25.9,208.7" />
+        <EdgeLayout
+          Id="Package\SEQ FactTransfer.PrecedenceConstraints[Constraint]"
+          TopLeft="85.5,47.1">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,59.9999999999999"
+              Start="0,0"
+              End="0,52.4999999999999">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.4999999999999" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SEQ FactTransfer.PrecedenceConstraints[Constraint 1]"
+          TopLeft="85.5,148.7">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,59.9999999999999"
+              Start="0,0"
+              End="0,52.4999999999999">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.4999999999999" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="171.2,305.6"
+          Size="171.2,348.8"
+          Id="Package\SEQ FactTransfer"
+          TopLeft="720.699962300064,109.633336864975" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="202.033333151208,284.966666461759">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="170.133313481676,0"
+              Start="0,0"
+              End="162.633313481676,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="162.633313481676,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="593.766646632884,284.166668776009">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="126.93331566718,0"
+              Start="0,0"
+              End="119.43331566718,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="119.43331566718,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="891.899962300064,281.633337768978">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="170.199982242784,0"
+              Start="0,0"
+              End="162.699982242784,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="162.699982242784,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="148.8,41.6"
+          Id="Package.EventHandlers[OnError]\SQL Run failed"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <TaskHost
+    design-time-name="Package\SEQ FactTransfer\DFT FactTransfer">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="152,41.6"
+          Id="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source"
+          TopLeft="181.666656740838,119.599999168317" />
+        <NodeLayout
+          Size="130.4,41.6"
+          Id="Package\SEQ FactTransfer\DFT FactTransfer\LKP Player"
+          TopLeft="411.666644174193,182.866665395035" />
+        <EdgeLayout
+          Id="Package\SEQ FactTransfer\DFT FactTransfer.Paths[OLE DB Source Output]"
+          TopLeft="333.666656740838,140.399999168317">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="77.9999874333546,63.2666662267182"
+              Start="0,0"
+              End="70.4999874333546,63.2666662267182">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="34.9999937166773,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="34.9999937166773,0"
+                    Point2="38.9999937166773,0"
+                    Point3="38.9999937166773,4" />
+                  <mssgle:LineSegment
+                    End="38.9999937166773,59.2666662267182" />
+                  <mssgle:CubicBezierSegment
+                    Point1="38.9999937166773,59.2666662267182"
+                    Point2="38.9999937166773,63.2666662267182"
+                    Point3="42.9999937166773,63.2666662267182" />
+                  <mssgle:LineSegment
+                    End="70.4999874333546,63.2666662267182" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="147.2,41.6"
+          Id="Package\SEQ FactTransfer\DFT FactTransfer\LKP From club"
+          TopLeft="689.999962300064,184.599998716315" />
+        <NodeLayout
+          Size="135.2,41.6"
+          Id="Package\SEQ FactTransfer\DFT FactTransfer\LKP To club"
+          TopLeft="935.833282201657,210.599998535514" />
+        <EdgeLayout
+          Id="Package\SEQ FactTransfer\DFT FactTransfer.Paths[Lookup Match Output]"
+          TopLeft="542.066644174193,204.533332055675">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="147.933318125871,0"
+              Start="0,0"
+              End="140.433318125871,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="140.433318125871,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="22.0252723441856,5,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SEQ FactTransfer\DFT FactTransfer.Paths[Lookup Match Output1]"
+          TopLeft="837.199962300064,205.399998716315">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="98.6333199015928,25.9999998191992"
+              Start="0,0"
+              End="91.1333199015928,25.9999998191992">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="45.3166599507964,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="45.3166599507964,0"
+                    Point2="49.3166599507964,0"
+                    Point3="49.3166599507964,4" />
+                  <mssgle:LineSegment
+                    End="49.3166599507964,21.9999998191992" />
+                  <mssgle:CubicBezierSegment
+                    Point1="49.3166599507964,21.9999998191992"
+                    Point2="49.3166599507964,25.9999998191992"
+                    Point3="53.3166599507964,25.9999998191992" />
+                  <mssgle:LineSegment
+                    End="91.1333199015928,25.9999998191992" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="1.1252732320464,-17.609375,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="161.6,41.6"
+          Id="Package\SEQ FactTransfer\DFT FactTransfer\LKP Transfer type"
+          TopLeft="1112.49993921568,297.266664599511" />
+        <EdgeLayout
+          Id="Package\SEQ FactTransfer\DFT FactTransfer.Paths[Lookup Match Output2]"
+          TopLeft="1003.43328220166,252.199998535514">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="189.866657014026,45.0666660639976"
+              Start="0,0"
+              End="189.866657014026,37.5666660639976">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.5333330319988" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,18.5333330319988"
+                    Point2="0,22.5333330319988"
+                    Point3="4,22.5333330319988" />
+                  <mssgle:LineSegment
+                    End="185.866657014026,22.5333330319988" />
+                  <mssgle:CubicBezierSegment
+                    Point1="185.866657014026,22.5333330319988"
+                    Point2="189.866657014026,22.5333330319988"
+                    Point3="189.866657014026,26.5333330319988" />
+                  <mssgle:LineSegment
+                    End="189.866657014026,37.5666660639976" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="46.741941788263,27.5333330319988,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="171.2,41.6"
+          Id="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination"
+          TopLeft="1119.06661111845,424.333330699669" />
+        <NodeLayout
+          Size="124,41.6"
+          Id="Package\SEQ FactTransfer\DFT FactTransfer\etl_run_id"
+          TopLeft="1004.46661794815,356.533332055675" />
+        <EdgeLayout
+          Id="Package\SEQ FactTransfer\DFT FactTransfer.Paths[Lookup Match Output3]"
+          TopLeft="1112.49993921568,318.066664599511">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-46.0333212675325,38.4666674561633"
+              Start="0,0"
+              End="-46.0333212675325,30.9666674561633">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-42.0333212675325,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-42.0333212675325,0"
+                    Point2="-46.0333212675325,0"
+                    Point3="-46.0333212675325,4" />
+                  <mssgle:LineSegment
+                    End="-46.0333212675325,30.9666674561633" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-94.2247079862825,-17.609375,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SEQ FactTransfer\DFT FactTransfer.Paths[Derived Column Output]"
+          TopLeft="1066.46661794815,398.133332055675">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="138.199993170301,26.1999986439943"
+              Start="0,0"
+              End="138.199993170301,18.6999986439943">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,9.09999932199716" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,9.09999932199716"
+                    Point2="0,13.0999993219972"
+                    Point3="4,13.0999993219972" />
+                  <mssgle:LineSegment
+                    End="134.199993170301,13.0999993219972" />
+                  <mssgle:CubicBezierSegment
+                    Point1="134.199993170301,13.0999993219972"
+                    Point2="138.199993170301,13.0999993219972"
+                    Point3="138.199993170301,17.0999993219972" />
+                  <mssgle:LineSegment
+                    End="138.199993170301,18.6999986439943" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\SEQ FactTransfer\DFT FactTransfer\LKP Player">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\SEQ FactTransfer\DFT FactTransfer\LKP From club">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\SEQ FactTransfer\DFT FactTransfer\LKP To club">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\SEQ FactTransfer\DFT FactTransfer\LKP Transfer type">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\SEQ FactTransfer\DFT FactTransfer\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,18 +1,7 @@
-/* =========================================================
-   08_test_clean_layer.sql
-   Run AFTER package 02 has run. Tests that the clean layer is complete
-   and that the T-SQL transfer classification gives exactly the same
-   result as the original rule in scripts/checklib.py.
-   Run the whole script (F5): 6 result grids, each with a PASS/FAIL column.
-   ========================================================= */
 
 USE FootballBI;
 GO
 
-/* ---------- Test data: 67 hand-checked transfers of 17 known players (dataset check P4.31) ----------
-   expected_subclass = result of the original rule (66 of 67 are correct in real life;
-   the known miss is Zaragoza's Recre Granada -> Granada CF, left 'unknown').
-   This table is a permanent regression test: re-run this script after any change to the rule. */
 DROP TABLE IF EXISTS etl.TestTransferLabels;
 CREATE TABLE etl.TestTransferLabels (
     player_id INT NOT NULL, transfer_date DATE NOT NULL, from_club_id INT NOT NULL, to_club_id INT NOT NULL,
@@ -90,14 +79,12 @@ INSERT INTO etl.TestTransferLabels VALUES
     (566931, '2025-08-29', 23826, 148, N'Xavi Simons', N'Leipzig', N'Tottenham', N'paid');
 GO
 
--- TEST 1. Reconciliation of the last package 02 run: 9 tables, read = clean + rejected
 SELECT table_name, rows_read, rows_loaded, rows_rejected, table_status,
        CASE WHEN table_status = 'Success' THEN 'PASS' ELSE 'FAIL' END AS test
 FROM etl.vw_RunSummary
 WHERE run_id = (SELECT MAX(run_id) FROM etl.Run WHERE package_name = '02_Clean_Transform')
 ORDER BY rows_read;
 
--- TEST 2. Row counts in cln against the source files (game_lineups: 12 duplicates removed)
 SELECT x.table_name, x.clean_rows, e.expected,
        CASE WHEN x.clean_rows = e.expected THEN 'PASS' ELSE 'FAIL' END AS test
 FROM (
@@ -117,13 +104,11 @@ JOIN (VALUES ('clubs',796),('competitions',65),('players',50149),('games',88958)
   ON e.table_name = x.table_name
 ORDER BY e.expected;
 
--- TEST 3. Rejected rows of the last run, by table and reason (expected: only 12 DUPLICATE in game_lineups)
 SELECT table_name, reason_code, COUNT(*) AS rows_rejected
 FROM etl.RejectedRows
 WHERE run_id = (SELECT MAX(run_id) FROM etl.Run WHERE package_name = '02_Clean_Transform')
 GROUP BY table_name, reason_code;
 
--- TEST 4. Transfer classification: rows per subclass vs the dataset check (P4.27) - must be identical
 SELECT e.transfer_subclass, ISNULL(x.n, 0) AS rows_now, e.expected,
        CASE WHEN ISNULL(x.n, 0) = e.expected THEN 'PASS' ELSE 'FAIL' END AS test
 FROM (VALUES (N'end of loan',30376),(N'free: club to club',36283),(N'free: free agent signed',2536),
@@ -134,7 +119,6 @@ LEFT JOIN (SELECT transfer_subclass, COUNT(*) AS n FROM cln.transfers GROUP BY t
   ON x.transfer_subclass = e.transfer_subclass
 ORDER BY e.expected DESC;
 
--- TEST 5. The 67 hand-checked transfers: expect 67 PASS
 SELECT COUNT(*) AS legs_tested,
        SUM(CASE WHEN t.transfer_subclass = k.expected_subclass THEN 1 ELSE 0 END) AS legs_matching,
        CASE WHEN SUM(CASE WHEN t.transfer_subclass = k.expected_subclass THEN 1 ELSE 0 END) = 67
@@ -144,7 +128,6 @@ LEFT JOIN cln.transfers t
   ON t.player_id = k.player_id AND t.transfer_date = k.transfer_date
  AND t.from_club_id = k.from_club_id AND t.to_club_id = k.to_club_id;
 
--- (if TEST 5 fails, this lists the differences)
 SELECT k.player_name, k.transfer_date, k.from_club_name, k.to_club_name,
        k.expected_subclass, t.transfer_subclass AS subclass_now
 FROM etl.TestTransferLabels k
@@ -153,7 +136,6 @@ LEFT JOIN cln.transfers t
  AND t.from_club_id = k.from_club_id AND t.to_club_id = k.to_club_id
 WHERE t.transfer_subclass IS NULL OR t.transfer_subclass <> k.expected_subclass;
 
--- TEST 6. The headline KPI: free departures with value >= EUR 5m per season (dataset check P4.35)
 SELECT e.season, ISNULL(x.n, 0) AS free_departures_now, e.expected_n,
        ISNULL(x.value_eur, 0) AS value_now, e.expected_value,
        CASE WHEN ISNULL(x.n, 0) = e.expected_n AND ISNULL(x.value_eur, 0) = e.expected_value
